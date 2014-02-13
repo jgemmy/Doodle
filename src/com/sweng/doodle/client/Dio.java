@@ -11,6 +11,7 @@ public class Dio extends Composite{
 	Button Registrazione = new Button("Registrazione");
 	static TabPanel pannello = new TabPanel();
 	
+	
 	public Dio(){
 		new Login(pannello);
 		new Registrazione(pannello);

@@ -16,9 +16,9 @@ public class gestioneasy implements ClickHandler{
 	Label luogo= new Label("Luogo:");
 	Label descs = new Label("Descrizione:");
 	Label from = new Label("Dal:");
-	Label to= new Label("al:");
+	Label to= new Label("Al:");
 	Label dore = new Label("Dalle ore:");
-	Label aore= new Label("alle ore:");
+	Label aore= new Label("Alle ore:");
 	TextBox tnome = new TextBox();
 	TextBox tluogo = new TextBox();
 	TextBox tdescs = new TextBox();
@@ -32,7 +32,6 @@ public class gestioneasy implements ClickHandler{
 	
 	public gestioneasy(TabPanel pannello){
 		VerticalPanel panel = new VerticalPanel();
-		panel.setSize("100px", "100px");
 		panel.add(nome);
 		panel.add(tnome);
 		panel.add(new HTML("<text> <br> </text>"));
@@ -61,8 +60,8 @@ public class gestioneasy implements ClickHandler{
 		
 		
 		
-		panel.getElement().setAttribute("align", "center");
-		pannello.add(panel, "gestioneasy");
+//		panel.getElement().setAttribute("align", "center");
+		pannello.add(panel, "Gestioneasy");
 		
 	}
 
@@ -87,7 +86,7 @@ public class gestioneasy implements ClickHandler{
 			idore = new Integer (tdore.getText());
 		if (!((taore.getText().length() == 0)) && (!(Utils.isStringNumeric(taore.getText())))) 
 			iaore = new Integer (taore.getText());
-//		GreetingService.Sondaggio(snome, sluogo, sdescs, ifrom, ito, idore, iaore){}
+//		GreetingService.sondaggio(snome, sluogo, sdescs, ifrom, ito, idore, iaore){}
 	}
 
 

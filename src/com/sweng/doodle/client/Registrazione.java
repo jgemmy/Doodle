@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -30,15 +31,23 @@ public Registrazione(TabPanel pannello) {
 	
 	panel.add(nome);
 	panel.add(tnome);
+	panel.add(new HTML("<text> <br> </text>"));
 	panel.add(nick);
 	panel.add(tnick);
+	panel.add(new HTML("<text> <br> </text>"));
 	panel.add(passw);
 	panel.add(tpassw);
+	panel.add(new HTML("<text> <br> </text>"));
 	panel.add(rpassw);
 	panel.add(trpassw);
+	panel.add(new HTML("<text> <br> </text>"));
 	panel.add(mail);
 	panel.add(tmail);
+	panel.add(new HTML("<text> <br> </text>"));
 	panel.add(singup);
+	pannello.add(panel, "Registrazione");
+	panel.getElement().setAttribute("align", "center"); 
+	
 	singup.addClickHandler(new ClickHandler() {
 		
 		@Override
@@ -51,7 +60,7 @@ public Registrazione(TabPanel pannello) {
 			   (trpassw.getText().length() == 0) &&
 			   !(tpassw.getText().contentEquals(trpassw.getText())) &&
 			   (tmail.getText().length() == 0)) return; 
-//     		 	GreetingService.Registrazione(tnome.getText(),tnick.getText(),tpassw.getText(), tmail.getText(), new AsyncCallback<String>(){
+//     		 	GreetingService.registrazione(tnome.getText(),tnick.getText(),tpassw.getText(), tmail.getText(), new AsyncCallback<String>(){
 
 //					@Override
 //					public void onFailure(Throwable caught) {
@@ -63,6 +72,7 @@ public Registrazione(TabPanel pannello) {
 //					public void onSuccess(String result) {
 //						 TODO Auto-generated method stub
 //						Window.alert("Registrazione Effettuata");
+//						Dio.pannello.selectTab(2);
 //					}
 				
 				
@@ -70,9 +80,7 @@ public Registrazione(TabPanel pannello) {
 		}
 		
 	});
-	panel.getElement().setAttribute("align", "center");
-	pannello.add(panel, "Registrazione");
-     
+	
 	
 }
 

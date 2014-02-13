@@ -28,6 +28,8 @@ public class Login implements ClickHandler{
 		panel.add(tpassw);		
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(Login);
+		panel.getElement().setAttribute("align", "center");
+		pannello.add(panel, "Log in");
 		Login.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -48,8 +50,9 @@ public class Login implements ClickHandler{
 					}
 		
 		});
-		panel.getElement().setAttribute("align", "center");
-		pannello.add(panel, "Log in");
+		
+		
+		
 		
 		
 		
