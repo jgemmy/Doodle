@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -17,16 +18,39 @@ public class Login implements ClickHandler{
 		
 		Label user= new Label("User:");
 		Label passw = new Label("Password:");
-		TextBox users = new TextBox();
-		TextBox passws = new TextBox();
+		final TextBox tuser = new TextBox();
+		final TextBox tpassw = new TextBox();
 		VerticalPanel panel = new VerticalPanel();
-		panel.add(user);
-		panel.add(users);
-		panel.add(passw);
-		panel.add(passws);		
+		panel.add(user);		
+		panel.add(tuser);
+		panel.add(new HTML("<text> <br> </text>"));
+		panel.add(passw);		
+		panel.add(tpassw);		
+		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(Login);
-		Login.addClickHandler(this);
+		Login.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+					if ((event.getSource() == Login) && 
+					   !(tuser.getText().length() == 0) &&
+					   !(tpassw.getText().length() == 0)) 
+//						chiamata server
+						Window.alert("Accesso Eseguito");
+						Dio.pannello.selectTab(2);
+						if ((event.getSource() == Login) && 
+								   (tuser.getText().length() == 0) ||
+								   (tpassw.getText().length() == 0)) 
+//									chiamata server
+									Window.alert("username e/o password errati");
+									Dio.pannello.selectTab(0);
+					}
+		
+		});
+		panel.getElement().setAttribute("align", "center");
 		pannello.add(panel, "Log in");
+		
 		
 		
 
@@ -34,12 +58,12 @@ public class Login implements ClickHandler{
 
 	@Override
 	public void onClick(ClickEvent event) {
-		if(event.getSource() == Login){
-			Window.alert("Accesso Eseguito");
-			Dio.pannello.selectTab(2);
-		}
+		// TODO Auto-generated method stub
 		
+	}
+
+
 	}
 	
 
-}
+

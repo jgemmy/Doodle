@@ -32,3 +32,20 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.gwt-Button:active {
+	position: relative !important;
+	top: 1px !important;
+}
+
+
+.panel {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	height: 100%;
+	border:10px solid DarkSlateGray !important;
+	-moz-border-radius: 25px !important;
+	-webkit-border-radius: 25px !important;
+	border-radius: 25px !important;
+	background-color: DarkSlateGray  !important;
+}

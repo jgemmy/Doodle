@@ -78,7 +78,7 @@ public class GestioneEventi implements ClickHandler{
 	@Override
 	public void onClick(ClickEvent event) {
 		// TODO Auto-generated method stub
-		if ((tnome.getText().length() == 0) ||
+		if (!((tnome.getText().length() == 0)) && 
 		   (tluogo.getText().length() == 0) ||
 		   (tdescs.getText().length() == 0) ||
 		   (tfrom.getText().length() == 0) ||

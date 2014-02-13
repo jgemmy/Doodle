@@ -1,6 +1,7 @@
 package com.sweng.doodle.client;
-import java.util.Date;  
-import com.smartgwt.client.widgets.grid.ListGridRecord;  
+import java.util.Date;
+
+import com.smartgwt.client.widgets.grid.ListGridRecord;
   
 public class GridData {  
   

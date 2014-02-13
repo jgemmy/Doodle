@@ -14,8 +14,10 @@ public class Dio extends Composite{
 	public Dio(){
 		new Login(pannello);
 		new Registrazione(pannello);
-		new GestioneEventi(pannello);
+		new gestioneasy(pannello);
 		new Sondaggio(pannello);
+//		new GestioneEventi(pannello);
+		
 		
 		pannello.getElement().setAttribute("align", "center");
 		RootPanel.get().add(pannello);
@@ -24,4 +26,3 @@ public class Dio extends Composite{
 	
 }
 }
-//panel.add(new HTML("<text>Inserisci ID Cliente:</text>"));
