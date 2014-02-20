@@ -1,8 +1,13 @@
 package com.sweng.doodle.server;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sweng.doodle.client.GreetingService;
 import com.sweng.doodle.shared.FieldVerifier;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server-side implementation of the RPC service.
@@ -31,13 +36,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				+ ".<br><br>It looks like you are using:<br>" + userAgent;
 	}
 
-	/**
-	 * Escape an html string. Escaping data received from the client helps to
-	 * prevent cross-site script vulnerabilities.
-	 * 
-	 * @param html the html string to escape
-	 * @return the escaped string
-	 */
+	
+	
 	private String escapeHtml(String html) {
 		if (html == null) {
 			return null;
@@ -45,4 +45,36 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
 	}
+
+
+
+	@Override
+	public String registrazione(String nome, String nick, String password,String mail)
+			throws IllegalArgumentException {
+		
+		Connection conn = null;
+		Statement statement = null;
+		
+		try {
+			 Class.forName("com.mysql.jdbc.Driver");
+			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
+			QueryMethods.insertUser(statement, nome, nick, password,mail);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "non registrato";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return "fatto";
+	}
+	
+	
+	
+	
 }

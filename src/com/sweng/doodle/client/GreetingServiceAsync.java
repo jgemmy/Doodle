@@ -15,6 +15,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface GreetingServiceAsync {
 	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
+	void registrazione(String nome, String nick, String passw,String mail, AsyncCallback<String> callback) throws IllegalArgumentException;
 //	void login(String nome, String passw, new AsyncCallback<String> callback) throws IllegalArgumentException;
 //	void registazione(String nome, String nick, String passw, String mail, new AsyncCallback<String> callback) throws IllegalArgumentException;
 //	void caricaevento(String nome, String luogo, String descs,Date dal,Date al,int dalle,int alle,new AsyncCallback<String> callback) throws IllegalArgumentException;

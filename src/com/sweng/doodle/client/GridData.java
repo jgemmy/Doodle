@@ -23,7 +23,7 @@ public class GridData {
         record.setAttribute("Dal", dal);  
         record.setAttribute("Al", al);  
         record.setAttribute("Dalle", dalle);  
-        record.setAttribute("alle", alle);  
+        record.setAttribute("Alle", alle);  
         return record;  
     }  
   

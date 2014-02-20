@@ -3,6 +3,8 @@ package com.sweng.doodle.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -11,7 +13,7 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class Registrazione extends Composite implements ClickHandler{
+public class Registrazione extends Composite  {
 	Button singup = new Button("Sing Up");
 	Label nome= new Label("Nome:");
 	Label nick= new Label("Nickname:");
@@ -53,44 +55,40 @@ public Registrazione(TabPanel pannello) {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			if (((event.getSource() == singup)) && 
-			   (tnome.getText().length() == 0) &&
-			   (tnick.getText().length() == 0) &&
-			   (tpassw.getText().length() == 0) &&
-			   (trpassw.getText().length() == 0) &&
-			   !(tpassw.getText().contentEquals(trpassw.getText())) &&
+			if ( 
+			   (tnome.getText().length() == 0) ||
+			   (tnick.getText().length() == 0) ||
+			   (tpassw.getText().length() == 0) ||
+			   (trpassw.getText().length() == 0) ||
+			   !(tpassw.getText().contentEquals(trpassw.getText())) ||
 			   (tmail.getText().length() == 0)) return; 
-//     		 	GreetingService.registrazione(tnome.getText(),tnick.getText(),tpassw.getText(), tmail.getText(), new AsyncCallback<String>(){
+			else{
+				
 
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						 TODO Auto-generated method stub
-//					Window.alert("Procedura Remota Fallita");
-//					}
-//
-//					@Override
-//					public void onSuccess(String result) {
-//						 TODO Auto-generated method stub
-//						Window.alert("Registrazione Effettuata");
-//						Dio.pannello.selectTab(2);
-//					}
-				
-				
+				greetingService.registrazione(tnome.getText(),tnick.getText(),tpassw.getText(), tmail.getText(), new AsyncCallback<String>(){
+			@Override
+						public void onFailure(Throwable caught) {
+//							 TODO Auto-generated method stub
+						Window.alert("Procedura Remota Fallita");
+						}
+
+						@Override
+						public void onSuccess(String result) {
+//							 TODO Auto-generated method stub
+							Window.alert("Registrazione Effettuata: "+result);
+							Dio.pannello.selectTab(2);
+						}
 			
-		}
+		});	
+			
+
+			}}});
 		
-	});
-	
-	
-}
+
+}}
 
 
-@Override
-public void onClick(ClickEvent event) {
-	// TODO Auto-generated method stub
-	
-}
-}	
+
 
 
 
