@@ -83,7 +83,37 @@ public class QueryMethods {
 			System.out.println("mail : " + mail);
 		}
 	}
+	
+	public static String login(Statement statement, String nick, String passw ) throws SQLException{
+		String get = "SELECT * FROM "+TABLENAME + " WHERE password = '"+passw+"' AND nick = '"+nick+"' ";
+				
+		String userid = "empty";
+		ResultSet rs = statement.executeQuery(get);
+		while (rs.next()) {
 
+			 userid = rs.getString("nome");
+			System.out.println("nome : " + userid);
+		
+		}
+		return userid;
+	}
+	
+	
+	
+	
+
+//( (nick.contentEquals(rs.getString("nome"))) &&	 (mail.contentEquals(rs.getString("mail")))) {
+	
+	public static void   creatabella(Statement statement, String tablename) throws SQLException{
+		String createTable = "CREATE TABLE IF NOT EXISTS "+tablename +
+				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
+				" nome VARCHAR(255), " + 
+				" nick VARCHAR(255), " +
+				" mail VARCHAR(255), " +
+				" password VARCHAR(255))"; 
+		statement.executeUpdate(createTable);
+		  System.out.println("Created table in given database...");
+	}
 
 	public static void insertUser(Statement statement, String nome, String nick, String password,String mail) throws SQLException{
 		String insertTableSQL = "INSERT INTO "+TABLENAME
@@ -110,16 +140,27 @@ public class QueryMethods {
 		stmt.executeUpdate(changepsw);
 	}
 
-	public static void   creatabella(Statement statement, String tablename) throws SQLException{
-		String createTable = "CREATE TABLE IF NOT EXISTS "+tablename +
+	
+	public static void   creatabellaeventi(Statement statement, String tablename) throws SQLException{
+		String createTablee = "CREATE TABLE IF NOT EXISTS "+tablename +
 				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
-				" nome VARCHAR(255), " + 
-				" nick VARCHAR(255), " +
-				" mail VARCHAR(255), " +
-				" password VARCHAR(255))"; 
-		statement.executeUpdate(createTable);
+				" id INTEGER, " + 
+				" nome VARCHAR(255), " +
+				" luogo VARCHAR(255), " +
+				" descrizione VARCHAR(255), " +
+				" dal VARCHAR(255), " +
+				" al VARCHAR(255), " +
+				" dalle INTEGER, " +
+				" alle INTEGER"; 
+		statement.executeUpdate(createTablee);
 		  System.out.println("Created table in given database...");
 	}
 
-
+	public static void insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al, int dalle, int alle) throws SQLException{
+		String insertTableSQL = "INSERT INTO "+ "Eventi"
+				+ "(nome, luogo, descrizione, dal, al, dalle, alle) " + "VALUES"
+				+ "('"+nome+"','"+luogo+"','"+descrizione+"', '"+dal+"', '"+al+"', '"+dalle+"', '"+alle+"')";
+		statement.executeUpdate(insertTableSQL);   
+		  System.out.println("Created event in given database...");
+	}
 }

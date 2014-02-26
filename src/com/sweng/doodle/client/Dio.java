@@ -15,8 +15,8 @@ public class Dio extends Composite{
 	public Dio(){
 		new Login(pannello);
 		new Registrazione(pannello);
-		new gestioneasy(pannello);
-		new Sondaggio(pannello);
+		new CopyOfgestioneasydata(pannello);
+//		new Sondaggio(pannello);
 //		new GestioneEventi(pannello);
 		
 		

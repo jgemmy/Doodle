@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -19,11 +20,11 @@ public class Registrazione extends Composite  {
 	Label nick= new Label("Nickname:");
 	Label passw= new Label("Password:");
 	Label rpassw= new Label("Ripeti Password:");
-	Label mail = new Label("Indirizzo mail:");
+	Label mail = new Label("Indirizzo mail:  (opzionale)");
 	final TextBox tnome = new TextBox();
 	final TextBox tnick = new TextBox();
-	final TextBox tpassw = new TextBox();
-	final TextBox trpassw = new TextBox();
+	final PasswordTextBox tpassw = new PasswordTextBox();
+	final PasswordTextBox trpassw = new PasswordTextBox();
 	final TextBox tmail = new TextBox();
 	VerticalPanel panel = new VerticalPanel();
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
@@ -60,8 +61,7 @@ public Registrazione(TabPanel pannello) {
 			   (tnick.getText().length() == 0) ||
 			   (tpassw.getText().length() == 0) ||
 			   (trpassw.getText().length() == 0) ||
-			   !(tpassw.getText().contentEquals(trpassw.getText())) ||
-			   (tmail.getText().length() == 0)) return; 
+			   !(tpassw.getText().contentEquals(trpassw.getText()))) return; 
 			else{
 				
 
@@ -75,8 +75,13 @@ public Registrazione(TabPanel pannello) {
 						@Override
 						public void onSuccess(String result) {
 //							 TODO Auto-generated method stub
-							Window.alert("Registrazione Effettuata: "+result);
-							Dio.pannello.selectTab(2);
+							if (result.contentEquals("empty")){
+							Window.alert("Registrazione Effettuata");
+							Dio.pannello.selectTab(1);
+						} else {
+							Dio.pannello.selectTab(0);
+							Window.alert(result + ": utente gia registrato");
+						}
 						}
 			
 		});	

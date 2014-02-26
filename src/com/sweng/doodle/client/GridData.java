@@ -16,7 +16,7 @@ public class GridData {
     
     public static ListGridRecord createRecord(int idevento, String nomevento, String luogo, String descr, Date dal, Date al, int dalle, int alle) {  
         ListGridRecord record = new ListGridRecord();  
-        record.setAttribute("ID Evento", idevento);  
+        record.setAttribute("Id Evento", idevento);  
         record.setAttribute("Nome Evento", nomevento);  
         record.setAttribute("Luogo", luogo);  
         record.setAttribute("Descrizione Evento", descr);  

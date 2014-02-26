@@ -73,8 +73,65 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		QueryMethods.close(statement, conn);
 		return "fatto";
 	}
-	
-	
-	
-	
+
+
+
+	@Override
+	public String login(String nick, String passw)
+			throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+		String returned = "empty";
+		try {
+			 Class.forName("com.mysql.jdbc.Driver");
+			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+//			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
+			returned= QueryMethods.login (statement, nick, passw);
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "non registrato";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return returned;
+	}
+
+
+
+	@Override
+	public String caricaevento(String nome, String luogo, String descs,
+			String dal, String al, int dalle, int alle)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		Statement statement = null;
+		
+		try {
+			 Class.forName("com.mysql.jdbc.Driver");
+			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellaeventi(statement, "Eventi");
+			QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al, dalle, alle);
+
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Evento non caricato";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return "Evento caricato";
+	}
+
+
+
 }
