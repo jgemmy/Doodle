@@ -14,6 +14,7 @@ public class QueryMethods {
 	static final String USER = "root";
 	static final String PASS = "";
 	static final String TABLENAME = "users";
+	static final String TABLENAME2 = "eventi";
 
 	
 	 public static Statement connect(Connection conn) {
@@ -68,23 +69,30 @@ public class QueryMethods {
 		   System.out.println("Goodbye!");
 	}
 	
-	public static void getAllInformations(Statement statement ) throws SQLException{
-		String get = "SELECT nome,nick,password,mail FROM "+TABLENAME;
-		ResultSet rs = statement.executeQuery(get);
-		while (rs.next()) {
-
-			String userid = rs.getString("nome");
-			String username = rs.getString("nick");
-			String password = rs.getString("password");
-			String mail = rs.getString("mail");
-			System.out.println("nome : " + userid);
-			System.out.println("nick : " + username);
-			System.out.println("password : " + password);
-			System.out.println("mail : " + mail);
-		}
+	
+	/*__________________________________________________USERS_____________________________________________________*/
+	
+	
+	public static void   creatabella(Statement statement, String tablename) throws SQLException{
+		String createTable = "CREATE TABLE IF NOT EXISTS "+tablename +
+				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
+				" nome VARCHAR(255), " + 
+				" nick VARCHAR(255), " +
+				" mail VARCHAR(255), " +
+				" password VARCHAR(255))"; 
+		statement.executeUpdate(createTable);
+		  System.out.println("Created table in given database...");
+	}
+	/*REGISTRAZIONE UTENTE*/
+	public static void insertUser(Statement statement, String nome, String nick, String password,String mail) throws SQLException{
+		String insertTableSQL = "INSERT INTO "+TABLENAME
+				+ "(nome, nick, password,mail) " + "VALUES"
+				+ "('"+nome+"','"+nick+"','"+password+"', '"+mail+"')";
+		statement.executeUpdate(insertTableSQL);   
+		  System.out.println("Created user in given database...");
 	}
 	
-	public static String login(Statement statement, String nick, String passw ) throws SQLException{
+	public static String login(Statement statement, String nick, String passw) throws SQLException{
 		String get = "SELECT * FROM "+TABLENAME + " WHERE password = '"+passw+"' AND nick = '"+nick+"' ";
 				
 		String userid = "empty";
@@ -98,29 +106,20 @@ public class QueryMethods {
 		return userid;
 	}
 	
-	
-	
-	
+	public static void getAllInformations(Statement statement) throws SQLException{
+		String get = "SELECT nome,nick,password,mail FROM "+TABLENAME;
+		ResultSet rs = statement.executeQuery(get);
+		while (rs.next()) {
 
-//( (nick.contentEquals(rs.getString("nome"))) &&	 (mail.contentEquals(rs.getString("mail")))) {
-	
-	public static void   creatabella(Statement statement, String tablename) throws SQLException{
-		String createTable = "CREATE TABLE IF NOT EXISTS "+tablename +
-				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
-				" nome VARCHAR(255), " + 
-				" nick VARCHAR(255), " +
-				" mail VARCHAR(255), " +
-				" password VARCHAR(255))"; 
-		statement.executeUpdate(createTable);
-		  System.out.println("Created table in given database...");
-	}
-
-	public static void insertUser(Statement statement, String nome, String nick, String password,String mail) throws SQLException{
-		String insertTableSQL = "INSERT INTO "+TABLENAME
-				+ "(nome, nick, password,mail) " + "VALUES"
-				+ "('"+nome+"','"+nick+"','"+password+"', '"+mail+"')";
-		statement.executeUpdate(insertTableSQL);   
-		  System.out.println("Created user in given database...");
+			String userid = rs.getString("nome");
+			String username = rs.getString("nick");
+			String password = rs.getString("password");
+			String mail = rs.getString("mail");
+			System.out.println("nome : " + userid);
+			System.out.println("nick : " + username);
+			System.out.println("password : " + password);
+			System.out.println("mail : " + mail);
+		}
 	}
 
 	public static void deleteUser(Statement statement, String nome, String nick, String password,String mail) throws SQLException{
@@ -139,28 +138,37 @@ public class QueryMethods {
 		String changepsw = "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('"+password+"');";
 		stmt.executeUpdate(changepsw);
 	}
-
 	
-	public static void   creatabellaeventi(Statement statement, String tablename) throws SQLException{
-		String createTablee = "CREATE TABLE IF NOT EXISTS "+tablename +
-				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
-				" id INTEGER, " + 
+	
+	/*__________________________________________________EVENTI_____________________________________________________*/
+	
+	public static void   creatabellaeventi(Statement statement, String tablename2) throws SQLException{
+		String createTablee = "CREATE TABLE IF NOT EXISTS "+tablename2 +
+				" (id INTEGER not NULL PRIMARY KEY , " +
 				" nome VARCHAR(255), " +
 				" luogo VARCHAR(255), " +
 				" descrizione VARCHAR(255), " +
 				" dal VARCHAR(255), " +
-				" al VARCHAR(255), " +
-				" dalle INTEGER, " +
-				" alle INTEGER"; 
+				" al VARCHAR(255))" ; 
 		statement.executeUpdate(createTablee);
 		  System.out.println("Created table in given database...");
 	}
-
-	public static void insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al, int dalle, int alle) throws SQLException{
-		String insertTableSQL = "INSERT INTO "+ "Eventi"
-				+ "(nome, luogo, descrizione, dal, al, dalle, alle) " + "VALUES"
-				+ "('"+nome+"','"+luogo+"','"+descrizione+"', '"+dal+"', '"+al+"', '"+dalle+"', '"+alle+"')";
+	
+	public static void insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al) throws SQLException{
+		String insertTableSQL = "INSERT INTO "+TABLENAME2
+				+ "(nome, luogo, descrizione, dal, al) " + "VALUES"
+				+ "('"+nome+"','"+luogo+"','"+descrizione+"', '"+dal+"', '"+al+"')";
 		statement.executeUpdate(insertTableSQL);   
 		  System.out.println("Created event in given database...");
 	}
+
+	
+	/*__________________________________________________PARTECIPANTI_______________________________________________*/
+	
+	
+	
+	
+	
+	/*__________________________________________________COMMENTI___________________________________________________*/
+
 }

@@ -17,20 +17,18 @@ import com.sweng.doodle.shared.Utils;
 
 public class CopyOfgestioneasydata {
 	Label nome= new Label("Nome Evento");
-	Label luogo= new Label("Luogo:");
-	Label descs = new Label("Descrizione:");
-	Label from = new Label("Dal:");
-	Label to= new Label("Al:");
+	Label luogo= new Label("Luogo:  (opzionale)");
+	Label descs = new Label("Descrizione:  (opzionale)");
+	Label from = new Label("Dal: , Dalle ore:");
+	Label to= new Label("Al: , Alle ore:");
 	
-	Label dore = new Label("Dalle ore:");
-	Label aore= new Label("Alle ore:");
+	
 	TextBox tnome = new TextBox();
 	TextBox tluogo = new TextBox();
 	TextBox tdescs = new TextBox();
 	DateBox tfrom = new DateBox();           
 	DateBox tto = new DateBox();
-	TextBox tdore = new TextBox();           
-	TextBox taore = new TextBox();
+	
 	Button carica = new Button("Carica Evento");
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	
@@ -53,11 +51,7 @@ public class CopyOfgestioneasydata {
 		panel.add(to);
 		panel.add(tto);
 		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(dore);
-		panel.add(tdore);
 		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(aore);
-		panel.add(taore);
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(carica);
 		
@@ -78,8 +72,7 @@ public class CopyOfgestioneasydata {
 				String sdescs= "empty";
 				String ifrom = "empty";
 				String ito = "empty";
-				int idore = 0;
-				int iaore = 0;
+				
 				if (!((tnome.getText().length() == 0)) && (!(Utils.isStringNumeric(tnome.getText())))) 
 					snome = new String(tnome.getText());
 				if (!((tluogo.getText().length() == 0)) && (!(Utils.isStringNumeric(tluogo.getText())))) 
@@ -90,12 +83,8 @@ public class CopyOfgestioneasydata {
 					ifrom = tfrom.getValue().toString();
 				if (!((tto.getValue().toString().length() == 0))) 
 					ito = tto.getValue().toString();
-				if (!((tdore.getText().length() == 0)) && (!(Utils.isStringNumeric(tdore.getValue())))) 
-					idore = new Integer (tdore.getValue());
-				if (!((taore.getText().length() == 0)) && (!(Utils.isStringNumeric(taore.getValue())))) 
-					iaore = new Integer (taore.getValue());
 				
-			greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito, idore, iaore, new AsyncCallback<String>() {
+			greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito, new AsyncCallback<String>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -106,7 +95,7 @@ public class CopyOfgestioneasydata {
 				@Override
 				public void onSuccess(String result) {
 					// TODO Auto-generated method stub
-					Window.alert("juve");
+					Window.alert("Evento caricato con successo");
 				}
 			});	
 			

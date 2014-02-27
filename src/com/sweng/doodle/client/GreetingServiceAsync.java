@@ -11,5 +11,5 @@ public interface GreetingServiceAsync {
 	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
 	void registrazione(String nome, String nick, String passw,String mail, AsyncCallback<String> callback) throws IllegalArgumentException;
 	void login(String nome, String passw, AsyncCallback<String> callback) throws IllegalArgumentException;
-	void caricaevento(String snome, String sluogo, String sdescs, String ifrom,	String ito, int idore, int iaore, AsyncCallback<String> callback);
+	void caricaevento(String snome, String sluogo, String sdescs, String ifrom,	String ito,  AsyncCallback<String> callback);
 }

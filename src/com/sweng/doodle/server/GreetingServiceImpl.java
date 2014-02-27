@@ -106,7 +106,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String caricaevento(String nome, String luogo, String descs,
-			String dal, String al, int dalle, int alle)
+			String dal, String al)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
@@ -116,8 +116,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			 Class.forName("com.mysql.jdbc.Driver");
 			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
-			QueryMethods.creatabellaeventi(statement, "Eventi");
-			QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al, dalle, alle);
+			QueryMethods.creatabellaeventi(statement, QueryMethods.TABLENAME2);
+			QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al);
 
 		
 		} catch (SQLException e) {
@@ -129,7 +129,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			e.printStackTrace();
 		}
 		QueryMethods.close(statement, conn);
-		return "Evento caricato";
+		return  "Evento caricato" ;
 	}
 
 
