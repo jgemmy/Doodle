@@ -44,7 +44,7 @@ public class Login{
 			@Override
 			public void onKeyPress(KeyPressEvent event_){
 				boolean enterPressed = KeyCodes.KEY_ENTER == event_.getNativeEvent().getKeyCode();
-				if (enterPressed && tuser.getText().length() != 0 && tpassw.getText().length() == 0){
+				if ( enterPressed && tuser.getText().length() != 0 && tpassw.getText().length() == 0 ){
 					inLogin();
 				}
 			}
@@ -71,7 +71,7 @@ public class Login{
 				} else {
 					idKey = result;								
 					Cookies.setCookie("MyCookies", result);
-													Window.alert("Benvenuto: " + result);
+					Window.alert("Benvenuto:  Login Effettuato");
 					Window.Location.reload();
 				}
 			}

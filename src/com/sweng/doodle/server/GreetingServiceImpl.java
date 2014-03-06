@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.sweng.doodle.client.Dio;
 import com.sweng.doodle.client.GreetingService;
 import com.sweng.doodle.shared.FieldVerifier;
 
@@ -14,7 +16,7 @@ import com.sweng.doodle.shared.FieldVerifier;
  */
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+GreetingService {
 
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
@@ -43,21 +45,21 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
 	}
-	
+
 	@Override
 	public String registrazione(String nome, String nick, String password,String mail)
 			throws IllegalArgumentException {
-		
+
 		Connection conn = null;
 		Statement statement = null;
-		
+
 		try {
-			 Class.forName("com.mysql.jdbc.Driver");
-			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
 			QueryMethods.insertUser(statement, nome, nick, password,mail);
-		
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,13 +81,13 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		Statement statement = null;
 		String returned = "empty";
 		try {
-			 Class.forName("com.mysql.jdbc.Driver");
-			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
-//			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
+			//			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
 			returned= QueryMethods.login (statement, nick, passw);
-			
-		
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,14 +109,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		Statement statement = null;
 		String returned ="id non esistente";
 		try {
-			 Class.forName("com.mysql.jdbc.Driver");
-			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabellaeventi(statement);
 			returned = 	QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al,idKey);
-			
 
-		
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,21 +128,23 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		QueryMethods.close(statement, conn);
 		return returned ;
 	}
-		@Override
+	@Override
 	public String cancellaevento(String id,String idKey) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stubss
 		Connection conn = null;
 		Statement statement = null;
 		String returned = id;
 		try {
-			 Class.forName("com.mysql.jdbc.Driver");
-			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabellaeventi(statement);
-			returned = QueryMethods.deleteIdEvent(statement, id,idKey);
-			
-			
-		
+//			if (Cookies.getCookie("MyCookies") == Dio.idKey){
+			returned = QueryMethods.deleteIdEvent(statement, id,idKey);//}
+//			else return "Evento non Trovato";
+
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,8 +155,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		}
 		QueryMethods.close(statement, conn);
 		return "evento cancellato "
-				+ returned;
+		+ returned;
 	}
 
-	
+
 }

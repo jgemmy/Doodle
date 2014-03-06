@@ -1,36 +1,35 @@
 package com.sweng.doodle.client;
-import java.util.Date;
 
+import java.util.Date;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
-  
+
 public class GridData {  
-  
-    private static ListGridRecord[] records;    
-        
-    public static ListGridRecord[] getRecords() {  
-        if (records == null) {  
-            records = getNewRecords();    
-        }    
-        return records;    
-    }    
-    
-    public static ListGridRecord createRecord(int idevento, String nomevento, String luogo, String descr, Date dal, Date al, int dalle, int alle) {  
-        ListGridRecord record = new ListGridRecord();  
-        record.setAttribute("Id Evento", idevento);  
-        record.setAttribute("Nome Evento", nomevento);  
-        record.setAttribute("Luogo", luogo);  
-        record.setAttribute("Descrizione Evento", descr);  
-        record.setAttribute("Dal", dal);  
-        record.setAttribute("Al", al);  
-        record.setAttribute("Dalle", dalle);  
-        record.setAttribute("Alle", alle);  
-        return record;  
-    }  
-  
-    
+
+	private static ListGridRecord[] records;    
+
+	public static ListGridRecord[] getRecords() {  
+		if (records == null) {  
+			records = getNewRecords();    
+		}    
+		return records;    
+	}    
+
+	public static ListGridRecord createRecord(String id, String nome, String luogo, String descrizione, Date dal, Date al) {  
+		ListGridRecord record = new ListGridRecord();  
+		record.setAttribute("id", id);  
+		record.setAttribute("nome", nome);  
+		record.setAttribute("luogo", luogo);  
+		record.setAttribute("descrizione", descrizione);  
+		record.setAttribute("dal", dal);  
+		record.setAttribute("al", al);    
+		return record;  
+	}  
+
+
+	@SuppressWarnings("deprecation")
 	public static ListGridRecord[] getNewRecords() {  
-        return new ListGridRecord[]{  
-                createRecord(1,"prova1", "prova1", "US", new Date(1776 - 1900, 6, 4),new Date(1776 - 1900, 6, 4), 1, 2)
-                };  
-    }  
+		return new ListGridRecord[]{  
+				createRecord("","", "", "", new Date(1776, 6, 4),new Date(1776, 6, 4))
+		};  
+	}  
 }  

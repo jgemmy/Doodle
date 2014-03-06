@@ -19,17 +19,18 @@ public class Dio extends Composite{
 
 
 	public Dio(){
-		//		Window.alert("Cookies: "+Cookies.getCookie("MyCookies"));
+
 		if (!(Cookies.getCookie("MyCookies").contentEquals("-1"))){
-//			Window.alert("Welcome user with id: "+Cookies.getCookie("MyCookies"));
+			//			Window.alert("Welcome user with id: "+Cookies.getCookie("MyCookies"));
 			idKey = Cookies.getCookie("MyCookies");
-			new CopyOfgestioneasydata(pannello);
+			new UserSondaggio(pannello);
+			new GestioneEventi(pannello);
 			RootPanel.get().add(logout);} else {
 				new Login(pannello);
 				new Registrazione(pannello);
 			}
-		//		new Sondaggio(pannello);
-		//		new GestioneEventi(pannello);
+		
+	
 
 
 		pannello.getElement().setAttribute("align", "center");
@@ -40,8 +41,11 @@ public class Dio extends Composite{
 
 			@Override
 			public void onClick(ClickEvent event) {
+
 				Cookies.setCookie("MyCookies","-1");
 				Window.Location.reload();
+				Window.alert("Logout Eseguito");
+				
 			}
 		});
 
