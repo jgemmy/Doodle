@@ -36,8 +36,6 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				+ ".<br><br>It looks like you are using:<br>" + userAgent;
 	}
 
-	
-	
 	private String escapeHtml(String html) {
 		if (html == null) {
 			return null;
@@ -45,9 +43,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
 	}
-
-
-
+	
 	@Override
 	public String registrazione(String nome, String nick, String password,String mail)
 			throws IllegalArgumentException {
@@ -105,19 +101,18 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 
 	@Override
-	public String caricaevento(String nome, String luogo, String descs,
-			String dal, String al)
-			throws IllegalArgumentException {
+	public String caricaevento(String nome, String luogo, String descs,	String dal, String al,String idKey) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		Statement statement = null;
-		
+		String returned ="id non esistente";
 		try {
 			 Class.forName("com.mysql.jdbc.Driver");
 			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
-			QueryMethods.creatabellaeventi(statement, QueryMethods.TABLENAME2);
-			QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al);
+			QueryMethods.creatabellaeventi(statement);
+			returned = 	QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al,idKey);
+			
 
 		
 		} catch (SQLException e) {
@@ -129,9 +124,35 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			e.printStackTrace();
 		}
 		QueryMethods.close(statement, conn);
-		return  "Evento caricato" ;
+		return returned ;
+	}
+		@Override
+	public String cancellaevento(String id,String idKey) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		Statement statement = null;
+		String returned = id;
+		try {
+			 Class.forName("com.mysql.jdbc.Driver");
+			 conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellaeventi(statement);
+			returned = QueryMethods.deleteIdEvent(statement, id,idKey);
+			
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Evento non cancellato";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return "evento cancellato "
+				+ returned;
 	}
 
-
-
+	
 }

@@ -16,6 +16,7 @@ public class QueryMethods {
 	static final String TABLENAME = "users";
 	static final String TABLENAME2 = "eventi";
 
+	/*__________________________________________________ConnessioneDB_____________________________________________________*/
 	
 	 public static Statement connect(Connection conn) {
 		
@@ -99,14 +100,14 @@ public class QueryMethods {
 		ResultSet rs = statement.executeQuery(get);
 		while (rs.next()) {
 
-			 userid = rs.getString("nome");
-			System.out.println("nome : " + userid);
+			 userid = rs.getString("id");
+			System.out.println("id : " + userid);
 		
 		}
 		return userid;
 	}
 	
-	public static void getAllInformations(Statement statement) throws SQLException{
+	public static void getAllInformationsUsers(Statement statement) throws SQLException{
 		String get = "SELECT nome,nick,password,mail FROM "+TABLENAME;
 		ResultSet rs = statement.executeQuery(get);
 		while (rs.next()) {
@@ -142,26 +143,65 @@ public class QueryMethods {
 	
 	/*__________________________________________________EVENTI_____________________________________________________*/
 	
-	public static void   creatabellaeventi(Statement statement, String tablename2) throws SQLException{
-		String createTablee = "CREATE TABLE IF NOT EXISTS "+tablename2 +
-				" (id INTEGER not NULL PRIMARY KEY , " +
+	public static void   creatabellaeventi(Statement statement ) throws SQLException{
+		String createTablee = "CREATE TABLE IF NOT EXISTS "+ TABLENAME2 +
+				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
+				" idKey INTEGER, " +
 				" nome VARCHAR(255), " +
 				" luogo VARCHAR(255), " +
 				" descrizione VARCHAR(255), " +
-				" dal VARCHAR(255), " +
-				" al VARCHAR(255))" ; 
+				" dal DATE, " +
+				" al DATE)" ; 
 		statement.executeUpdate(createTablee);
 		  System.out.println("Created table in given database...");
 	}
 	
-	public static void insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al) throws SQLException{
-		String insertTableSQL = "INSERT INTO "+TABLENAME2
-				+ "(nome, luogo, descrizione, dal, al) " + "VALUES"
-				+ "('"+nome+"','"+luogo+"','"+descrizione+"', '"+dal+"', '"+al+"')";
-		statement.executeUpdate(insertTableSQL);   
-		  System.out.println("Created event in given database...");
+	public static String insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al,String idKey) throws SQLException{
+	
+		String insertTableSQL = "INSERT INTO "+ TABLENAME2
+				+ "(nome, luogo, descrizione, dal, al,idKey) " + "VALUES"
+				+ "('"+nome+"','"+luogo+"','"+descrizione+"', CONVERT(DateTime,'"+dal+"',112), CONVERT(DateTime,'"+al+"',112), '"+idKey+"')";
+		statement.executeUpdate(insertTableSQL);
+		String get = "SELECT id FROM "+TABLENAME2 + " WHERE nome = '"+nome+"' ";
+		
+		String userid = "empty";
+		ResultSet rs = statement.executeQuery(get);
+		while (rs.next()) {
+
+			 userid = rs.getString("id");
+			System.out.println("id : " + userid);
+		
+		}
+		return userid;
 	}
 
+	public static String deleteIdEvent(Statement statement, String id,String idKey) throws SQLException{
+		String removeEvent = "DELETE FROM "+TABLENAME2+" WHERE idKey = "+idKey+" AND id = "+id;
+		String eventid = id ;
+		statement.executeUpdate(removeEvent);
+		
+		return eventid;
+		
+	}
+		
+	
+	public static void getAllInformationsEvent(Statement statement) throws SQLException{
+		String get = "SELECT nome,luogo,descrizione,dal,al FROM "+TABLENAME2;
+		ResultSet rs = statement.executeQuery(get);
+		while (rs.next()) {
+
+			String nome = rs.getString("nome");
+			String luogo = rs.getString("luogo");
+			String descrizione= rs.getString("descrizione");
+			String dal = rs.getString("dal");
+			String al = rs.getString("al");
+			System.out.println("nome : " + nome);
+			System.out.println("luogo : " + luogo);
+			System.out.println("descrizione : " + descrizione);
+			System.out.println("dal : " + dal);
+			System.out.println("al : " + al);
+		}
+	}
 	
 	/*__________________________________________________PARTECIPANTI_______________________________________________*/
 	

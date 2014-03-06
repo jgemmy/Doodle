@@ -3,6 +3,7 @@ package com.sweng.doodle.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -21,13 +22,18 @@ public class CopyOfgestioneasydata {
 	Label descs = new Label("Descrizione:  (opzionale)");
 	Label from = new Label("Dal: , Dalle ore:");
 	Label to= new Label("Al: , Alle ore:");
-	
+
 	
 	TextBox tnome = new TextBox();
 	TextBox tluogo = new TextBox();
 	TextBox tdescs = new TextBox();
 	DateBox tfrom = new DateBox();           
 	DateBox tto = new DateBox();
+	String snome = "empty";
+	String sluogo= "empty";
+	String sdescs= "empty";
+	String ifrom = "empty";
+	String ito = "empty";
 	
 	Button carica = new Button("Carica Evento");
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
@@ -54,8 +60,12 @@ public class CopyOfgestioneasydata {
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(carica);
-		
-		
+		tto.setFormat(new DateBox.DefaultFormat 
+				(DateTimeFormat.getFormat("EEEE,dd MMMM , yyyy"))); 
+		tfrom.setFormat(new DateBox.DefaultFormat 
+				(DateTimeFormat.getFormat("EEEE,dd MMMM , yyyy"))); 
+//				(DateTimeFormat.getFormat("mm HH"))); 
+	
 	
 		
 		
@@ -67,11 +77,7 @@ public class CopyOfgestioneasydata {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				String snome = "empty";
-				String sluogo= "empty";
-				String sdescs= "empty";
-				String ifrom = "empty";
-				String ito = "empty";
+				
 				
 				if (!((tnome.getText().length() == 0)) && (!(Utils.isStringNumeric(tnome.getText())))) 
 					snome = new String(tnome.getText());
@@ -83,8 +89,16 @@ public class CopyOfgestioneasydata {
 					ifrom = tfrom.getValue().toString();
 				if (!((tto.getValue().toString().length() == 0))) 
 					ito = tto.getValue().toString();
-				
-			greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito, new AsyncCallback<String>() {
+				inEvento();
+			
+			
+			} 
+			
+		});
+		
+	}
+	 public void inEvento(){
+		 greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito,Dio.idKey, new AsyncCallback<String>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -95,16 +109,10 @@ public class CopyOfgestioneasydata {
 				@Override
 				public void onSuccess(String result) {
 					// TODO Auto-generated method stub
-					Window.alert("Evento caricato con successo");
+					Window.alert("Evento caricato con successo: id evento  = "+result);
 				}
 			});	
-			
-			} 
-			
-		});
-		
-	}
-	
+	 }
 }
 
 

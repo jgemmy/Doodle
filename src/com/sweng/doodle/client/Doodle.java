@@ -18,6 +18,7 @@ public class Doodle implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
 		new Dio();
 		
 	}
