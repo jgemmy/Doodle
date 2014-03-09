@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.StringTokenizer;
 
 public class QueryMethods {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -151,17 +152,35 @@ public class QueryMethods {
 				" nome VARCHAR(255), " +
 				" luogo VARCHAR(255), " +
 				" descrizione VARCHAR(255), " +
-				" dal VARCHAR(255), " +
-				" al VARCHAR(255))" ; 
+				" dal DATETIME, " +
+				" al DATETIME)" ; 
 		statement.executeUpdate(createTablee);
 		System.out.println("Created Eventi table in given database...");
 	}
 
 	public static String insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al,String idKey) throws SQLException{
-		
+		//		Sun Mar 09 00:00:00 CET 2014
+		StringTokenizer token = new StringTokenizer(dal, " ");
+		token.nextToken();
+		String month = token.nextToken();
+		String day =  token.nextToken();
+		String hour = token.nextToken();
+		token.nextToken();
+		String year = token.nextToken();
+		String dateDal = day+","+month+","+year+" "+hour;
+		System.out.println(dateDal);
+		StringTokenizer token1 = new StringTokenizer(al, " ");
+		token1.nextToken();
+		String month1 = token1.nextToken();
+		String day1 =  token1.nextToken();
+		String hour1 = token1.nextToken();
+		token1.nextToken();
+		String year1 = token1.nextToken();
+		String dateAl = day1+","+month1+","+year1+" "+hour1;
+		System.out.println(dateAl);
 		String insertTableSQL = "INSERT INTO "+ TABLENAME2
 				+ "(nome, luogo, descrizione, dal, al,idKey) " + "VALUES"
-				+ "('"+nome+"','"+luogo+"','"+descrizione+"', '"+dal+"', '"+al+"', '"+idKey+"')";
+				+ "('"+nome+"','"+luogo+"','"+descrizione+"',STR_TO_DATE('"+dateDal+"', '%d,%b,%Y %H:%i:%s'),  STR_TO_DATE('"+dateAl+"', '%d,%b,%Y %T'), '"+idKey+"')";
 		statement.executeUpdate(insertTableSQL);
 		String get = "SELECT id FROM "+TABLENAME2 + " WHERE nome = '"+nome+"' ";
 
@@ -177,7 +196,7 @@ public class QueryMethods {
 	}
 
 	public static String deleteIdEvent(Statement statement, String id,String idKey) throws SQLException{
-		
+
 		String removeEvent = "DELETE FROM "+TABLENAME2+" WHERE idKey = "+idKey+" AND id = "+id;
 		String eventid = id ;
 		statement.executeUpdate(removeEvent);

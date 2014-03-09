@@ -17,7 +17,7 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 
 public class UserSondaggio {
 	Button togli = new Button("togli");
-	Label id = new Label("ID:");
+	Label id = new Label("CANCELLA EVENTO ID:");
 	TextBox idd = new TextBox();
 	ListGrid countryGrid = new ListGrid(); 
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);

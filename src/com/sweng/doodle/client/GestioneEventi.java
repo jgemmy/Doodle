@@ -3,7 +3,6 @@ package com.sweng.doodle.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -60,10 +59,10 @@ public class GestioneEventi {
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(carica);
-		tto.setFormat(new DateBox.DefaultFormat 
-				(DateTimeFormat.getFormat("EEEE,dd MMMM , yyyy"))); 
-		tfrom.setFormat(new DateBox.DefaultFormat 
-				(DateTimeFormat.getFormat("EEEE,dd MMMM , yyyy"))); 
+//		tto.setFormat(new DateBox.DefaultFormat 
+//				(DateTimeFormat.getFormat("dd MMMM , yyyy"))); 
+//		tfrom.setFormat(new DateBox.DefaultFormat 
+//				(DateTimeFormat.getFormat("EEEE,dd MMMM , yyyy"))); 
 //				(DateTimeFormat.getFormat("mm HH"))); 
 	
 	
@@ -98,6 +97,7 @@ public class GestioneEventi {
 		
 	}
 	 public void inEvento(){
+	
 		 greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito,Dio.idKey, new AsyncCallback<String>() {
 
 				@Override
