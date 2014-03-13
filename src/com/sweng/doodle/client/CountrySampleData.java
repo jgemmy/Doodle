@@ -2,14 +2,15 @@ package com.sweng.doodle.client;
 
 import java.util.Date;
 import java.util.LinkedList;
+
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.sweng.doodle.shared.Evento;
 
-public class GridData {  
+
+public class CountrySampleData {  
 
 	private static RecordList dataTable = new RecordList();
-
 	public static RecordList getRecords(LinkedList<Evento> dataTable) {  
 		return setEventi(dataTable);
 
@@ -35,3 +36,4 @@ public class GridData {
 
 
 }  
+

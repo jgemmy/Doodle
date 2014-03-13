@@ -22,7 +22,7 @@ public class GestioneEventi {
 	Label from = new Label("Dal: , Dalle ore:");
 	Label to= new Label("Al: , Alle ore:");
 
-	
+
 	TextBox tnome = new TextBox();
 	TextBox tluogo = new TextBox();
 	TextBox tdescs = new TextBox();
@@ -33,13 +33,13 @@ public class GestioneEventi {
 	String sdescs= "empty";
 	String ifrom = "empty";
 	String ito = "empty";
-	
+
 	Button carica = new Button("Carica Evento");
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-	
-	
-	
-	public GestioneEventi(TabPanel pannello){
+
+
+
+	public GestioneEventi(final TabPanel pannello){
 		VerticalPanel panel = new VerticalPanel();
 		panel.add(nome);
 		panel.add(tnome);
@@ -59,60 +59,56 @@ public class GestioneEventi {
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(carica);
-//		tto.setFormat(new DateBox.DefaultFormat 
-//				(DateTimeFormat.getFormat("dd MMMM , yyyy"))); 
-//		tfrom.setFormat(new DateBox.DefaultFormat 
-//				(DateTimeFormat.getFormat("EEEE,dd MMMM , yyyy"))); 
-//				(DateTimeFormat.getFormat("mm HH"))); 
-	
-	
-		
-		
-		
-//		panel.getElement().setAttribute("align", "center");
 		pannello.add(panel, "Carica Evento");
 		carica.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				
-				
+
+
 				if (!((tnome.getText().length() == 0)) && (!(Utils.isStringNumeric(tnome.getText())))) 
-					snome = new String(tnome.getText());
+					snome = new String(tnome.getText()); else return;
 				if (!((tluogo.getText().length() == 0)) && (!(Utils.isStringNumeric(tluogo.getText())))) 
 					sluogo = new String(tluogo.getText());
 				if (!((tdescs.getText().length() == 0)) && (!(Utils.isStringNumeric(tdescs.getText())))) 
 					sdescs = new String(tdescs.getText());
-				if (!((tfrom.getValue().toString().length() == 0)))  
-					ifrom = tfrom.getValue().toString();
+				if (!((tfrom.getValue().toString().length() == 0)))   
+					ifrom = tfrom.getValue().toString(); else return;
 				if (!((tto.getValue().toString().length() == 0))) 
-					ito = tto.getValue().toString();
+					ito = tto.getValue().toString(); else return;
 				inEvento();
-			
-			
+				
+
+
+
+
+
 			} 
-			
+
 		});
-		
+
 	}
-	 public void inEvento(){
-	
-		 greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito,Dio.idKey, new AsyncCallback<String>() {
+	public void inEvento(){
 
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					Window.alert("procedura remota fallita");
-				}
+		greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito,Dio.idKey, new AsyncCallback<String>() {
 
-				@Override
-				public void onSuccess(String result) {
-					// TODO Auto-generated method stub
-					Window.alert("Evento caricato con successo: id evento  = "+result);
-				}
-			});	
-	 }
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("procedura remota fallita");
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert("Evento caricato con successo: id evento  = "+result);
+				Window.Location.reload();
+				
+
+			}
+		});	
+	}
 }
 
 

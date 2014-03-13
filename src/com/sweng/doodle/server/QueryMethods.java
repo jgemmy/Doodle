@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
+
+import com.sweng.doodle.shared.Evento;
 
 public class QueryMethods {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -206,6 +209,43 @@ public class QueryMethods {
 
 	}
 
+
+	public static LinkedList<Evento> getAllEvents(Statement statement){
+		LinkedList<Evento> list = new LinkedList<Evento>();
+		String select = "SELECT * FROM "+TABLENAME2;
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery(select);
+			while(rs.next()) {
+				System.out.println("Adding All Events");
+				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	public static LinkedList<Evento> getAllUserEvents(Statement statement, String idkey){
+		LinkedList<Evento> list = new LinkedList<Evento>();
+		String select = "SELECT * FROM "+TABLENAME2 + " WHERE idKey = '"+idkey+"' ;";
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery(select);
+			while(rs.next()) {
+				System.out.println("Adding User Events");
+				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("catch");
+		}
+		System.out.println("list size: "+list.size());
+		return list;
+	}
+
+
 	public static void getAllInformationsEvent(Statement statement) throws SQLException{
 		String get = "SELECT nome,luogo,descrizione,dal,al,idkey FROM "+TABLENAME2;
 		ResultSet rs = statement.executeQuery(get);
@@ -225,6 +265,7 @@ public class QueryMethods {
 			System.out.println("ideky : " + idkey);
 		}
 	}
+
 
 	/*__________________________________________________PARTECIPANTI_______________________________________________*/
 

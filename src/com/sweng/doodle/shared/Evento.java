@@ -1,13 +1,17 @@
 package com.sweng.doodle.shared;
+import java.io.Serializable;
+import java.util.Date;
 
-import java.sql.Date;
+public class Evento implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static  long serialVersionUID = -3319509587649402955L;
+	private  String id, nome, luogo, descrizione;
+	private  Date dal,al;
 
-public class Evento {
-	private final int id;
-	private final String nome, luogo, descrizione;
-	private final Date dal,al;
-
-	public Evento (int id, String nome, String luogo,String descrizione, Date dal, Date al) {
+	public Evento (String id, String nome, String luogo,String descrizione, Date dal, Date al) {
 		this.id = id;
 		this.nome = nome;
 		this.luogo = luogo;
@@ -16,7 +20,16 @@ public class Evento {
 		this.al = al;
 	}
 
-	public int getID() {
+	public Evento (){
+		this.id = "no data";
+		this.nome = "no data";
+		this.luogo = "no data";
+		this.descrizione = "no data";
+		this.dal = new Date();
+		this.al = new Date();
+	}
+	
+	public String getID() {
 		return id;
 	}
 

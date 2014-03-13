@@ -25,12 +25,14 @@ public class Dio extends Composite{
 			idKey = Cookies.getCookie("MyCookies");
 			new UserSondaggio(pannello);
 			new GestioneEventi(pannello);
+			new AllEventi(pannello);
 			RootPanel.get().add(logout);} else {
 				new Login(pannello);
 				new Registrazione(pannello);
+				new AllEventi(pannello);
 			}
-		
-	
+
+
 
 
 		pannello.getElement().setAttribute("align", "center");
@@ -45,7 +47,7 @@ public class Dio extends Composite{
 				Cookies.setCookie("MyCookies","-1");
 				Window.Location.reload();
 				Window.alert("Logout Eseguito");
-				
+
 			}
 		});
 

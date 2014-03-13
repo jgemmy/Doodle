@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.sweng.doodle.client.Dio;
 import com.sweng.doodle.client.GreetingService;
+import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.FieldVerifier;
 
 /**
@@ -45,7 +46,7 @@ GreetingService {
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
 	}
-
+/*_____________________________________________UTENTI______________________________________________________________________________ */
 	@Override
 	public String registrazione(String nome, String nick, String password,String mail)
 			throws IllegalArgumentException {
@@ -71,8 +72,6 @@ GreetingService {
 		QueryMethods.close(statement, conn);
 		return "fatto";
 	}
-
-
 
 	@Override
 	public String login(String nick, String passw)
@@ -100,8 +99,8 @@ GreetingService {
 		return returned;
 	}
 
-
-
+/*_____________________________________________EVENTI______________________________________________________________________________ */
+	
 	@Override
 	public String caricaevento(String nome, String luogo, String descs,	String dal, String al,String idKey) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -128,7 +127,7 @@ GreetingService {
 		QueryMethods.close(statement, conn);
 		return returned ;
 	}
-	@Override
+
 	public String cancellaevento(String id,String idKey) throws IllegalArgumentException {
 		// TODO Auto-generated method stubss
 		Connection conn = null;
@@ -139,9 +138,9 @@ GreetingService {
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabellaeventi(statement);
-//			if (Cookies.getCookie("MyCookies") == Dio.idKey){
+			//			if (Cookies.getCookie("MyCookies") == Dio.idKey){
 			returned = QueryMethods.deleteIdEvent(statement, id,idKey);//}
-//			else return "Evento non Trovato";
+			//			else return "Evento non Trovato";
 
 
 
@@ -158,5 +157,42 @@ GreetingService {
 		+ returned;
 	}
 
+	@Override
+	public LinkedList<Evento> getAllUserEvents(String id)  {
+		Connection conn = null;
+		Statement statement = null;
+		
+		
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+				statement = conn.createStatement();
+			} catch (SQLException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+				return QueryMethods.getAllUserEvents(statement,id);		
+	
+	}
+
+	@Override
+	public LinkedList<Evento> getAllEvents() throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+		
+		
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+				statement = conn.createStatement();
+			} catch (SQLException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+				return QueryMethods.getAllEvents(statement);		
+	
+	}
 
 }

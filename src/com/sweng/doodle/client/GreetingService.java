@@ -1,7 +1,11 @@
 package com.sweng.doodle.client;
 
+import java.sql.Statement;
+import java.util.LinkedList;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.sweng.doodle.shared.Evento;
 
 /**
  * The client-side stub for the RPC service.
@@ -13,4 +17,6 @@ public interface GreetingService extends RemoteService {
 	String login(String nick, String passw) throws IllegalArgumentException;
 	String caricaevento(String nome, String luogo, String descs,String dal,String al,String idKey) throws IllegalArgumentException;
 	String cancellaevento(String id,String idKey) throws IllegalArgumentException;
+	LinkedList<Evento> getAllUserEvents(String id) throws IllegalArgumentException;
+	LinkedList<Evento> getAllEvents() throws IllegalArgumentException;
 }
