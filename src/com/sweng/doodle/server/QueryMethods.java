@@ -19,6 +19,7 @@ public class QueryMethods {
 	static final String PASS = "";
 	static final String TABLENAME = "users";
 	static final String TABLENAME2 = "eventi";
+	static final String TABLENAME3 = "partecipanti";
 
 	/*__________________________________________________ConnessioneDB_____________________________________________________*/
 
@@ -150,18 +151,20 @@ public class QueryMethods {
 
 	public static void   creatabellaeventi(Statement statement ) throws SQLException{
 		String createTablee = "CREATE TABLE IF NOT EXISTS "+ TABLENAME2 +
-				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
+				"(id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
 				" idKey INTEGER, " +
 				" nome VARCHAR(255), " +
 				" luogo VARCHAR(255), " +
 				" descrizione VARCHAR(255), " +
 				" dal DATETIME, " +
-				" al DATETIME)" ; 
+				" al DATETIME, " +
+				" checks INTEGER) "; 
+
 		statement.executeUpdate(createTablee);
 		System.out.println("Created Eventi table in given database...");
 	}
 
-	public static String insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al,String idKey) throws SQLException{
+	public static String insertEvent(Statement statement, String nome, String luogo, String descrizione,String dal, String al,String idKey, int check) throws SQLException{
 		//		Sun Mar 09 00:00:00 CET 2014
 		StringTokenizer token = new StringTokenizer(dal, " ");
 		token.nextToken();
@@ -182,8 +185,8 @@ public class QueryMethods {
 		String dateAl = day1+","+month1+","+year1+" "+hour1;
 		System.out.println(dateAl);
 		String insertTableSQL = "INSERT INTO "+ TABLENAME2
-				+ "(nome, luogo, descrizione, dal, al,idKey) " + "VALUES"
-				+ "('"+nome+"','"+luogo+"','"+descrizione+"',STR_TO_DATE('"+dateDal+"', '%d,%b,%Y %H:%i:%s'),  STR_TO_DATE('"+dateAl+"', '%d,%b,%Y %T'), '"+idKey+"')";
+				+ "(nome, luogo, descrizione, dal, al,idKey, checks) " + "VALUES"
+				+ "('"+nome+"','"+luogo+"','"+descrizione+"',STR_TO_DATE('"+dateDal+"', '%d,%b,%Y %H:%i:%s'),  STR_TO_DATE('"+dateAl+"', '%d,%b,%Y %T'), '"+idKey+"', '"+check+"')";
 		statement.executeUpdate(insertTableSQL);
 		String get = "SELECT id FROM "+TABLENAME2 + " WHERE nome = '"+nome+"' ";
 
@@ -209,6 +212,16 @@ public class QueryMethods {
 
 	}
 
+	public static String closeIdEvent(Statement statement, String id,String idKey) throws SQLException{
+
+		String closeEvent = "UPDATE "+TABLENAME2+" SET checks = 0 WHERE idKey = "+idKey+" AND id = "+id;
+		String eventid = id ;
+		statement.executeUpdate(closeEvent);
+		System.out.println("Evento Chiuso ID: " + id);
+
+		return eventid;
+
+	}
 
 	public static LinkedList<Evento> getAllEvents(Statement statement){
 		LinkedList<Evento> list = new LinkedList<Evento>();
@@ -218,14 +231,13 @@ public class QueryMethods {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding All Events");
-				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7)));
+				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7),rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-
 
 	public static LinkedList<Evento> getAllUserEvents(Statement statement, String idkey){
 		LinkedList<Evento> list = new LinkedList<Evento>();
@@ -235,7 +247,7 @@ public class QueryMethods {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding User Events");
-				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7)));
+				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7),rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -246,33 +258,23 @@ public class QueryMethods {
 	}
 
 
-	public static void getAllInformationsEvent(Statement statement) throws SQLException{
-		String get = "SELECT nome,luogo,descrizione,dal,al,idkey FROM "+TABLENAME2;
-		ResultSet rs = statement.executeQuery(get);
-		while (rs.next()) {
-
-			String nome = rs.getString("nome");
-			String luogo = rs.getString("luogo");
-			String descrizione= rs.getString("descrizione");
-			String dal = rs.getString("dal");
-			String al = rs.getString("al");
-			String idkey = rs.getString("idkey");
-			System.out.println("nome : " + nome);
-			System.out.println("luogo : " + luogo);
-			System.out.println("descrizione : " + descrizione);
-			System.out.println("dal : " + dal);
-			System.out.println("al : " + al);
-			System.out.println("ideky : " + idkey);
-		}
-	}
-
-
 	/*__________________________________________________PARTECIPANTI_______________________________________________*/
 
 
+	public static void   creatabellapartecipanti(Statement statement ) throws SQLException{
+		String createTablee = "CREATE TABLE IF NOT EXISTS "+ TABLENAME3 +
+				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
+				" idEvento VARCHAR(255), " +
+				" nome VARCHAR(255), " +
+				" cognome VARCHAR(255), " +
+				" nick VARCHAR(255), " +
+				" commento VARCHAR(255), " +
+				" disponibilita INTEGER)" ; 
+		statement.executeUpdate(createTablee);
+		System.out.println("Created Partecipanti table in given database...");
+	}
 
 
-
-	/*__________________________________________________COMMENTI___________________________________________________*/
 
 }
+

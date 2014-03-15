@@ -32,13 +32,14 @@ public class AllEventi {
 		ListGridField descrField = new ListGridField("descrizione", "Descrizione");  
 		ListGridField fromField = new ListGridField("dal", "Dal");  
 		ListGridField toField = new ListGridField("al", "Al");
-		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField});  
+		ListGridField checkField = new ListGridField("check", "Stato");
+		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField,checkField});  
 		greetingService.getAllEvents(new AsyncCallback<LinkedList<Evento>>() {
 			
 			@Override
 			public void onSuccess(LinkedList<Evento> result) {
 				// TODO Auto-generated method stub
-				countryGrid.setData(GridData.getRecords(result));
+				countryGrid.setData(CountrySampleData.getRecords(result));
 			}
 			
 			@Override

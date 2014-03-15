@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sweng.doodle.client.GreetingService;
 import com.sweng.doodle.shared.Evento;
@@ -46,7 +45,7 @@ GreetingService {
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
 	}
-/*_____________________________________________UTENTI______________________________________________________________________________ */
+	/*_____________________________________________UTENTI______________________________________________________________________________ */
 	@Override
 	public String registrazione(String nome, String nick, String password,String mail)
 			throws IllegalArgumentException {
@@ -99,10 +98,10 @@ GreetingService {
 		return returned;
 	}
 
-/*_____________________________________________EVENTI______________________________________________________________________________ */
-	
+	/*_____________________________________________EVENTI______________________________________________________________________________ */
+
 	@Override
-	public String caricaevento(String nome, String luogo, String descs,	String dal, String al,String idKey) throws IllegalArgumentException {
+	public String caricaevento(String nome, String luogo, String descs,	String dal, String al,String idKey, int check) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		Statement statement = null;
@@ -112,7 +111,7 @@ GreetingService {
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabellaeventi(statement);
-			returned = 	QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al,idKey);
+			returned = 	QueryMethods.insertEvent(statement, nome, luogo, descs, dal, al,idKey, check);
 
 
 
@@ -157,42 +156,74 @@ GreetingService {
 		+ returned;
 	}
 
+
+	@Override
+	public String chiudievento(String id, String idKey)
+			throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+		String returned = id;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellaeventi(statement);
+			returned = QueryMethods.closeIdEvent(statement, id,idKey);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Evento non chiuso";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return "evento chiuso "
+		+ returned;
+	}
+
+
 	@Override
 	public LinkedList<Evento> getAllUserEvents(String id)  {
 		Connection conn = null;
 		Statement statement = null;
-		
-		
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-				statement = conn.createStatement();
-			} catch (SQLException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-				return QueryMethods.getAllUserEvents(statement,id);		
-	
+
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellaeventi(statement);
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return QueryMethods.getAllUserEvents(statement,id);		
+
 	}
 
 	@Override
 	public LinkedList<Evento> getAllEvents() throws IllegalArgumentException {
 		Connection conn = null;
 		Statement statement = null;
-		
-		
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-				statement = conn.createStatement();
-			} catch (SQLException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-				return QueryMethods.getAllEvents(statement);		
-	
+
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellaeventi(statement);
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return QueryMethods.getAllEvents(statement);		
+
 	}
+
+	
 
 }

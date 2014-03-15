@@ -14,19 +14,19 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.events.RecordDoubleClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
 import com.sweng.doodle.shared.Evento;
 
 public class UserSondaggio {
 	Button delete = new Button("Cancella Evento");
-	Label id = new Label("Inserire evento ID da cancellare");
+	Label id = new Label("Inserire evento ID da cancellare o chiudere");
 	TextBox idd = new TextBox();
 	Button close = new Button("Chiudi Evento");
-	Label id1 = new Label("Inserire evento ID da chiudere");
-	TextBox tid = new TextBox();
 	ListGrid countryGrid = new ListGrid(); 
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	//	public static LinkedList<Evento> evento ;
@@ -43,10 +43,6 @@ public class UserSondaggio {
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(delete);												//doppioclick
 		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(id1);
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(tid);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(close);
 		pannello.add(panel, "Amministrativo Eventi");
 		countryGrid.setWidth(500);  
@@ -61,7 +57,18 @@ public class UserSondaggio {
 		ListGridField descrField = new ListGridField("descrizione", "Descrizione");  
 		ListGridField fromField = new ListGridField("dal", "Dal");  
 		ListGridField toField = new ListGridField("al", "Al");
-		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField});  
+		ListGridField checkField = new ListGridField("check", "Aperto/Chiuso");
+		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField, checkField}); 
+		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
+			
+			@Override
+			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
+				// TODO Auto-generated method stub
+				ListGridRecord record = (ListGridRecord)event.getRecord(); 
+				idd.setValue(record.getAttribute("id"));
+		
+			}
+		});
 		greetingService.getAllUserEvents(Dio.idKey,new AsyncCallback<LinkedList<Evento>>() {
 
 			@Override
@@ -80,11 +87,27 @@ public class UserSondaggio {
 				Window.alert("Procedura Fallita");
 			}
 		});
+		
+		
+	
+		close.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				String input = idd.getText();
+				if (!input.matches("[0-9]*")) {
+					Window.alert("Errore: inserire ID numerico");
+					return;
+				}
+				if ((event.getSource() == close) &&
+					(!(idd.getValue().length() == 0)))  /*AGGIUNGI SE E GIA CHIUSO*/
+					inchiudievento();
 
 
-
-
-
+			}
+		});
+		
 		delete.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -97,21 +120,7 @@ public class UserSondaggio {
 				}
 				if ((event.getSource() == delete) &&
 						(!(idd.getValue().length() == 0)))  
-					greetingService.cancellaevento(idd.getText(), Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
-
-						@Override
-						public void onSuccess(String result) {
-							// TODO Auto-generated method stub
-							Window.alert("Evento Cancellato: "
-									+ result);
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							Window.alert("Evento non Cancellato");
-						}
-					});
+					incancellaevento();
 
 
 			}
@@ -119,6 +128,41 @@ public class UserSondaggio {
 
 	}
 
+	public void incancellaevento(){
+		greetingService.cancellaevento(idd.getText(), Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert("Evento Cancellato: "
+						+ result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Evento non Cancellato");
+			}
+		});
+	}
+	
+	public void inchiudievento(){
+		greetingService.chiudievento(idd.getText(), Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert("Evento Chiuso: "+ result);
+				Window.Location.reload();
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Evento non Chiuso");
+			}
+		});
+	}
 
 }
 
