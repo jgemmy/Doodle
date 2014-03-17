@@ -223,6 +223,19 @@ public class QueryMethods {
 
 	}
 
+	public static Boolean isCloseIdEvent(Statement statement, String id) throws SQLException{
+
+		String isCloseEvent = "SELECT checks FROM "+TABLENAME2+" WHERE id = "+id;
+		statement.executeQuery(isCloseEvent);
+
+		if (isCloseEvent.contentEquals("chiuso")) {
+			System.out.println(isCloseEvent);
+			return true;}
+		else return false;
+
+
+	}
+
 	public static LinkedList<Evento> getAllEvents(Statement statement){
 		LinkedList<Evento> list = new LinkedList<Evento>();
 		String select = "SELECT * FROM "+TABLENAME2;
@@ -263,18 +276,33 @@ public class QueryMethods {
 
 	public static void   creatabellapartecipanti(Statement statement ) throws SQLException{
 		String createTablee = "CREATE TABLE IF NOT EXISTS "+ TABLENAME3 +
-				" (id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
+				"(id INTEGER not NULL PRIMARY KEY AUTO_INCREMENT , " +
 				" idEvento VARCHAR(255), " +
 				" nome VARCHAR(255), " +
-				" cognome VARCHAR(255), " +
 				" nick VARCHAR(255), " +
 				" commento VARCHAR(255), " +
-				" disponibilita INTEGER)" ; 
+				" disponibilita INTEGER) "; 
 		statement.executeUpdate(createTablee);
 		System.out.println("Created Partecipanti table in given database...");
 	}
 
 
+	public static String insertJoin(Statement statement, String idEvento, String nome, String nick, String commento,int disp) throws SQLException{
+		String name = nome;
+		String insert = "INSERT INTO "+ TABLENAME3
+				+ "(idEvento, nome, nick, commento, disp) " + "VALUES"
+				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+commento+"','"+disp+"')";
+		statement.executeUpdate(insert);
+		System.out.println("Created join in given database...Utente inscritto all evento");
+		return name;
+	}
 
+	public static String deleteJoin(Statement statement, String idEvento, String nome) throws SQLException{
+		String name = nome;
+		String remove = "DELETE FROM "+TABLENAME3+" WHERE idEvento = '"+idEvento+"' AND nome = '"+nome+"'";
+		statement.executeUpdate(remove);   
+		System.out.println("Deleted join in given database...Utente ritirato dall evento");
+		return name;
+	}
 }
 

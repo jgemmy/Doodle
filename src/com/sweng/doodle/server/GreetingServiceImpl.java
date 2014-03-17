@@ -168,7 +168,10 @@ GreetingService {
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabellaeventi(statement);
+//			if (QueryMethods.isCloseIdEvent(statement, id)){
+//				System.out.println((QueryMethods.isCloseIdEvent(statement, id)));
 			returned = QueryMethods.closeIdEvent(statement, id,idKey);
+//			else return "stilo";
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

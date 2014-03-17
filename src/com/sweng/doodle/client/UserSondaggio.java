@@ -21,6 +21,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
 import com.sweng.doodle.shared.Evento;
+import com.sweng.doodle.shared.User;
 
 public class UserSondaggio {
 	Button delete = new Button("Cancella Evento");
@@ -45,7 +46,7 @@ public class UserSondaggio {
 		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(close);
 		pannello.add(panel, "Amministrativo Eventi");
-		countryGrid.setWidth(500);  
+		countryGrid.setWidth(700);  
 		countryGrid.setHeight(224);  
 		countryGrid.setShowAllRecords(true);  
 		countryGrid.setCanEdit(false);  
