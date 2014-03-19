@@ -86,7 +86,7 @@ public class GestioneEventi {
 	}
 	public void inEvento(){
 
-		greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito,Dio.idKey,1,"", new AsyncCallback<String>() {
+		greetingService.caricaevento(snome, sluogo, sdescs, ifrom, ito,Doodle_Main.idKey,1,"", new AsyncCallback<String>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

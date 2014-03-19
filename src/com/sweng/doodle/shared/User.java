@@ -9,14 +9,34 @@ public class User implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1638298745965991471L;
+	private static final long serialVersionUID = 4989940652498527383L;
+	/**
+	 * 
+	 */
+	
 	private  String id;
 	private String nome;
 	private String nick;
 	private String mail;
 	private String passw;
 
+	public User(String nome) {
+		this.nome = nome;
+		this.id = "no data";
+		this.nick = "no data";
+		this.mail = "no data";
+		this.passw = "no data";
 
+	}
+	
+	public User(String nome,String nick) {
+		this.nome = nome;
+		this.id = "no data";
+		this.nick = nick;;
+		this.mail = "no data";
+		this.passw = "no data";
+
+	}
 	
 	public User (String id, String nome, String nick,String mail, String passw) {
 		this.id = id;

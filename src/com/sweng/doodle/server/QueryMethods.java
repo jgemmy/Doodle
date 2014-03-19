@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import com.sweng.doodle.shared.Evento;
-import com.sweng.doodle.shared.Partecipa;
+import com.sweng.doodle.shared.User;
 
 public class QueryMethods {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -112,6 +112,7 @@ public class QueryMethods {
 		}
 		return userid;
 	}
+	
 
 	public static void getAllInformationsUsers(Statement statement) throws SQLException{
 		String get = "SELECT nome,nick,password,mail FROM "+TABLENAME;
@@ -147,7 +148,21 @@ public class QueryMethods {
 		stmt.executeUpdate(changepsw);
 	}
 	
-	
+	public static LinkedList<User> getUserInfo(Statement statement, String id){
+		LinkedList<User> list = new LinkedList<User>();
+		String select = "SELECT nome FROM "+TABLENAME3+" WHERE id = "+id;
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery(select);
+			while(rs.next()) {
+				System.out.println("Adding User Info");
+				list.add(new User(rs.getString(2),rs.getString(3)));
+			}
+		} catch (SQLException e) {
+//			e.printStackTrace();
+		}
+		return list;
+	}
 	
 
 
@@ -227,6 +242,7 @@ public class QueryMethods {
 
 	}
 
+
 	public static String isCloseIdEvent(Statement statement, String id) throws SQLException{
 		String check = "";
 		String isCloseEvent = "SELECT checks FROM "+TABLENAME2+" WHERE id = "+id;
@@ -294,18 +310,18 @@ public class QueryMethods {
 		System.out.println("Created Partecipanti table in given database...");
 	}
 
-	public static LinkedList<Partecipa> getAllUsersJoin(Statement statement, String idEvento){
-		LinkedList<Partecipa> list = new LinkedList<Partecipa>();
+	public static LinkedList<User> getAllUsersJoin(Statement statement, String idEvento){
+		LinkedList<User> list = new LinkedList<User>();
 		String select = "SELECT nome FROM "+TABLENAME3+" WHERE idEvento = "+idEvento;
 		ResultSet rs = null;
 		try {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding All Joiners");
-				list.add(new Partecipa(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6)));
+				list.add(new User(rs.getString(1)));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return list;
 	}
@@ -322,7 +338,7 @@ public class QueryMethods {
 
 	public static String deleteJoin(Statement statement, String idEvento, String nome) throws SQLException{
 		String name = nome;
-		String remove = "DELETE FROM "+TABLENAME3+" WHERE idEvento = '"+idEvento+"' AND nome = '"+nome+"'";
+		String remove = "DELETE FROM "+TABLENAME3+" WHERE idEvento = '"+idEvento+"' AND nome = '"+nome+"' ;";
 		statement.executeUpdate(remove);   
 		System.out.println("Deleted join in given database...Utente ritirato dall evento");
 		return name;

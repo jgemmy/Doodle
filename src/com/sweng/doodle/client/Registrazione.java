@@ -10,7 +10,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -31,26 +30,22 @@ public class Registrazione extends Composite  {
 	final PasswordTextBox trpassw = new PasswordTextBox();
 	final TextBox tmail = new TextBox();
 	VerticalPanel panel = new VerticalPanel();
+	
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
 
 	public Registrazione(TabPanel pannello) {
-
+		panel.setSpacing(20);
 		panel.add(nome);
 		panel.add(tnome);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(nick);
 		panel.add(tnick);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(passw);
 		panel.add(tpassw);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(rpassw);
 		panel.add(trpassw);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(mail);
 		panel.add(tmail);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(singup);
 		pannello.add(panel, "Registrazione");
 		panel.getElement().setAttribute("align", "center"); 
@@ -121,7 +116,7 @@ public class Registrazione extends Composite  {
 			public void onSuccess(String result) {
 				//							 TODO Auto-generated method stub
 				Window.alert(result +  ": Registrazione Effettuata");
-				Dio.pannello.selectTab(1); 
+				Doodle_Main.pannello.selectTab(1); 
 
 			}
 		});

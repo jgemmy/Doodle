@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -23,26 +22,34 @@ import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewer;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 import com.sweng.doodle.shared.Evento;
-import com.sweng.doodle.shared.Partecipa;
+import com.sweng.doodle.shared.User;
 
 public class AllEventi {
 	String idevento ;
+	String motivi ;
+	
 
 	ListGrid countryGrid = new ListGrid();  
 	ListGrid userGrid = new ListGrid(); 
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-	Label info = new Label("Doppio click per visualizzare le info:");
+	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
 	Label lnome = new Label("Nome:");
+	Label lusers = new Label("Lista utenti inscritti all evento: ");
+	Label lcomm = new Label("Inserire qui eventuali commenti:");
+
+	Label disp = new Label("Disponibilita:");
 	TextBox tnome = new TextBox();
+	
 	CheckBox yes = new CheckBox("Yes");
 	CheckBox no = new CheckBox("No");
 	TextBox commenti = new TextBox();
 	Button salva = new Button("Salva");	
-	
+
+
 
 
 	public AllEventi(final TabPanel pannello){
-		
+
 		final DetailViewer detailViewer = new DetailViewer();  
 		detailViewer.setWidth(500);  
 		detailViewer.setFields(  
@@ -72,7 +79,7 @@ public class AllEventi {
 		ListGridField checkField = new ListGridField("check", "Stato");
 		ListGridField causeField = new ListGridField("causechiuso", "Motivi");
 		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField,checkField, causeField});
-		userGrid.setWidth(400);  
+		userGrid.setWidth(224);  
 		userGrid.setHeight(224);  
 		userGrid.setShowAllRecords(true);  
 		userGrid.setCanEdit(false);  
@@ -80,6 +87,7 @@ public class AllEventi {
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
 		userGrid.setFields(new ListGridField[] {nomeField});
+		panel.setSpacing(20);
 		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
 
 			@SuppressWarnings("deprecation")
@@ -89,76 +97,91 @@ public class AllEventi {
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
 				detailViewer.setData(countryGrid.getSelection());
 				idevento = record.getAttribute("id");
-				/*nome user nel textbox*/
+				motivi = record.getAttribute("causechiuso");
+				//				tnome.setText(username);?????????????????????????????????????????????????????????????????????nnva
 				inListJoiners();
-				panel.add(userGrid);
-				panel.add(new HTML("<text> <br> </text>"));
-				panel.add(commenti);
-				commenti.setText("inserire qui eventuale commento");
-				panel.add(new HTML("<text> <br> </text>"));
-				panel.add(lnome);
-				panel.add(new HTML("<text> <br> </text>"));
-				panel.add(tnome);
-				panel.add(new HTML("<text> <br> </text>"));
-				panel.add(yes);
-				yes.setChecked(true);
-				panel.add(new HTML("<text> <br> </text>"));
-				panel.add(no);
-				panel.add(new HTML("<text> <br> </text>"));
-				panel.add(salva);
-				
-				salva.addClickHandler(new ClickHandler() {
+				if (record.getAttribute("check").contentEquals("chiuso")){
+					Window.alert("Evento Chiuso");}
+				else{
 					
+					panel.add(userGrid);
+					panel.add(lusers);
+					panel.add(lnome);
+					panel.add(tnome);
+					panel.add(lcomm);
+					panel.add(commenti);
+					panel.add(disp);
+					panel.add(yes);
+					panel.add(no);
+					panel.add(salva);
+				}
+				salva.addClickHandler(new ClickHandler() {
+
 					@Override
 					public void onClick(ClickEvent event) {
 						// TODO Auto-generated method stub
-						if ((event.getSource() == salva) && (!(tnome.getText().length() == 0)))
-					inInsertJoin();	
+						if ((event.getSource() == salva) && (!(tnome.getText().length() == 0)) && (yes.isEnabled()))
+							inInsertJoin();	
+//						if ((event.getSource() == salva) && (!(tnome.getText().length() == 0)) && (no.isEnabled()))
+//							inDeleteJoin();
 					}
 				});
-				
+
 			}
 		});
 		inGetAllEvents();
 		panel.add(countryGrid);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(info);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(detailViewer);
-		panel.add(new HTML("<text> <br> </text>"));
-	
-		
-		
-		panel.add(new HTML("<text> <br> </text>"));
-		
 		pannello.add(panel, "Eventi");
-		
-		
+
+
 	}
 	public void inInsertJoin(){
-		greetingService.insertJoin(idevento, tnome.getText(), tnome.getText(), tnome.getText(), 1, new AsyncCallback<String>() {
-			
+		greetingService.insertJoin(idevento, tnome.getText(), tnome.getText(), commenti.getText(), 1, new AsyncCallback<String>() {
+
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
 				Window.alert("Inscrizione: " + result);
 				Window.Location.reload();
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
 				Window.alert("Iscrizione fallita");
 			}
 		});
-	
-		
+
+
 	}
+
+	public void inDeleteJoin(){
+		greetingService.deleteJoin(idevento, tnome.getText(), new AsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert("Disponibilita Rimossa");
+				Window.Location.reload();
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Disponibilita non Rimossa");
+			}
+		});
+
+
+
+	};
 	public void inListJoiners(){
-		greetingService.getAllUsersJoin(idevento, new AsyncCallback<LinkedList<Partecipa>>() {
+		greetingService.getAllUsersJoin(idevento, new AsyncCallback<LinkedList<User>>() {
 			
 			@Override
-			public void onSuccess(LinkedList<Partecipa> result) {
+			public void onSuccess(LinkedList<User> result) {
 				// TODO Auto-generated method stub
 				System.out.println(result);
 				userGrid.setData(UserGridData.getRecords(result));
@@ -167,9 +190,12 @@ public class AllEventi {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				
+				Window.alert("UserGrid non creata");
 			}
-		}); 
+		});
+
+
+		
 		
 		
 	}

@@ -8,9 +8,9 @@ import java.util.LinkedList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sweng.doodle.client.GreetingService;
+import com.sweng.doodle.shared.User;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.FieldVerifier;
-import com.sweng.doodle.shared.Partecipa;
 
 /**
  * The server-side implementation of the RPC service.
@@ -98,6 +98,25 @@ GreetingService {
 		QueryMethods.close(statement, conn);
 		return returned;
 	}
+	
+	@Override
+	public LinkedList<User> getUserInfo(String id)
+			throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return QueryMethods.getUserInfo(statement, id);		
+
+	}
 
 	/*_____________________________________________EVENTI______________________________________________________________________________ */
 
@@ -183,8 +202,8 @@ GreetingService {
 			e.printStackTrace();
 		}
 			QueryMethods.close(statement, conn);			return  returned;		}
-
-		@Override		public LinkedList<Evento> getAllUserEvents(String id)  {			Connection conn = null;			Statement statement = null;
+	
+			@Override		public LinkedList<Evento> getAllUserEvents(String id)  {			Connection conn = null;			Statement statement = null;
 
 			try {				Class.forName("com.mysql.jdbc.Driver");				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);				statement = conn.createStatement();				QueryMethods.creatabellaeventi(statement);			} catch (SQLException | ClassNotFoundException e) {				// TODO Auto-generated catch block				e.printStackTrace();			}
 			return QueryMethods.getAllUserEvents(statement,id);		
@@ -222,7 +241,32 @@ GreetingService {
 		}
 
 		@Override
-		public LinkedList<Partecipa> getAllUsersJoin(String idEvento)
+		public String deleteJoin(String idEvento, String nome)
+				throws IllegalArgumentException {
+			Connection conn = null;
+			Statement statement = null;
+			String returned = nome;
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+				statement = conn.createStatement();
+				returned = QueryMethods.deleteJoin(statement, idEvento, nome);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "Disponibilita non revocata";
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			QueryMethods.close(statement, conn);
+			return returned+ ": Disponibilta revocata";
+		}
+
+			
+		
+		@Override
+		public LinkedList<User> getAllUsersJoin(String idEvento)
 				throws IllegalArgumentException {
 			Connection conn = null;
 			Statement statement = null;
@@ -240,4 +284,9 @@ GreetingService {
 			return QueryMethods.getAllUsersJoin(statement, idEvento);
 
 		}
-	}
+
+	
+
+		
+
+			}

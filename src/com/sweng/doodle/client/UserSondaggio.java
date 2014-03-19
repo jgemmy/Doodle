@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -20,30 +19,44 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
+import com.smartgwt.client.widgets.viewer.DetailViewer;
+import com.smartgwt.client.widgets.viewer.DetailViewerField;
 import com.sweng.doodle.shared.Evento;
+import com.sweng.doodle.shared.User;
 
 public class UserSondaggio {
 	Button delete = new Button("Cancella Evento");
-	Label id = new Label("Inserire evento ID da cancellare o chiudere");
-	TextBox idd = new TextBox();
+	Label lcause = new Label("Inserire cause chiusura evento :");
+	Label lusers = new Label("Lista utenti inscritti all evento: ");
+	TextBox tcause = new TextBox();
 	Button close = new Button("Chiudi Evento");
 	ListGrid countryGrid = new ListGrid(); 
+	ListGrid userGrid = new ListGrid(); 
+	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
+	String idclick;
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	//	public static LinkedList<Evento> evento ;
 	//	CellTable<Evento> table = new CellTable<Evento>();
 
-	public UserSondaggio(final TabPanel pannello){
+	public UserSondaggio(final TabPanel pannello){				
+		final DetailViewer detailViewer = new DetailViewer();  
+		detailViewer.setWidth(500);  
+		detailViewer.setFields(  
+				new DetailViewerField("id", "ID"),  
+				new DetailViewerField("nome", "Nome Evento"),  
+				new DetailViewerField("luogo", "Luogo"),
+				new DetailViewerField("descrizione", "Descrizione"),
+				new DetailViewerField("dal", "Dal"),
+				new DetailViewerField("al", "Al"),
+				new DetailViewerField("check", "Stato"),
+				new DetailViewerField("causechiuso", "Motivi")); 
 
-		VerticalPanel panel = new VerticalPanel();
-		panel.add(countryGrid);
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(id);
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(idd);
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(delete);												//doppioclick
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(close);
+
+		final VerticalPanel panel = new VerticalPanel();
+		
+		
+
+
 		pannello.add(panel, "Amministrativo Eventi");
 		countryGrid.setWidth(700);  
 		countryGrid.setHeight(224);  
@@ -58,18 +71,45 @@ public class UserSondaggio {
 		ListGridField fromField = new ListGridField("dal", "Dal");  
 		ListGridField toField = new ListGridField("al", "Al");
 		ListGridField checkField = new ListGridField("check", "Aperto/Chiuso");
-		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField, checkField}); 
+		ListGridField causeField = new ListGridField("causechiuso", "Motivi");
+		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField,checkField, causeField});
+		userGrid.setWidth(224);  
+		userGrid.setHeight(224);  
+		userGrid.setShowAllRecords(true);  
+		userGrid.setCanEdit(false);  
+		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
+		userGrid.setModalEditing(false);  
+		ListGridField nomeField = new ListGridField("nome", "Nome");
+		userGrid.setFields(new ListGridField[] {nomeField});
 		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
 				// TODO Auto-generated method stub
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
-				idd.setValue(record.getAttribute("id"));
-
+				detailViewer.setData(countryGrid.getSelection());
+				idclick = record.getAttribute("id");
+				inListJoiners();
+				if (record.getAttribute("check").contentEquals("chiuso")){
+					Window.alert("Evento Chiuso");}
+				else {
+					panel.add(lusers);
+					panel.add(userGrid);
+					panel.add(lcause);
+					panel.add(tcause);
+					panel.add(close);
+					panel.add(delete);	
+					
+				}	
+				
 			}
 		});
-		greetingService.getAllUserEvents(Dio.idKey,new AsyncCallback<LinkedList<Evento>>() {
+		
+		
+		
+		
+		greetingService.getAllUserEvents(Doodle_Main.idKey,new AsyncCallback<LinkedList<Evento>>() {
 
 			@Override
 			public void onSuccess(LinkedList<Evento> result) {
@@ -88,23 +128,19 @@ public class UserSondaggio {
 			}
 		});
 
-
+		panel.setSpacing(20);
+		panel.add(countryGrid);
+		panel.add(info);
+		panel.add(detailViewer);
+	
 
 		close.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				String input = idd.getText();
-				if (!input.matches("[0-9]*")) {
-					Window.alert("Errore: inserire ID numerico");
-					return;
-				}
-				if ((event.getSource() == close) &&
-						(!(idd.getValue().length() == 0)))  
+				if (event.getSource() == close)   
 					inchiudievento();
-
-
 			}
 		});
 
@@ -113,15 +149,8 @@ public class UserSondaggio {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				String input = idd.getText();
-				if (!input.matches("[0-9]*")) {
-					Window.alert("Errore: inserire ID numerico");
-					return;
-				}
-				if ((event.getSource() == delete) &&
-						(!(idd.getValue().length() == 0)))  
+				if (event.getSource() == delete)  
 					incancellaevento();
-
 
 			}
 		});
@@ -129,7 +158,7 @@ public class UserSondaggio {
 	}
 
 	public void incancellaevento(){
-		greetingService.cancellaevento(idd.getText(), Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
+		greetingService.cancellaevento(idclick, Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
@@ -149,7 +178,7 @@ public class UserSondaggio {
 	}
 
 	public void inchiudievento(){
-		greetingService.chiudievento(idd.getText(), Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
+		greetingService.chiudievento(idclick, Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
@@ -171,6 +200,25 @@ public class UserSondaggio {
 		});
 	}
 
+	public void inListJoiners(){
+		greetingService.getAllUsersJoin(idclick, new AsyncCallback<LinkedList<User>>() {
+			
+			@Override
+			public void onSuccess(LinkedList<User> result) {
+				// TODO Auto-generated method stub
+				System.out.println(result);
+				userGrid.setData(UserGridData.getRecords(result));
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Can't load");
+			}
+		});
+
+
+	}
 }
 
 
