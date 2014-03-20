@@ -8,9 +8,9 @@ import java.util.LinkedList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sweng.doodle.client.GreetingService;
-import com.sweng.doodle.shared.User;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.FieldVerifier;
+import com.sweng.doodle.shared.User;
 
 /**
  * The server-side implementation of the RPC service.
@@ -100,23 +100,63 @@ GreetingService {
 	}
 	
 	@Override
-	public LinkedList<User> getUserInfo(String id)
-			throws IllegalArgumentException {
+	public String GetNick(String id) throws IllegalArgumentException {
 		Connection conn = null;
 		Statement statement = null;
-
+		String returned = "";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
+			returned = QueryMethods.GetNick(statement, id);
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return QueryMethods.getUserInfo(statement, id);		
+		return returned;
 
 	}
+	
+	@Override
+	public String GetNome(String id) throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+		String returned = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			returned = QueryMethods.GetNome(statement, id);
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("esce qua");
+		}
+
+		return returned;
+
+	}
+
+	
+//	@Override
+//	public LinkedList<User> getUserInfo(String id)
+//			throws IllegalArgumentException {
+//		Connection conn = null;
+//		Statement statement = null;
+//
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+//			statement = conn.createStatement();
+//		} catch (SQLException | ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return QueryMethods.getUserInfo(statement, id);		
+//
+//	}
 
 	/*_____________________________________________EVENTI______________________________________________________________________________ */
 
@@ -226,6 +266,11 @@ GreetingService {
 				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 				statement = conn.createStatement();
 				QueryMethods.creatabellapartecipanti(statement);
+//				System.out.println(QueryMethods.checkInsertJoin(statement, idEvento, id));
+//				
+//				if(QueryMethods.checkInsertJoin(statement, idEvento, id).contentEquals("1")){
+//					return "Gia Inscritto all evento";
+//				}
 				QueryMethods.insertJoin(statement, idEvento, nome, nick, commento, disp);
 
 			} catch (SQLException e) {
@@ -285,6 +330,7 @@ GreetingService {
 
 		}
 
+		
 	
 
 		

@@ -16,9 +16,10 @@ public class UserGridData {
 
 	}    
 
-	public static ListGridRecord createRecord(String nome) {  
+	public static ListGridRecord createRecord(String nome,String comm) {  
 		ListGridRecord record = new ListGridRecord();    
 		record.setAttribute("nome", nome);  
+		record.setAttribute("commento", comm);  
 		 
 		   
 		return record;  
@@ -27,7 +28,7 @@ public class UserGridData {
 
 	public static RecordList setUser(LinkedList<User> user){
 		for(int i = 0 ; i < user.size(); i++)
-			dataTable.add(createRecord(user.get(i).getNome()));
+			dataTable.add(createRecord(user.get(i).getNome(),user.get(i).getComm()));
 		return dataTable;
 	}
 

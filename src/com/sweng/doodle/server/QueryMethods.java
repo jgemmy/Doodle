@@ -148,21 +148,48 @@ public class QueryMethods {
 		stmt.executeUpdate(changepsw);
 	}
 	
-	public static LinkedList<User> getUserInfo(Statement statement, String id){
-		LinkedList<User> list = new LinkedList<User>();
-		String select = "SELECT nome FROM "+TABLENAME3+" WHERE id = "+id;
-		ResultSet rs = null;
-		try {
-			rs = statement.executeQuery(select);
-			while(rs.next()) {
-				System.out.println("Adding User Info");
-				list.add(new User(rs.getString(2),rs.getString(3)));
-			}
-		} catch (SQLException e) {
-//			e.printStackTrace();
+//	public static LinkedList<User> getUserInfo(Statement statement, String id){
+//		LinkedList<User> list = new LinkedList<User>();
+//		String select = "SELECT nome, nick FROM "+TABLENAME+" WHERE id = "+id;
+//		ResultSet rs = null;
+//		try {
+//			rs = statement.executeQuery(select);
+//			while(rs.next()) {
+//				System.out.println("Adding User Info");
+//				list.add(new User(rs.getString(1),rs.getString(2)));
+//			}
+//		} catch (SQLException e) {
+////			e.printStackTrace();
+//			System.out.println("errore");
+//		}
+//		return list;
+//	}
+	
+	public static String GetNick(Statement statement,String id) throws SQLException{
+		String nick = "";
+		String select = "SELECT nick FROM "+TABLENAME+" WHERE id = "+id;
+		ResultSet rs = statement.executeQuery(select);
+		while (rs.next()) {
+
+			nick = rs.getString("nick");
+
 		}
-		return list;
+		return nick;
 	}
+	
+	public static String GetNome(Statement statement,String id) throws SQLException{
+		String nome = "";
+		String select = "SELECT nome FROM "+TABLENAME+" WHERE id = "+id;
+		ResultSet rs = statement.executeQuery(select);
+		while (rs.next()) {
+
+			nome = rs.getString("nome");
+			System.out.println("Getting User Info");
+
+		}
+		return nome;
+	}
+	
 	
 
 
@@ -312,13 +339,13 @@ public class QueryMethods {
 
 	public static LinkedList<User> getAllUsersJoin(Statement statement, String idEvento){
 		LinkedList<User> list = new LinkedList<User>();
-		String select = "SELECT nome FROM "+TABLENAME3+" WHERE idEvento = "+idEvento;
+		String select = "SELECT nome,commento FROM "+TABLENAME3+" WHERE idEvento = "+idEvento;
 		ResultSet rs = null;
 		try {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding All Joiners");
-				list.add(new User(rs.getString(1)));
+				list.add(new User(rs.getString(1),rs.getString(2)));
 			}
 		} catch (SQLException e) {
 //			e.printStackTrace();
@@ -334,6 +361,19 @@ public class QueryMethods {
 		statement.executeUpdate(insert);
 		System.out.println("Created join in given database...Utente inscritto all evento");
 		return name;
+	}
+
+	public static String checkInsertJoin(Statement statement,String idEvento,String id) throws SQLException{
+		String disp= "";
+		String check = "SELECT disponibilita FROM "+TABLENAME3+ " WHERE idEvento = "+idEvento+" AND id = "+id;
+		ResultSet rs = statement.executeQuery(check);
+		while (rs.next()) {
+
+			disp = rs.getString("disponibilita");
+			System.out.println("disponibilita: " +disp);
+
+		}
+		return disp;
 	}
 
 	public static String deleteJoin(Statement statement, String idEvento, String nome) throws SQLException{

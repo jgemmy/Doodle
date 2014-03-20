@@ -33,6 +33,9 @@ public class GestioneEventi {
 	String sdescs= "empty";
 	String ifrom = "empty";
 	String ito = "empty";
+	String idevento;
+	String nick;
+	String name;
 
 	Button carica = new Button("Carica Evento");
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
@@ -41,6 +44,8 @@ public class GestioneEventi {
 
 	public GestioneEventi(final TabPanel pannello){
 		VerticalPanel panel = new VerticalPanel();
+		inGetNick();
+		inGetNome();
 		panel.add(nome);
 		panel.add(tnome);
 		panel.add(new HTML("<text> <br> </text>"));
@@ -98,11 +103,70 @@ public class GestioneEventi {
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
 				Window.alert("Evento caricato con successo: id evento  = "+result);
+				idevento = result;
+				inInsertJoin();
 				Window.Location.reload();
 
 
 			}
 		});	
+	}
+	
+	public void inInsertJoin(){
+		greetingService.insertJoin(idevento, name, nick, "Owner", 1, new AsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert("yo");
+			
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Iscrizione fallita");
+			}
+		});
+
+
+	}
+	
+	public void inGetNick(){
+		greetingService.GetNick(Doodle_Main.idKey, new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				nick = result;
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("fallito");
+			}
+		});
+	}
+	
+	public void inGetNome(){
+		greetingService.GetNome(Doodle_Main.idKey, new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				name = result;
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+				Window.alert("fallito");
+			}
+		});
 	}
 }
 

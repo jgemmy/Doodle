@@ -34,6 +34,7 @@ public class AllEventi {
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
 	Label lnome = new Label("Nome:");
+	Label lnick = new Label("Nick:");
 	Label lusers = new Label("Lista utenti inscritti all evento: ");
 	Label lcomm = new Label("Inserire qui eventuali commenti:");
 
@@ -43,6 +44,7 @@ public class AllEventi {
 	CheckBox yes = new CheckBox("Yes");
 	CheckBox no = new CheckBox("No");
 	TextBox commenti = new TextBox();
+	TextBox tnick = new TextBox();
 	Button salva = new Button("Salva");	
 
 
@@ -86,8 +88,11 @@ public class AllEventi {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
-		userGrid.setFields(new ListGridField[] {nomeField});
+		ListGridField commField = new ListGridField("commento", "Commenti");
+		userGrid.setFields(new ListGridField[] {nomeField, commField});
 		panel.setSpacing(20);
+		
+		
 		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
 
 			@SuppressWarnings("deprecation")
@@ -99,21 +104,31 @@ public class AllEventi {
 				idevento = record.getAttribute("id");
 				motivi = record.getAttribute("causechiuso");
 				//				tnome.setText(username);?????????????????????????????????????????????????????????????????????nnva
-				inListJoiners();
+				
 				if (record.getAttribute("check").contentEquals("chiuso")){
-					Window.alert("Evento Chiuso");}
+					Window.alert("Evento Chiuso");
+					}
 				else{
-					
-					panel.add(userGrid);
+					inGetNick();
+					inGetNome();
+					inListJoiners();
 					panel.add(lusers);
+					panel.add(userGrid);
 					panel.add(lnome);
 					panel.add(tnome);
+					tnome.setReadOnly(true);
+					panel.add(lnick);
+					panel.add(tnick);
+					tnick.setReadOnly(true);
 					panel.add(lcomm);
 					panel.add(commenti);
 					panel.add(disp);
 					panel.add(yes);
+					yes.setChecked(true);
 					panel.add(no);
 					panel.add(salva);
+					
+					
 				}
 				salva.addClickHandler(new ClickHandler() {
 
@@ -130,6 +145,7 @@ public class AllEventi {
 			}
 		});
 		inGetAllEvents();
+		
 		panel.add(countryGrid);
 		panel.add(info);
 		panel.add(detailViewer);
@@ -138,7 +154,7 @@ public class AllEventi {
 
 	}
 	public void inInsertJoin(){
-		greetingService.insertJoin(idevento, tnome.getText(), tnome.getText(), commenti.getText(), 1, new AsyncCallback<String>() {
+		greetingService.insertJoin(idevento, tnome.getText(), tnick.getText(), commenti.getText(), 1, new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
@@ -212,6 +228,43 @@ public class AllEventi {
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
 				Window.alert("Procedura Fallita");
+			}
+		});
+	}
+	
+	public void inGetNick(){
+		greetingService.GetNick(Doodle_Main.idKey, new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				tnick.setText(result);
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("fallito");
+			}
+		});
+	}
+	
+	public void inGetNome(){
+		greetingService.GetNome(Doodle_Main.idKey, new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				tnome.setText(result);
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+				Window.alert("fallito");
 			}
 		});
 	}

@@ -15,7 +15,9 @@ public interface GreetingService extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	String registrazione(String nome, String nick, String password, String mail) throws IllegalArgumentException;
 	String login(String nick, String passw) throws IllegalArgumentException;
-	LinkedList<User> getUserInfo(String id) throws IllegalArgumentException;
+//	LinkedList<User> getUserInfo(String id) throws IllegalArgumentException;
+	String GetNick(String id) throws IllegalArgumentException;
+	String GetNome(String id) throws IllegalArgumentException;
 	String caricaevento(String nome, String luogo, String descs,String dal,String al,String idKey, int check, String cause) throws IllegalArgumentException;
 	String cancellaevento(String id,String idKey) throws IllegalArgumentException;
 	String chiudievento(String id,String idKey) throws IllegalArgumentException;

@@ -25,21 +25,26 @@ import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
 public class UserSondaggio {
+	String nick;
+	Button close = new Button("Chiudi Evento");
 	Button delete = new Button("Cancella Evento");
+	String idclick;
 	Label lcause = new Label("Inserire cause chiusura evento :");
 	Label lusers = new Label("Lista utenti inscritti all evento: ");
+	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
 	TextBox tcause = new TextBox();
-	Button close = new Button("Chiudi Evento");
 	ListGrid countryGrid = new ListGrid(); 
 	ListGrid userGrid = new ListGrid(); 
-	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
-	String idclick;
+
+
+
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	//	public static LinkedList<Evento> evento ;
 	//	CellTable<Evento> table = new CellTable<Evento>();
 
 	public UserSondaggio(final TabPanel pannello){				
 		final DetailViewer detailViewer = new DetailViewer();  
+
 		detailViewer.setWidth(500);  
 		detailViewer.setFields(  
 				new DetailViewerField("id", "ID"),  
@@ -52,12 +57,7 @@ public class UserSondaggio {
 				new DetailViewerField("causechiuso", "Motivi")); 
 
 
-		final VerticalPanel panel = new VerticalPanel();
-		
-		
-
-
-		pannello.add(panel, "Amministrativo Eventi");
+		final VerticalPanel panel = new VerticalPanel();	
 		countryGrid.setWidth(700);  
 		countryGrid.setHeight(224);  
 		countryGrid.setShowAllRecords(true);  
@@ -80,7 +80,10 @@ public class UserSondaggio {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
-		userGrid.setFields(new ListGridField[] {nomeField});
+		ListGridField commField = new ListGridField("commento", "Commenti");
+		userGrid.setFields(new ListGridField[] {nomeField, commField});
+		inGetNick();
+		
 		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
 
 			@SuppressWarnings("deprecation")
@@ -90,25 +93,34 @@ public class UserSondaggio {
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
 				detailViewer.setData(countryGrid.getSelection());
 				idclick = record.getAttribute("id");
-				inListJoiners();
+				
+
 				if (record.getAttribute("check").contentEquals("chiuso")){
-					Window.alert("Evento Chiuso");}
+					Window.alert("Evento Chiuso");
+					panel.remove(lusers);
+					panel.remove(userGrid);
+					panel.remove(lcause);
+					panel.remove(tcause);
+					panel.remove(close);
+					panel.remove(delete);	}
+
 				else {
+					inListJoiners();
 					panel.add(lusers);
 					panel.add(userGrid);
 					panel.add(lcause);
 					panel.add(tcause);
 					panel.add(close);
 					panel.add(delete);	
-					
+
 				}	
-				
+
 			}
 		});
-		
-		
-		
-		
+
+
+
+
 		greetingService.getAllUserEvents(Doodle_Main.idKey,new AsyncCallback<LinkedList<Evento>>() {
 
 			@Override
@@ -116,7 +128,7 @@ public class UserSondaggio {
 
 				countryGrid.setData(CountrySampleData.getRecords(result));
 				pannello.selectTab(0);
-				Window.alert("Benvenuto nei tuoi eventi");
+				Window.alert("Benvenuto nei tuoi eventi "+nick);
 
 
 			}
@@ -127,12 +139,12 @@ public class UserSondaggio {
 				Window.alert("Procedura Fallita");
 			}
 		});
-
+		
 		panel.setSpacing(20);
 		panel.add(countryGrid);
 		panel.add(info);
 		panel.add(detailViewer);
-	
+		pannello.add(panel, "Amministrativo Eventi");
 
 		close.addClickHandler(new ClickHandler() {
 
@@ -156,6 +168,7 @@ public class UserSondaggio {
 		});
 
 	}
+
 
 	public void incancellaevento(){
 		greetingService.cancellaevento(idclick, Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
@@ -202,14 +215,14 @@ public class UserSondaggio {
 
 	public void inListJoiners(){
 		greetingService.getAllUsersJoin(idclick, new AsyncCallback<LinkedList<User>>() {
-			
+
 			@Override
 			public void onSuccess(LinkedList<User> result) {
 				// TODO Auto-generated method stub
 				System.out.println(result);
 				userGrid.setData(UserGridData.getRecords(result));
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
@@ -219,6 +232,25 @@ public class UserSondaggio {
 
 
 	}
+	
+	public void inGetNick(){
+		greetingService.GetNick(Doodle_Main.idKey, new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				nick = result;
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("fallito coockie");
+			}
+		});
+	}
+	
 }
 
 

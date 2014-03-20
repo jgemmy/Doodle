@@ -1,7 +1,6 @@
 package com.sweng.doodle.client;
 
 import java.util.Date;
-import java.util.LinkedList;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,7 +17,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.sweng.doodle.shared.User;
+import com.smartgwt.client.widgets.grid.ListGrid;
 
 public class Login{
 
@@ -28,6 +27,7 @@ public class Login{
 	public static String username;
 	public static String nome= "anonymous";
 	VerticalPanel panel ;
+	ListGrid coockie = new ListGrid(); 
 	TabPanel pannello;
 	final long DURATION = 1000 * 60 * 60 * 24 * 14;
 	Date expires = new Date(System.currentTimeMillis() + DURATION);
@@ -35,16 +35,14 @@ public class Login{
 	final Button Login = new Button("Log in");
 	public Login(final TabPanel pannello){
 		this.pannello = pannello;
-		Label user= new Label("User:");
+	Label user= new Label("User:");
 		Label passw = new Label("Password:");
 		panel = new VerticalPanel();
 		panel.setSpacing(20);
 		panel.add(user);		
 		panel.add(tuser);
-		
 		panel.add(passw);		
 		panel.add(tpassw);		
-		
 		panel.add(Login);
 		panel.getElement().setAttribute("align", "center");
 		pannello.add(panel, "Log in");
@@ -64,7 +62,7 @@ public class Login{
 				// TODO Auto-generated method stub
 				if ((event.getSource() == Login) &&!(tuser.getText().length() == 0) &&!(tpassw.getText().length() == 0)) 
 					inLogin();
-					ingetUserInfo();
+					
 			}
 		});
 
@@ -89,28 +87,12 @@ public class Login{
 			}
 			@Override
 			public void onFailure(Throwable caught) {
+				
 			}
 		});
 	}
 
-	public void ingetUserInfo(){
-		greetingService.getUserInfo(idKey, new AsyncCallback<LinkedList<User>>() {
-			
-			@Override
-			public void onSuccess(LinkedList<User> result) {
-				// TODO Auto-generated method stub
-				System.out.println("stampolista" + result.toString());
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				System.out.println("stampolista" + caught);	
-			}
-		});
-		
-		
-	}
+	
 }
 
 
