@@ -20,8 +20,9 @@ public interface GreetingService extends RemoteService {
 	String GetNome(String id) throws IllegalArgumentException;
 	String caricaevento(String nome, String luogo, String descs,String dal,String al,String idKey, int check, String cause) throws IllegalArgumentException;
 	String cancellaevento(String id,String idKey) throws IllegalArgumentException;
-	String chiudievento(String id,String idKey) throws IllegalArgumentException;
-	String insertJoin(String idEvento, String nome, String nick, String commento,int disp) throws IllegalArgumentException;
+	String chiudievento(String id,String idKey,String commento) throws IllegalArgumentException;
+	String insertJoin(String idEvento, String nome, String nick, String commento,int disp,String idKey) throws IllegalArgumentException;
+	String insertcomm(String idEvento, String nome, String nick, String commento,int disp) throws IllegalArgumentException;
 	String deleteJoin(String idEvento, String nome)throws IllegalArgumentException;
 	LinkedList<User> getAllUsersJoin(String idEvento) throws IllegalArgumentException;
 	LinkedList<Evento> getAllUserEvents(String id) throws IllegalArgumentException;

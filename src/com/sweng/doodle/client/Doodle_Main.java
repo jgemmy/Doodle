@@ -31,6 +31,7 @@ public class Doodle_Main extends Composite{
 				new Login(pannello);
 				new Registrazione(pannello);
 				new AllEventi(pannello);
+				
 			}
 
 

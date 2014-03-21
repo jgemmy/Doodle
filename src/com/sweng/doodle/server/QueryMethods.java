@@ -91,6 +91,19 @@ public class QueryMethods {
 		System.out.println("Created Users table in given database...");
 	}
 	/*REGISTRAZIONE UTENTE*/
+	
+	public static String checkExNick(Statement statement) throws SQLException{
+		String select = "SELECT nick FROM "+TABLENAME;
+		String nick = "";
+		ResultSet rs = statement.executeQuery(select);
+		while (rs.next()) {
+
+			nick = rs.getString("nick");
+			System.out.println("disponibilita: " +nick);
+
+		}
+		return nick;
+	}
 	public static void insertUser(Statement statement, String nome, String nick, String password,String mail) throws SQLException{
 		String insertTableSQL = "INSERT INTO "+TABLENAME
 				+ "(nome, nick, password,mail) " + "VALUES"
@@ -258,9 +271,9 @@ public class QueryMethods {
 
 	}
 
-	public static String closeIdEvent(Statement statement, String id,String idKey) throws SQLException{
+	public static String closeIdEvent(Statement statement, String id,String idKey,String commento) throws SQLException{
 
-		String closeEvent = "UPDATE "+TABLENAME2+" SET checks = 0 WHERE idKey = "+idKey+" AND id = "+id;
+		String closeEvent = "UPDATE "+TABLENAME2+" SET checks = 0 ,causechiuso = '"+commento+"' WHERE idKey = "+idKey+" AND id = "+id;
 		String eventid = id ;
 		statement.executeUpdate(closeEvent);
 		System.out.println("Evento Chiuso ID: " + id);
@@ -353,29 +366,54 @@ public class QueryMethods {
 		return list;
 	}
 
+	public static String insertcomm(Statement statement, String idEvento, String nome, String nick, String commento,int disp) throws SQLException{
+		String name = nome;
+		String insert = "INSERT INTO "+ TABLENAME3
+				+ "(idEvento, nome, nick, commento, disponibilita) " + "VALUES"
+				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+commento+"','"+disp+"')";
+		statement.executeUpdate(insert);
+		System.out.println("Created join in given database...Utente inscritto all evento" +insert);
+		return name;
+	}
+	
 	public static String insertJoin(Statement statement, String idEvento, String nome, String nick, String commento,int disp) throws SQLException{
 		String name = nome;
 		String insert = "INSERT INTO "+ TABLENAME3
 				+ "(idEvento, nome, nick, commento, disponibilita) " + "VALUES"
 				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+commento+"','"+disp+"')";
 		statement.executeUpdate(insert);
-		System.out.println("Created join in given database...Utente inscritto all evento");
+		System.out.println("Created join in given database...Utente inscritto all evento" +insert);
 		return name;
 	}
 
-	public static String checkInsertJoin(Statement statement,String idEvento,String id) throws SQLException{
-		String disp= "";
-		String check = "SELECT disponibilita FROM "+TABLENAME3+ " WHERE idEvento = "+idEvento+" AND id = "+id;
+	public static String checkInsertJoin(Statement statement,String idEvento,String idKey) throws SQLException{
+		String disp= "-1";
+		String check = "select "+TABLENAME3+".disponibilita " +
+	             "from "+TABLENAME2+", "+TABLENAME3+" " +
+	             "where "+TABLENAME3+".idEvento like "+TABLENAME2+".id and " +
+	             ""+TABLENAME2+".idKey = '"+idKey+"'";
+
 		ResultSet rs = statement.executeQuery(check);
 		while (rs.next()) {
 
-			disp = rs.getString("disponibilita");
+			disp = ""+rs.getInt("disponibilita");
 			System.out.println("disponibilita: " +disp);
 
 		}
 		return disp;
 	}
-
+	
+//	   String query = "select SUPPLIERS.SUP_NAME, COFFEES.COF_NAME " +
+//	             "from COFFEES, SUPPLIERS " +
+//	             "where SUPPLIERS.SUP_NAME like 'Acme, Inc.' and " +
+//	             "SUPPLIERS.SUP_ID = COFFEES.SUP_ID";
+//
+//	   String query = "select "+TABLENAME3+".disponibilita " +
+//	             "from "+TABLENAME2+", "+TABLENAME3+" " +
+//	             "where "+TABLENAME3+".idEvento like '"+TABLENAME2+"."+id+"' and " +
+//	             ""+TABLENAME2+"."+idKey" = '"idKey"'";
+	   
+	   
 	public static String deleteJoin(Statement statement, String idEvento, String nome) throws SQLException{
 		String name = nome;
 		String remove = "DELETE FROM "+TABLENAME3+" WHERE idEvento = '"+idEvento+"' AND nome = '"+nome+"' ;";

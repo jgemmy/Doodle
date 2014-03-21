@@ -53,24 +53,27 @@ GreetingService {
 
 		Connection conn = null;
 		Statement statement = null;
+		String returned = "";
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
-			QueryMethods.insertUser(statement, nome, nick, password,mail);
+			if(QueryMethods.checkExNick(statement).contentEquals(nick)){
+				return returned = nick+": Username gia impegnato";
+			} else QueryMethods.insertUser(statement, nome, nick, password,mail);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "non registrato";
-		} catch (ClassNotFoundException e) {
+			return returned = nick+": non registrato";
+		} catch (ClassNotFoundException e) {	
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		QueryMethods.close(statement, conn);
-		return "fatto";
+		return returned = nick+": Registazione Effettuata";
 	}
 
 	@Override
@@ -218,7 +221,7 @@ GreetingService {
 
 
 	@Override
-	public String chiudievento(String id, String idKey)
+	public String chiudievento(String id, String idKey, String commento)
 			throws IllegalArgumentException {
 		Connection conn = null;
 		Statement statement = null;
@@ -229,8 +232,8 @@ GreetingService {
 			statement = conn.createStatement();
 			QueryMethods.creatabellaeventi(statement);
 			if (QueryMethods.isCloseIdEvent(statement, id).contentEquals("0")){
-			returned = "evento gia chiuso";}
-			else returned = QueryMethods.closeIdEvent(statement, id,idKey);
+			returned = "evento gia chiuso";} 
+			else returned = QueryMethods.closeIdEvent(statement, id,idKey,commento);
 
 
 		} catch (SQLException e) {
@@ -257,7 +260,7 @@ GreetingService {
 		
 
 		@Override
-		public String insertJoin(String idEvento,String nome, String nick, String commento, int disp)
+		public String insertJoin(String idEvento,String nome, String nick, String commento, int disp,String idKey)
 				throws IllegalArgumentException {
 			Connection conn = null;
 			Statement statement = null;
@@ -268,9 +271,9 @@ GreetingService {
 				QueryMethods.creatabellapartecipanti(statement);
 //				System.out.println(QueryMethods.checkInsertJoin(statement, idEvento, id));
 //				
-//				if(QueryMethods.checkInsertJoin(statement, idEvento, id).contentEquals("1")){
-//					return "Gia Inscritto all evento";
-//				}
+				if(QueryMethods.checkInsertJoin(statement, idEvento,idKey).contentEquals("1")){
+					return " Fallita: Gia Inscritto all evento";
+				}
 				QueryMethods.insertJoin(statement, idEvento, nome, nick, commento, disp);
 
 			} catch (SQLException e) {
@@ -283,6 +286,29 @@ GreetingService {
 			}
 			QueryMethods.close(statement, conn);
 			return "fatto";
+		}
+		
+		public String insertcomm(String idEvento,String nome, String nick, String commento, int disp)
+				throws IllegalArgumentException {
+//			Connection conn = null;
+//			Statement statement = null;
+//			try {
+//				Class.forName("com.mysql.jdbc.Driver");
+//				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+//				statement = conn.createStatement();
+//				QueryMethods.creatabellapartecipanti(statement);
+//				QueryMethods.insertcomm(statement, idEvento, nome, nick, commento, disp);
+//
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return "Commento non Inscritto";
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			QueryMethods.close(statement, conn);
+			return "commento inserito";
 		}
 
 		@Override

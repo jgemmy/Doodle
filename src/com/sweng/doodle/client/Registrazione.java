@@ -115,8 +115,8 @@ public class Registrazione extends Composite  {
 			@Override
 			public void onSuccess(String result) {
 				//							 TODO Auto-generated method stub
-				Window.alert(result +  ": Registrazione Effettuata");
-				Doodle_Main.pannello.selectTab(1); 
+				Window.alert(result);
+				Window.Location.reload();
 
 			}
 		});

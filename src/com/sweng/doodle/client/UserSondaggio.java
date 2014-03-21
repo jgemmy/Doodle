@@ -93,16 +93,17 @@ public class UserSondaggio {
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
 				detailViewer.setData(countryGrid.getSelection());
 				idclick = record.getAttribute("id");
-				
+				 	
 
 				if (record.getAttribute("check").contentEquals("chiuso")){
 					Window.alert("Evento Chiuso");
+					if(userGrid.isAttached()){
 					panel.remove(lusers);
 					panel.remove(userGrid);
 					panel.remove(lcause);
 					panel.remove(tcause);
 					panel.remove(close);
-					panel.remove(delete);	}
+					panel.remove(delete);	}}
 
 				else {
 					inListJoiners();
@@ -178,7 +179,7 @@ public class UserSondaggio {
 				// TODO Auto-generated method stub
 				Window.alert("Evento Cancellato: "
 						+ result);
-				Window.Location.reload();
+				Window.Location.reload();	
 			}
 
 			@Override
@@ -191,7 +192,7 @@ public class UserSondaggio {
 	}
 
 	public void inchiudievento(){
-		greetingService.chiudievento(idclick, Cookies.getCookie("MyCookies"),  new AsyncCallback<String>() {
+		greetingService.chiudievento(idclick, Cookies.getCookie("MyCookies"), tcause.getText(), new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
@@ -219,7 +220,6 @@ public class UserSondaggio {
 			@Override
 			public void onSuccess(LinkedList<User> result) {
 				// TODO Auto-generated method stub
-				System.out.println(result);
 				userGrid.setData(UserGridData.getRecords(result));
 			}
 

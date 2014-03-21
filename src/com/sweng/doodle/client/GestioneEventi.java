@@ -69,9 +69,6 @@ public class GestioneEventi {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
-
 				if (!((tnome.getText().length() == 0)) && (!(Utils.isStringNumeric(tnome.getText())))) 
 					snome = new String(tnome.getText()); else return;
 				if (!((tluogo.getText().length() == 0)) && (!(Utils.isStringNumeric(tluogo.getText())))) 
@@ -105,20 +102,18 @@ public class GestioneEventi {
 				Window.alert("Evento caricato con successo: id evento  = "+result);
 				idevento = result;
 				inInsertJoin();
-				Window.Location.reload();
-
-
 			}
 		});	
 	}
 	
 	public void inInsertJoin(){
-		greetingService.insertJoin(idevento, name, nick, "Owner", 1, new AsyncCallback<String>() {
+		greetingService.insertJoin(idevento, name, nick, "Owner", 1,Doodle_Main.idKey, new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
-				Window.alert("yo");
+				Window.Location.reload();
+				return;
 			
 			}
 
@@ -126,6 +121,7 @@ public class GestioneEventi {
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
 				Window.alert("Iscrizione fallita");
+				return;
 			}
 		});
 
