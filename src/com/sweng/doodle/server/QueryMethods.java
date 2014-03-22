@@ -366,15 +366,15 @@ public class QueryMethods {
 		return list;
 	}
 
-	public static String insertcomm(Statement statement, String idEvento, String nome, String nick, String commento,int disp) throws SQLException{
-		String name = nome;
-		String insert = "INSERT INTO "+ TABLENAME3
-				+ "(idEvento, nome, nick, commento, disponibilita) " + "VALUES"
-				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+commento+"','"+disp+"')";
-		statement.executeUpdate(insert);
-		System.out.println("Created join in given database...Utente inscritto all evento" +insert);
-		return name;
-	}
+//	public static String insertcomm(Statement statement, String idEvento, String nome, String nick, String commento,int disp) throws SQLException{
+//		String name = nome;
+//		String insert = "INSERT INTO "+ TABLENAME3
+//				+ "(idEvento, nome, nick, commento, disponibilita) " + "VALUES"
+//				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+commento+"','"+disp+"')";
+//		statement.executeUpdate(insert);
+//		System.out.println("Created join in given database...Utente inscritto all evento" +insert);
+//		return name;
+//	}
 	
 	public static String insertJoin(Statement statement, String idEvento, String nome, String nick, String commento,int disp) throws SQLException{
 		String name = nome;

@@ -11,6 +11,7 @@ public class Doodle implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
+	@SuppressWarnings("unused")
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
 

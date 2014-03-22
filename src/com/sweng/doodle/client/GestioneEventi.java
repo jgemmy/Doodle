@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -16,13 +15,12 @@ import com.sweng.doodle.shared.Utils;
 
 
 public class GestioneEventi {
+	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	Label nome= new Label("Nome Evento");
 	Label luogo= new Label("Luogo:  (opzionale)");
 	Label descs = new Label("Descrizione:  (opzionale)");
 	Label from = new Label("Dal: , Dalle ore:");
 	Label to= new Label("Al: , Alle ore:");
-
-
 	TextBox tnome = new TextBox();
 	TextBox tluogo = new TextBox();
 	TextBox tdescs = new TextBox();
@@ -36,33 +34,23 @@ public class GestioneEventi {
 	String idevento;
 	String nick;
 	String name;
-
 	Button carica = new Button("Carica Evento");
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-
-
 
 	public GestioneEventi(final TabPanel pannello){
 		VerticalPanel panel = new VerticalPanel();
 		inGetNick();
 		inGetNome();
+		panel.setSpacing(20);
 		panel.add(nome);
 		panel.add(tnome);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(luogo);
 		panel.add(tluogo);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(descs);
 		panel.add(tdescs);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(from);
 		panel.add(tfrom);
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(to);
 		panel.add(tto);
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(new HTML("<text> <br> </text>"));
-		panel.add(new HTML("<text> <br> </text>"));
 		panel.add(carica);
 		pannello.add(panel, "Carica Evento");
 		carica.addClickHandler(new ClickHandler() {

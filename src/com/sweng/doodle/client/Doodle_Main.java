@@ -23,14 +23,15 @@ public class Doodle_Main extends Composite{
 		if (!(Cookies.getCookie("MyCookies").contentEquals("-1"))){
 			//			Window.alert("Welcome user with id: "+Cookies.getCookie("MyCookies"));
 			idKey = Cookies.getCookie("MyCookies");
-			new UserSondaggio(pannello);
+			new AmministrativoEventi(pannello);
 			new GestioneEventi(pannello);
-			new AllEventi(pannello);
+			new AllEventiUser(pannello);
 //			new Prova(pannello);
 			RootPanel.get().add(logout);} else {
 				new Login(pannello);
 				new Registrazione(pannello);
-				new AllEventi(pannello);
+				new AllEventiAnonymus(pannello);
+				pannello.selectTab(0);
 				
 			}
 

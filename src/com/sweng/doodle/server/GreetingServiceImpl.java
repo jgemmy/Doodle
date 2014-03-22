@@ -53,6 +53,7 @@ GreetingService {
 
 		Connection conn = null;
 		Statement statement = null;
+		@SuppressWarnings("unused")
 		String returned = "";
 
 		try {
@@ -134,7 +135,6 @@ GreetingService {
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("esce qua");
 		}
 
 		return returned;
