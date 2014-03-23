@@ -81,8 +81,12 @@ public class AmministrativoEventi {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
+		ListGridField stateField = new ListGridField("stato", "Stato");
+		ListGridField nickField = new ListGridField("nick", "Username");
 		ListGridField commField = new ListGridField("commento", "Commenti");
-		userGrid.setFields(new ListGridField[] {nomeField, commField});
+		
+		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField,commField});
+
 		inGetNick();
 		
 		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {

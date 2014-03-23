@@ -63,8 +63,9 @@ public class AllEventiAnonymus {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
-		ListGridField commField = new ListGridField("commento", "Commenti");
-		userGrid.setFields(new ListGridField[] {nomeField, commField});
+		ListGridField commField = new ListGridField("stato", "Stato");
+		ListGridField nickField = new ListGridField("nick", "Username");
+		userGrid.setFields(new ListGridField[] {nomeField, nickField, commField});
 
 		final DetailViewer detailViewer = new DetailViewer();  
 		detailViewer.setWidth(500);  
@@ -139,7 +140,7 @@ public class AllEventiAnonymus {
 
 	}
 	public void inInsertJoin(){
-		greetingService.insertJoin(idevento, tnome.getText(), "Anonymus", "Anonymus" , 1, "", new AsyncCallback<String>() {
+		greetingService.insertJoin(idevento, tnome.getText(), "Anonymus", "" , 1, "", new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {

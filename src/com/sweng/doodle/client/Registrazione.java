@@ -68,7 +68,7 @@ public class Registrazione extends Composite  {
 
 
 
-		tmail.addKeyPressHandler(new KeyPressHandler(){
+		trpassw.addKeyPressHandler(new KeyPressHandler(){
 			@Override
 			public void onKeyPress(KeyPressEvent event_){
 				boolean enterPressed = KeyCodes.KEY_ENTER == event_.getNativeEvent().getKeyCode();

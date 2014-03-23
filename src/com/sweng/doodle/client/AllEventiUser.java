@@ -1,5 +1,6 @@
 package com.sweng.doodle.client;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 import com.google.gwt.core.client.GWT;
@@ -45,6 +46,7 @@ public class AllEventiUser {
 	CheckBox no = new CheckBox("No");
 	Button salva = new Button("Salva");	
 	Button comm = new Button("Commenta");	
+	String getdate= (new Date(System.currentTimeMillis())).toString();
 
 	public AllEventiUser(final TabPanel pannello){
 
@@ -72,8 +74,11 @@ public class AllEventiUser {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
+		ListGridField stateField = new ListGridField("stato", "Stato");
+		ListGridField nickField = new ListGridField("nick", "Username");
 		ListGridField commField = new ListGridField("commento", "Commenti");
-		userGrid.setFields(new ListGridField[] {nomeField, commField});
+		
+		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField,commField});
 
 		final DetailViewer detailViewer = new DetailViewer();  
 		detailViewer.setWidth(500);  
@@ -87,7 +92,6 @@ public class AllEventiUser {
 				new DetailViewerField("check", "Stato"),
 				new DetailViewerField("causechiuso", "Motivi")); 
 
-
 		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
 
 			@SuppressWarnings("deprecation")
@@ -96,6 +100,7 @@ public class AllEventiUser {
 				// TODO Auto-generated method stub
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
 				detailViewer.setData(countryGrid.getSelection());
+//				userViewer.setData(userGrid.getDataAsRecordList());
 				idevento = record.getAttribute("id");
 				motivi = record.getAttribute("causechiuso");
 	
@@ -146,7 +151,6 @@ public class AllEventiUser {
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							if ((event.getSource() == comm) && (!(commenti.getText().length() == 0)))
-								Window.alert("ooo");
 							incommenta();	
 
 
@@ -203,7 +207,7 @@ public class AllEventiUser {
 
 	}
 	public void inInsertJoin(){
-		greetingService.insertJoin(idevento, tnome.getText(), tnick.getText(), commenti.getText(), 1,Doodle_Main.idKey, new AsyncCallback<String>() {
+		greetingService.insertJoin(idevento, tnome.getText(), tnick.getText(), "User", 1,Doodle_Main.idKey, new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
@@ -321,23 +325,20 @@ public class AllEventiUser {
 	}
 
 	public void incommenta(){
-		//		greetingService.insertcomm(idevento, nome, nick, commenti.getText(), -1, new AsyncCallback<String>() {
-		//			
-		//			@Override
-		//			public void onSuccess(String result) {
-		//				// TODO Auto-generated method stub
-		//				Window.alert("commentato");
-		//			}
-		//			
-		//			@Override
-		//			public void onFailure(Throwable caught) {
-		//				// TODO Auto-generated method stub
-		//				Window.alert("non commentato");
-		//				
-		//			}
-		//		});
-
-
-
+				greetingService.insertcomm(idevento, commenti.getText(), getdate,Doodle_Main.idKey, new AsyncCallback<String>() {
+					
+					@Override
+					public void onSuccess(String result) {
+						// TODO Auto-generated method stub
+						Window.alert(result);
+						Window.Location.reload();
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						Window.alert("fallit");
+					}
+				});
 	}	
 }

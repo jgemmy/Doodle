@@ -20,14 +20,16 @@ public class User implements Serializable {
 	private String mail;
 	private String passw;
 	private String comm;
+	private String stato;
 	
-	public User (String id, String nome, String nick,String mail, String passw, String comm) {
+	public User (String id, String nome, String nick,String mail, String passw, String comm,String stato) {
 		this.id = id;
 		this.nome = nome;
 		this.nick = nick;
 		this.mail = mail;
 		this.passw = passw;
 		this.comm = comm;
+		this.stato = stato;
 	}
 
 	public User(String nome) {
@@ -37,17 +39,19 @@ public class User implements Serializable {
 		this.mail = "no data";
 		this.passw = "no data";
 		this.comm = "no data";
+		this.stato = "no data";
 
 	}
 
 	
-	public User(String nome,String comm) {
+	public User(String nome,String nick,String stato,String comm) {
 		this.nome = nome;
 		this.id = "no data";
-		this.nick = "no data";
+		this.nick = nick;
 		this.mail = "no data";
 		this.passw = "no data";
 		this.comm = comm;
+		this.stato = stato;
 
 	}
 	
@@ -61,6 +65,7 @@ public class User implements Serializable {
 		this.mail = "no data";
 		this.passw = "no data";
 		this.comm = "no data";
+		this.stato = "no data";
 	
 	}
 	
@@ -88,5 +93,7 @@ public class User implements Serializable {
 		return comm;
 	}
 
-	
+	public String getStato() {
+		return stato;
+	}
 }

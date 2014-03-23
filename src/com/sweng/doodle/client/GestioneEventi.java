@@ -68,6 +68,7 @@ public class GestioneEventi {
 				if (!((tto.getValue().toString().length() == 0))) 
 					ito = tto.getValue().toString(); else return;
 				inEvento();
+				
 
 			} 
 
@@ -90,12 +91,13 @@ public class GestioneEventi {
 				Window.alert("Evento caricato con successo: id evento  = "+result);
 				idevento = result;
 				inInsertJoin();
+				
 			}
 		});	
 	}
 	
 	public void inInsertJoin(){
-		greetingService.insertJoin(idevento, name, nick, "Owner", 1,Doodle_Main.idKey, new AsyncCallback<String>() {
+		greetingService.insertJoin(idevento, name, nick, "Owner", 1, Doodle_Main.idKey, new AsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {

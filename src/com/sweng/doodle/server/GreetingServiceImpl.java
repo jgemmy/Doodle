@@ -102,7 +102,7 @@ GreetingService {
 		QueryMethods.close(statement, conn);
 		return returned;
 	}
-	
+
 	@Override
 	public String GetNick(String id) throws IllegalArgumentException {
 		Connection conn = null;
@@ -121,7 +121,7 @@ GreetingService {
 		return returned;
 
 	}
-	
+
 	@Override
 	public String GetNome(String id) throws IllegalArgumentException {
 		Connection conn = null;
@@ -141,25 +141,25 @@ GreetingService {
 
 	}
 
-	
-//	@Override
-//	public LinkedList<User> getUserInfo(String id)
-//			throws IllegalArgumentException {
-//		Connection conn = null;
-//		Statement statement = null;
-//
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-//			statement = conn.createStatement();
-//		} catch (SQLException | ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return QueryMethods.getUserInfo(statement, id);		
-//
-//	}
+
+	//	@Override
+	//	public LinkedList<User> getUserInfo(String id)
+	//			throws IllegalArgumentException {
+	//		Connection conn = null;
+	//		Statement statement = null;
+	//
+	//		try {
+	//			Class.forName("com.mysql.jdbc.Driver");
+	//			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+	//			statement = conn.createStatement();
+	//		} catch (SQLException | ClassNotFoundException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		}
+	//
+	//		return QueryMethods.getUserInfo(statement, id);		
+	//
+	//	}
 
 	/*_____________________________________________EVENTI______________________________________________________________________________ */
 
@@ -199,10 +199,7 @@ GreetingService {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
-			QueryMethods.creatabellaeventi(statement);
-			//			if (Cookies.getCookie("MyCookies") == Dio.idKey){
-			returned = QueryMethods.deleteIdEvent(statement, id,idKey);//}
-			//			else return "Evento non Trovato";
+			returned = QueryMethods.deleteIdEvent(statement, id,idKey);
 
 
 
@@ -230,9 +227,8 @@ GreetingService {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
-			QueryMethods.creatabellaeventi(statement);
 			if (QueryMethods.isCloseIdEvent(statement, id).contentEquals("0")){
-			returned = "evento gia chiuso";} 
+				returned = "evento gia chiuso";} 
 			else returned = QueryMethods.closeIdEvent(statement, id,idKey,commento);
 
 
@@ -244,121 +240,124 @@ GreetingService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			QueryMethods.close(statement, conn);			return  returned;		}
-	
-			@Override		public LinkedList<Evento> getAllUserEvents(String id)  {			Connection conn = null;			Statement statement = null;
+		QueryMethods.close(statement, conn);		return  returned;	}
 
-			try {				Class.forName("com.mysql.jdbc.Driver");				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);				statement = conn.createStatement();				QueryMethods.creatabellaeventi(statement);			} catch (SQLException | ClassNotFoundException e) {				// TODO Auto-generated catch block				e.printStackTrace();			}
-			return QueryMethods.getAllUserEvents(statement,id);		
-		}
-		@Override		public LinkedList<Evento> getAllEvents() throws IllegalArgumentException {			Connection conn = null;			Statement statement = null;
+	@Override	public LinkedList<Evento> getAllUserEvents(String id)  {		Connection conn = null;		Statement statement = null;
 
-			try {				Class.forName("com.mysql.jdbc.Driver");				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);				statement = conn.createStatement();				QueryMethods.creatabellaeventi(statement);			} catch (SQLException | ClassNotFoundException e) {				// TODO Auto-generated catch block				e.printStackTrace();			}
-			return QueryMethods.getAllEvents(statement);		
-		}
+		try {			Class.forName("com.mysql.jdbc.Driver");			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);			statement = conn.createStatement();		} catch (SQLException | ClassNotFoundException e) {			// TODO Auto-generated catch block			e.printStackTrace();		}
+		return QueryMethods.getAllUserEvents(statement,id);		
+	}
+	@Override	public LinkedList<Evento> getAllEvents() throws IllegalArgumentException {		Connection conn = null;		Statement statement = null;
 
-		
+		try {			Class.forName("com.mysql.jdbc.Driver");			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);			statement = conn.createStatement();			QueryMethods.creatabellaeventi(statement);		} catch (SQLException | ClassNotFoundException e) {			// TODO Auto-generated catch block			e.printStackTrace();		}
+		return QueryMethods.getAllEvents(statement);		
+	}
 
-		@Override
-		public String insertJoin(String idEvento,String nome, String nick, String commento, int disp,String idKey)
-				throws IllegalArgumentException {
-			Connection conn = null;
-			Statement statement = null;
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-				statement = conn.createStatement();
-				QueryMethods.creatabellapartecipanti(statement);
-//				System.out.println(QueryMethods.checkInsertJoin(statement, idEvento, id));
-//				
-				if(QueryMethods.checkInsertJoin(statement, idEvento,idKey).contentEquals("1")){
-					return " Fallita: Gia Inscritto all evento";
+
+
+	@Override
+	public String insertJoin(String idEvento,String nome, String nick, String stato, int disp,String idKey)
+			throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellapartecipanti(statement);
+			//				System.out.println(QueryMethods.checkInsertJoin(statement, idEvento, id));
+			//				
+			if(QueryMethods.checkInsertJoin(statement, idEvento,idKey).contentEquals("1")){
+				return " Fallita: Gia Inscritto all evento";
+			}
+			QueryMethods.insertJoin(statement, idEvento, nome, nick, stato, disp);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "non Inscritto";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return "fatto";
+	}
+
+	public String insertcomm(String idPart,String commento, String il,String iduser)throws IllegalArgumentException {
+		Connection conn = null;
+		Statement statement = null;
+		String returned = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+			statement = conn.createStatement();
+			QueryMethods.creatabellacommenti(statement);
+			returned = QueryMethods.insertCommento(statement, idPart, commento, il,iduser);
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Commento non registrato";
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		QueryMethods.close(statement, conn);
+		return  "Commento Registrto id: "+returned;
+	}
+
+
+			@Override
+			public String deleteJoin(String idEvento, String nome)
+					throws IllegalArgumentException {
+				Connection conn = null;
+				Statement statement = null;
+				String returned = nome;
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+					statement = conn.createStatement();
+					returned = QueryMethods.deleteJoin(statement, idEvento, nome);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return "Disponibilita non revocata";
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				QueryMethods.insertJoin(statement, idEvento, nome, nick, commento, disp);
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "non Inscritto";
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			QueryMethods.close(statement, conn);
-			return "fatto";
-		}
-		
-		public String insertcomm(String idEvento,String nome, String nick, String commento, int disp)
-				throws IllegalArgumentException {
-//			Connection conn = null;
-//			Statement statement = null;
-//			try {
-//				Class.forName("com.mysql.jdbc.Driver");
-//				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-//				statement = conn.createStatement();
-//				QueryMethods.creatabellapartecipanti(statement);
-//				QueryMethods.insertcomm(statement, idEvento, nome, nick, commento, disp);
-//
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				return "Commento non Inscritto";
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			QueryMethods.close(statement, conn);
-			return "commento inserito";
-		}
-
-		@Override
-		public String deleteJoin(String idEvento, String nome)
-				throws IllegalArgumentException {
-			Connection conn = null;
-			Statement statement = null;
-			String returned = nome;
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-				statement = conn.createStatement();
-				returned = QueryMethods.deleteJoin(statement, idEvento, nome);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "Disponibilita non revocata";
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			QueryMethods.close(statement, conn);
-			return returned+ ": Disponibilta revocata";
-		}
-
-			
-		
-		@Override
-		public LinkedList<User> getAllUsersJoin(String idEvento)
-				throws IllegalArgumentException {
-			Connection conn = null;
-			Statement statement = null;
-
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
-				statement = conn.createStatement();
-			} catch (SQLException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				QueryMethods.close(statement, conn);
+				return returned+ ": Disponibilta revocata";
 			}
 
-			return QueryMethods.getAllUsersJoin(statement, idEvento);
 
-		}
 
-		
-	
+			@Override
+			public LinkedList<User> getAllUsersJoin(String idEvento)
+					throws IllegalArgumentException {
+				Connection conn = null;
+				Statement statement = null;
 
-		
 
-			}
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+					statement = conn.createStatement();
+					 QueryMethods.creatabellapartecipanti(statement);
+				} catch (SQLException | ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return QueryMethods.getAllUsersJoin(statement, idEvento);
+
+			}
+
+
+
+
+
+
+		}
