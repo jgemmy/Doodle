@@ -1,5 +1,8 @@
 package com.sweng.doodle.client;
 
+import java.util.Date;
+import java.util.LinkedList;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,6 +14,7 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Utils;
 
 
@@ -35,6 +39,7 @@ public class GestioneEventi {
 	String nick;
 	String name;
 	Button carica = new Button("Carica Evento");
+	String getdate= (new Date(System.currentTimeMillis())).toString();
 
 	public GestioneEventi(final TabPanel pannello){
 		VerticalPanel panel = new VerticalPanel();
@@ -68,7 +73,7 @@ public class GestioneEventi {
 				if (!((tto.getValue().toString().length() == 0))) 
 					ito = tto.getValue().toString(); else return;
 				inEvento();
-				
+
 
 			} 
 
@@ -91,11 +96,12 @@ public class GestioneEventi {
 				Window.alert("Evento caricato con successo: id evento  = "+result);
 				idevento = result;
 				inInsertJoin();
-				
+				//				incommenta();
+
 			}
 		});	
 	}
-	
+
 	public void inInsertJoin(){
 		greetingService.insertJoin(idevento, name, nick, "Owner", 1, Doodle_Main.idKey, new AsyncCallback<String>() {
 
@@ -104,7 +110,7 @@ public class GestioneEventi {
 				// TODO Auto-generated method stub
 				Window.Location.reload();
 				return;
-			
+
 			}
 
 			@Override
@@ -117,17 +123,17 @@ public class GestioneEventi {
 
 
 	}
-	
+
 	public void inGetNick(){
 		greetingService.GetNick(Doodle_Main.idKey, new AsyncCallback<String>() {
-			
+
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
 				nick = result;
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
@@ -135,24 +141,60 @@ public class GestioneEventi {
 			}
 		});
 	}
-	
+
 	public void inGetNome(){
 		greetingService.GetNome(Doodle_Main.idKey, new AsyncCallback<String>() {
-			
+
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
 				name = result;
-				
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+				Window.alert("fallito");
+			}
+		});
+	}
+
+	public void incommenta(){
+		greetingService.insertcomm(idevento, "", getdate,Doodle_Main.idKey, new AsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert(result);
+				Window.Location.reload();
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("fallit");
+			}
+		});
+	}
+	
+	public void injuve(){
+		greetingService.getAllCommenti(idevento, new AsyncCallback<LinkedList<Commento>>() {
+			
+			@Override
+			public void onSuccess(LinkedList<Commento> result) {
+				// TODO Auto-generated method stub
+				Window.alert("yo");
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
 				
-				Window.alert("fallito");
 			}
 		});
+		
 	}
 }
 

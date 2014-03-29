@@ -44,13 +44,13 @@ public class User implements Serializable {
 	}
 
 	
-	public User(String nome,String nick,String stato,String comm) {
+	public User(String nome,String nick,String stato) {
 		this.nome = nome;
 		this.id = "no data";
 		this.nick = nick;
 		this.mail = "no data";
 		this.passw = "no data";
-		this.comm = comm;
+		this.comm = "no data";
 		this.stato = stato;
 
 	}

@@ -20,6 +20,7 @@ import com.smartgwt.client.widgets.grid.events.RecordDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewer;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
+import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
@@ -31,9 +32,11 @@ public class AllEventiAnonymus {
 
 	ListGrid countryGrid = new ListGrid();  
 	ListGrid userGrid = new ListGrid(); 
+	ListGrid commentGrid = new ListGrid();  
 	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
 	Label lnome = new Label("Nome:");
 	Label lusers = new Label("Lista utenti inscritti all evento: ");
+	Label lcomm = new Label("Lista Commenti: ");
 	TextBox tnome = new TextBox();
 	Button salva = new Button("Inscriviti");	
 
@@ -56,6 +59,18 @@ public class AllEventiAnonymus {
 		ListGridField causeField = new ListGridField("causechiuso", "Motivi");
 		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField,checkField, causeField});
 
+		commentGrid.setWidth(550);  
+		commentGrid.setHeight(224);  
+		commentGrid.setShowAllRecords(true);  
+		commentGrid.setCanEdit(false);  	
+		commentGrid.setEditEvent(ListGridEditEvent.CLICK);  
+		commentGrid.setModalEditing(false);  
+		ListGridField nicknameField = new ListGridField("nickname", "Nick - Name");
+		ListGridField commField = new ListGridField("commento", "Commento");
+
+
+		commentGrid.setFields(new ListGridField[] {nicknameField, commField});
+		
 		userGrid.setWidth(224);  
 		userGrid.setHeight(224);  
 		userGrid.setShowAllRecords(true);  
@@ -63,9 +78,9 @@ public class AllEventiAnonymus {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
 		userGrid.setModalEditing(false);  
 		ListGridField nomeField = new ListGridField("nome", "Nome");
-		ListGridField commField = new ListGridField("stato", "Stato");
-		ListGridField nickField = new ListGridField("nick", "Username");
-		userGrid.setFields(new ListGridField[] {nomeField, nickField, commField});
+		ListGridField stateField = new ListGridField("stato", "Stato");
+		ListGridField nickField = new ListGridField("nick", "Username");	
+		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField});
 
 		final DetailViewer detailViewer = new DetailViewer();  
 		detailViewer.setWidth(500);  
@@ -99,17 +114,20 @@ public class AllEventiAnonymus {
 						panel.remove(userGrid);
 						panel.remove(lnome);
 						panel.remove(tnome);
+						panel.remove(lcomm);
+						panel.remove(commentGrid);
 						panel.remove(salva);
 					}
 				}
 				else{
-					inListJoiners();					
+					inListJoiners();		
+					inListcomment();	
 					panel.add(lusers);
 					panel.add(userGrid);
+					panel.add(lcomm);
+					panel.add(commentGrid);
 					panel.add(lnome);
 					panel.add(tnome);
-
-
 					panel.add(salva);
 
 					salva.addClickHandler(new ClickHandler() {
@@ -219,5 +237,21 @@ public class AllEventiAnonymus {
 		});
 	}
 
+	public void inListcomment(){
+		greetingService.getAllCommenti(idevento, new AsyncCallback<LinkedList<Commento>>() {
 
+			@Override
+			public void onSuccess(LinkedList<Commento> result) {
+				// TODO Auto-generated method stub
+				commentGrid.setData(CommentGridData.getRecords(result));
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("CommentGrid non creata");
+			}
+		});
+
+	}
 }

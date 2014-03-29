@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
@@ -23,6 +24,7 @@ public interface GreetingService extends RemoteService {
 	String chiudievento(String id,String idKey,String commento) throws IllegalArgumentException;
 	String insertJoin(String idEvento, String nome, String nick, String stato,int disp,String idKey) throws IllegalArgumentException;
 	String insertcomm(String idEvento, String commento, String il,String iduser) throws IllegalArgumentException;
+	LinkedList<Commento> getAllCommenti(String idevento) throws IllegalArgumentException;
 	String deleteJoin(String idEvento, String nome)throws IllegalArgumentException;
 	LinkedList<User> getAllUsersJoin(String idEvento) throws IllegalArgumentException;
 	LinkedList<Evento> getAllUserEvents(String id) throws IllegalArgumentException;

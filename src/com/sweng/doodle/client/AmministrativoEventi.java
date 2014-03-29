@@ -21,6 +21,7 @@ import com.smartgwt.client.widgets.grid.events.RecordDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewer;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
+import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
@@ -31,10 +32,12 @@ public class AmministrativoEventi {
 	String idclick;
 	Label lcause = new Label("Inserire cause chiusura evento :");
 	Label lusers = new Label("Lista utenti inscritti all evento: ");
+	Label lcomm = new Label("Lista Commenti: ");
 	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
 	TextBox tcause = new TextBox();
 	ListGrid countryGrid = new ListGrid(); 
 	ListGrid userGrid = new ListGrid(); 
+	ListGrid commentGrid = new ListGrid(); 
 	final VerticalPanel panel = new VerticalPanel();	
 	final DetailViewer detailViewer = new DetailViewer();  
 
@@ -83,9 +86,21 @@ public class AmministrativoEventi {
 		ListGridField nomeField = new ListGridField("nome", "Nome");
 		ListGridField stateField = new ListGridField("stato", "Stato");
 		ListGridField nickField = new ListGridField("nick", "Username");
-		ListGridField commField = new ListGridField("commento", "Commenti");
+	
 		
-		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField,commField});
+		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField});
+		commentGrid.setWidth(550);  
+		commentGrid.setHeight(224);  
+		commentGrid.setShowAllRecords(true);  
+		commentGrid.setCanEdit(false);  	
+		commentGrid.setEditEvent(ListGridEditEvent.CLICK);  
+		commentGrid.setModalEditing(false);  
+		ListGridField nicknameField = new ListGridField("nickname", "Nick - Name");
+		ListGridField commField = new ListGridField("commento", "Commento");
+
+
+		commentGrid.setFields(new ListGridField[] {nicknameField, commField});
+
 
 		inGetNick();
 		
@@ -107,15 +122,20 @@ public class AmministrativoEventi {
 					panel.remove(userGrid);
 					panel.remove(lcause);
 					panel.remove(tcause);
+					panel.remove(lcomm);
+					panel.remove(commentGrid);
 					panel.remove(close);
 					panel.remove(delete);	}}
 
 				else {
 					inListJoiners();
+					inListcomment();
 					panel.add(lusers);
 					panel.add(userGrid);
 					panel.add(lcause);
 					panel.add(tcause);
+					panel.add(lcomm);
+					panel.add(commentGrid);
 					panel.add(close);
 					panel.add(delete);	
 
@@ -254,6 +274,24 @@ public class AmministrativoEventi {
 				Window.alert("fallito coockie");
 			}
 		});
+	}
+	
+	public void inListcomment(){
+		greetingService.getAllCommenti(idclick, new AsyncCallback<LinkedList<Commento>>() {
+
+			@Override
+			public void onSuccess(LinkedList<Commento> result) {
+				// TODO Auto-generated method stub
+				commentGrid.setData(CommentGridData.getRecords(result));
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("CommentGrid non creata");
+			}
+		});
+
 	}
 	
 }

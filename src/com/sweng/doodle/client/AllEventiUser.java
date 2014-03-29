@@ -22,6 +22,7 @@ import com.smartgwt.client.widgets.grid.events.RecordDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDoubleClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewer;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
+import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
@@ -33,11 +34,13 @@ public class AllEventiUser {
 	String nick;
 	ListGrid countryGrid = new ListGrid();  
 	ListGrid userGrid = new ListGrid(); 
+	ListGrid commentGrid = new ListGrid(); 
 	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
 	Label lnome = new Label("Nome:");
 	Label lnick = new Label("Nick:");
 	Label lusers = new Label("Lista utenti inscritti all evento: ");
 	Label lcomm = new Label("Inserire qui eventuali commenti:");
+	Label llcomm = new Label("Lista commenti: ");
 	Label disp = new Label("Disponibilita:");
 	TextBox tnome = new TextBox();
 	TextBox tnick = new TextBox();
@@ -76,9 +79,18 @@ public class AllEventiUser {
 		ListGridField nomeField = new ListGridField("nome", "Nome");
 		ListGridField stateField = new ListGridField("stato", "Stato");
 		ListGridField nickField = new ListGridField("nick", "Username");
-		ListGridField commField = new ListGridField("commento", "Commenti");
-		
-		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField,commField});
+		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField});
+
+	commentGrid.setWidth(550);  
+		commentGrid.setHeight(224);  
+		commentGrid.setShowAllRecords(true);  
+		commentGrid.setCanEdit(false);  	
+		commentGrid.setEditEvent(ListGridEditEvent.CLICK);  
+		commentGrid.setModalEditing(false);  
+		ListGridField nicknameField = new ListGridField("nickname", "Nick - Name");
+		ListGridField commField = new ListGridField("commento", "Commento");
+		commentGrid.setFields(new ListGridField[] {nicknameField, commField});
+
 
 		final DetailViewer detailViewer = new DetailViewer();  
 		detailViewer.setWidth(500);  
@@ -100,10 +112,10 @@ public class AllEventiUser {
 				// TODO Auto-generated method stub
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
 				detailViewer.setData(countryGrid.getSelection());
-//				userViewer.setData(userGrid.getDataAsRecordList());
+				//				userViewer.setData(userGrid.getDataAsRecordList());
 				idevento = record.getAttribute("id");
 				motivi = record.getAttribute("causechiuso");
-	
+
 
 				if (record.getAttribute("check").contentEquals("chiuso")){
 					Window.alert("Evento Chiuso");
@@ -114,6 +126,8 @@ public class AllEventiUser {
 						panel.remove(tnome);
 						panel.remove(lnick);
 						panel.remove(tnick);
+						panel.remove(llcomm);
+						panel.remove(commentGrid);
 						panel.remove(lcomm);
 						panel.remove(commenti);
 						panel.remove(comm);
@@ -126,7 +140,8 @@ public class AllEventiUser {
 				else{
 					inGetNick();
 					inGetNome();
-					inListJoiners();					
+					inListJoiners();
+					inListcomment();	
 					panel.add(lusers);
 					panel.add(userGrid);
 					panel.add(lnome);
@@ -135,6 +150,8 @@ public class AllEventiUser {
 					panel.add(lnick);
 					panel.add(tnick);
 					tnick.setReadOnly(true);
+					panel.remove(llcomm);
+					panel.add(commentGrid);
 					panel.add(lcomm);
 					panel.add(commenti);
 					panel.add(comm);
@@ -151,7 +168,7 @@ public class AllEventiUser {
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							if ((event.getSource() == comm) && (!(commenti.getText().length() == 0)))
-							incommenta();	
+								incommenta();	
 
 
 
@@ -214,14 +231,13 @@ public class AllEventiUser {
 				// TODO Auto-generated method stub
 				Window.alert("Inscrizione: " + result);
 				Window.Location.reload();
-				return;
+
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
 				Window.alert("Iscrizione fallita");
-				return;
 			}
 		});
 
@@ -325,20 +341,38 @@ public class AllEventiUser {
 	}
 
 	public void incommenta(){
-				greetingService.insertcomm(idevento, commenti.getText(), getdate,Doodle_Main.idKey, new AsyncCallback<String>() {
-					
-					@Override
-					public void onSuccess(String result) {
-						// TODO Auto-generated method stub
-						Window.alert(result);
-						Window.Location.reload();
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						Window.alert("fallit");
-					}
-				});
+		greetingService.insertcomm(idevento, commenti.getText(), getdate,Doodle_Main.idKey, new AsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				Window.alert(result);
+				Window.Location.reload();
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("fallit");
+			}
+		});
 	}	
+
+	public void inListcomment(){
+		greetingService.getAllCommenti(idevento, new AsyncCallback<LinkedList<Commento>>() {
+
+			@Override
+			public void onSuccess(LinkedList<Commento> result) {
+				// TODO Auto-generated method stub
+				commentGrid.setData(CommentGridData.getRecords(result));
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("CommentGrid non creata");
+			}
+		});
+
+	}
 }

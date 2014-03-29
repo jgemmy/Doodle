@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
@@ -92,7 +93,7 @@ public class QueryMethods {
 		System.out.println("Created Users table in given database...");
 	}
 	/*REGISTRAZIONE UTENTE*/
-	
+
 	public static String checkExNick(Statement statement) throws SQLException{
 		String select = "SELECT nick FROM "+TABLENAME;
 		String nick = "";
@@ -126,7 +127,7 @@ public class QueryMethods {
 		}
 		return userid;
 	}
-	
+
 
 	public static void getAllInformationsUsers(Statement statement) throws SQLException{
 		String get = "SELECT nome,nick,password,mail FROM "+TABLENAME;
@@ -161,7 +162,7 @@ public class QueryMethods {
 		String changepsw = "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('"+password+"');";
 		stmt.executeUpdate(changepsw);
 	}
-	
+
 	public static String GetNick(Statement statement,String id) throws SQLException{
 		String nick = "";
 		String select = "SELECT nick FROM "+TABLENAME+" WHERE id = "+id;
@@ -173,7 +174,7 @@ public class QueryMethods {
 		}
 		return nick;
 	}
-	
+
 	public static String GetNome(Statement statement,String id) throws SQLException{
 		String nome = "";
 		String select = "SELECT nome FROM "+TABLENAME+" WHERE id = "+id;
@@ -186,8 +187,8 @@ public class QueryMethods {
 		}
 		return nome;
 	}
-	
-	
+
+
 
 
 	/*__________________________________________________EVENTI_____________________________________________________*/
@@ -217,7 +218,7 @@ public class QueryMethods {
 		token.nextToken();
 		String year = token.nextToken();
 		String dateDal = day+","+month+","+year+" "+hour;
-//		System.out.println(dateDal);
+		//		System.out.println(dateDal);
 		StringTokenizer token1 = new StringTokenizer(al, " ");
 		token1.nextToken();
 		String month1 = token1.nextToken();
@@ -226,7 +227,7 @@ public class QueryMethods {
 		token1.nextToken();
 		String year1 = token1.nextToken();
 		String dateAl = day1+","+month1+","+year1+" "+hour1;
-//		System.out.println(dateAl);
+		//		System.out.println(dateAl);
 		String insertTableSQL = "INSERT INTO "+ TABLENAME2
 				+ "(nome, luogo, descrizione, dal, al,idKey, checks, causechiuso) " + "VALUES"
 				+ "('"+nome+"','"+luogo+"','"+descrizione+"',STR_TO_DATE('"+dateDal+"', '%d,%b,%Y %H:%i:%s'),  STR_TO_DATE('"+dateAl+"', '%d,%b,%Y %T'), '"+idKey+"', '"+check+"', '"+cause+"')";
@@ -272,15 +273,15 @@ public class QueryMethods {
 		String isCloseEvent = "SELECT checks FROM "+TABLENAME2+" WHERE id = "+id;
 		ResultSet rs = statement.executeQuery(isCloseEvent);
 		while(rs.next()){
-		check = rs.getString("checks");
-		System.out.println(check);
+			check = rs.getString("checks");
+			System.out.println(check);
 		}
 		return check;
-		
+
 	}
-	
-	
-	
+
+
+
 
 	public static LinkedList<Evento> getAllEvents(Statement statement){
 		LinkedList<Evento> list = new LinkedList<Evento>();
@@ -316,8 +317,8 @@ public class QueryMethods {
 		return list;
 	}
 
-	
-	
+
+
 
 	/*__________________________________________________PARTECIPANTI_______________________________________________*/
 
@@ -333,24 +334,25 @@ public class QueryMethods {
 		statement.executeUpdate(createTablee);
 		System.out.println("Created Partecipanti table in given database...");
 	}
-	
-	
+
+
 
 	public static LinkedList<User> getAllUsersJoin(Statement statement, String idEvento){
-		LinkedList<User> list = new LinkedList<User>();		
-		String select = "SELECT "+TABLENAME3+".nome, "+TABLENAME3+".nick, "+TABLENAME3+".stato, "+TABLENAME4+".commento " +
-	             "FROM "+TABLENAME3+" INNER JOIN "+TABLENAME4+" " +
-	             "ON "+TABLENAME3+".idEvento = "+TABLENAME4+".idevento " + 
-	             "WHERE "+TABLENAME3+".idEvento = '"+idEvento+"' ";
+		LinkedList<User> list = new LinkedList<User>();	
+		String select = "SELECT nome,nick,stato FROM "+TABLENAME3+" WHERE idEvento = "+idEvento;
+		//		String select = "SELECT "+TABLENAME3+".nome, "+TABLENAME3+".nick, "+TABLENAME3+".stato, "+TABLENAME4+".commento " +
+		//	             "FROM "+TABLENAME3+" INNER JOIN "+TABLENAME4+" " +
+		//	             "ON "+TABLENAME3+".idEvento = "+TABLENAME4+".idevento " + 
+		//	             "WHERE "+TABLENAME3+".idEvento = '"+idEvento+"' ";
 		ResultSet rs = null;
 		try {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding All Joiners");
-				list.add(new User(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+				list.add(new User(rs.getString(1),rs.getString(2),rs.getString(3)));
 			}
 		} catch (SQLException e) {
-//			e.printStackTrace();
+			//			e.printStackTrace();
 		}
 		return list;
 	}
@@ -361,34 +363,34 @@ public class QueryMethods {
 				+ "(idEvento, nome, nick, stato, disponibilita) " + "VALUES"
 				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+stato+"','"+disp+"')";
 		statement.executeUpdate(insert);
-		System.out.println("Created join in given database...Utente inscritto all evento" +insert);
+		System.out.println("Created join in given database...Utente inscritto all evento");
 		return name;
 	}
 
-//	public static String checkInsertJoin(Statement statement,String idEvento,String idKey) throws SQLException{
-//		String disp= "-1";
-//		String check = "select "+TABLENAME3+".disponibilita " +
-//	             "from "+TABLENAME2+", "+TABLENAME3+" " +
-//	             "where "+idEvento+" like "+TABLENAME2+".id and " +
-//	             ""+TABLENAME2+".idKey = '"+idKey+"'";
-//
-//		System.out.println("query: " +check);
-//		ResultSet rs = statement.executeQuery(check);
-//		while (rs.next()) {
-//
-//			disp = ""+rs.getInt("disponibilita");
-//			System.out.println("disponibilita: " +disp);
-//
-//		}
-//		return disp;
-//	}
+	//	public static String checkInsertJoin(Statement statement,String idEvento,String idKey) throws SQLException{
+	//		String disp= "-1";
+	//		String check = "select "+TABLENAME3+".disponibilita " +
+	//	             "from "+TABLENAME2+", "+TABLENAME3+" " +
+	//	             "where "+idEvento+" like "+TABLENAME2+".id and " +
+	//	             ""+TABLENAME2+".idKey = '"+idKey+"'";
+	//
+	//		System.out.println("query: " +check);
+	//		ResultSet rs = statement.executeQuery(check);
+	//		while (rs.next()) {
+	//
+	//			disp = ""+rs.getInt("disponibilita");
+	//			System.out.println("disponibilita: " +disp);
+	//
+	//		}
+	//		return disp;
+	//	}
 	public static String checkInsertJoin(Statement statement,String idEvento,String idKey) throws SQLException{
 		String disp= "-1";
 		String check = "SELECT "+TABLENAME3+".disponibilita " +
-	             "FROM "+TABLENAME2+" INNER JOIN "+TABLENAME3+" " +
-	             "ON "+TABLENAME2+".id = "+TABLENAME3+".idEvento " + 
-	             "WHERE "+TABLENAME3+".idEvento = '"+idEvento+"' " +
-	             "AND "+TABLENAME2+".idKey = '"+idKey+"'";
+				"FROM "+TABLENAME2+" INNER JOIN "+TABLENAME3+" " +
+				"ON "+TABLENAME2+".id = "+TABLENAME3+".idEvento " + 
+				"WHERE "+TABLENAME3+".idEvento = '"+idEvento+"' " +
+				"AND "+TABLENAME2+".idKey = '"+idKey+"'";
 
 		ResultSet rs = statement.executeQuery(check);
 		while (rs.next()) {
@@ -400,7 +402,7 @@ public class QueryMethods {
 		return disp;
 	}
 
-	   
+
 	public static String deleteJoin(Statement statement, String idEvento, String nome) throws SQLException{
 		String name = nome;
 		String remove = "DELETE FROM "+TABLENAME3+" WHERE idEvento = '"+idEvento+"' AND nome = '"+nome+"' ;";
@@ -408,8 +410,8 @@ public class QueryMethods {
 		System.out.println("Deleted join in given database...Utente ritirato dall evento");
 		return name;
 	}
-	
-	
+
+
 	/*__________________________________________________EVENTI_____________________________________________________*/
 
 	public static void creatabellacommenti(Statement statement) throws SQLException{
@@ -440,5 +442,46 @@ public class QueryMethods {
 		System.out.println("Created Commento in given database...Commento Registrato");
 		return idPar;
 	}
+
+	public static LinkedList<Commento> getAllCommenti(Statement statement, String idevento){
+		LinkedList<Commento> list = new LinkedList<Commento>();	
+		String select = "SELECT iduser,commento,il FROM "+TABLENAME4+" WHERE idEvento = "+idevento;
+		System.out.println("Query: "+select);
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery(select);
+			while(rs.next()) {
+				System.out.println("Adding All Comments");
+				list.add(new Commento(rs.getString(1),rs.getString(2)+" - Aggiunto il "+rs.getString(3)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	public static  LinkedList<Commento> getAllnickName(Statement statement,LinkedList<Commento> commenti){
+
+		ResultSet rs = null;
+		try {
+
+			for(int k = 0 ; k < commenti.size(); k++){
+				rs = statement.executeQuery("SELECT nome,nick FROM "+TABLENAME+" WHERE id = "+commenti.get(k).getIduser());
+				System.out.println("Adding Comment");
+				while(rs.next())
+					commenti.get(k).setNickName(rs.getString(1)+" - "+rs.getString(2));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return commenti;
+
+	}
+
+
+
 }
 
