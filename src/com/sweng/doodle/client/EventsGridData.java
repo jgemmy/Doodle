@@ -1,6 +1,5 @@
 package com.sweng.doodle.client;
 
-import java.util.Date;
 import java.util.LinkedList;
 
 import com.smartgwt.client.data.RecordList;

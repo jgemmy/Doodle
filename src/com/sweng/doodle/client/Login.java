@@ -38,6 +38,8 @@ public class Login{
 	Label user= new Label("User:");
 		Label passw = new Label("Password:");
 		panel = new VerticalPanel();
+		panel.setHeight("50");
+		panel.setWidth("150");
 		panel.setSpacing(20);
 		panel.add(user);		
 		panel.add(tuser);

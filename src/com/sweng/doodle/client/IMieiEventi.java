@@ -58,7 +58,7 @@ public class IMieiEventi {
 
 	public IMieiEventi(final TabPanel pannello){				
 
-		detailViewer.setWidth(500);  
+		detailViewer.setWidth(450);  
 		detailViewer.setFields(  
 				new DetailViewerField("id", "ID"),  
 				new DetailViewerField("nome", "Nome Evento"),  
@@ -68,10 +68,10 @@ public class IMieiEventi {
 				new DetailViewerField("al", "Al"),
 				new DetailViewerField("check", "Stato"),
 				new DetailViewerField("causechiuso", "Motivi")); 
+		detailViewer.setStyleName("tables");
 
 
-
-		eventsGrid.setWidth(720);  
+		eventsGrid.setWidth(650);  
 		eventsGrid.setHeight(214);  
 		eventsGrid.setShowAllRecords(true);  
 		eventsGrid.setCanEdit(false);  
@@ -89,8 +89,11 @@ public class IMieiEventi {
 		eventsGrid.setHeaderHeight(40);
 		eventsGrid.setHeaderSpans(
 				new HeaderSpan("Eventi", new String[]{"id", "nome","luogo","descrizione","dal","al","check","causechiuso"}));
-		userGrid.setWidth(200);  
-		userGrid.setHeight(124);  
+		eventsGrid.setStyleName("tables");
+		
+		
+		userGrid.setWidth(180);  
+		userGrid.setHeight(200);  
 		userGrid.setShowAllRecords(true);  
 		userGrid.setCanEdit(false);  
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
@@ -98,6 +101,7 @@ public class IMieiEventi {
 		ListGridField nomeField = new ListGridField("nome", "Nome");
 		ListGridField stateField = new ListGridField("stato", "Stato");
 		ListGridField nickField = new ListGridField("nick", "Username");
+		userGrid.setStyleName("tables");
 
 
 		hChiudi.add(close);
@@ -124,7 +128,7 @@ public class IMieiEventi {
 		commentview.setFields(  
 				new DetailViewerField("nickname", "Nick - Name"),  
 				new DetailViewerField("commento", "Commento")); 
-
+		commentview.setStyleName("tables");
 
 		inGetNick();
 
@@ -202,9 +206,9 @@ public class IMieiEventi {
 		});
 
 		panel.setSpacing(20);
+		panel.add(info);
 		panel.add(eventsGrid);
 		eventsGrid.setEmptyMessage("Nessun evento da visualizzare!");
-		panel.add(info);
 		//		panel.add(detailViewer);
 		panel.add(hPanels);
 		detailViewer.setEmptyMessage(" ");

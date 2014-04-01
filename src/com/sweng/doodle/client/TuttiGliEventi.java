@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -35,11 +34,11 @@ public class TuttiGliEventi {
 
 	final DetailViewer commentview = new DetailViewer();
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-
+	VerticalPanel registrati = new VerticalPanel();
 	HorizontalPanel hPanels = new HorizontalPanel();
-HTML riga = new HTML("<hr>");
-HTML riga1 = new HTML("<hr>");
-String idevento ;
+	HTML riga = new HTML("<hr>");
+	HTML riga1 = new HTML("<hr>");
+	String idevento ;
 	String motivi ;
 	String nome;
 	String nick;
@@ -54,7 +53,6 @@ String idevento ;
 	Label disp = new Label("Disponibilita:");
 
 	TabPanel registra = new TabPanel();
-	VerticalPanel registrati = new VerticalPanel();
 	TextBox tnome = new TextBox();
 	TextBox tnick = new TextBox();
 	TextBox commenti = new TextBox();
@@ -67,7 +65,7 @@ String idevento ;
 	public TuttiGliEventi(final TabPanel pannello){
 
 		final VerticalPanel panel = new VerticalPanel();
-		eventsGrid.setWidth(720);  
+		eventsGrid.setWidth(650);  
 		eventsGrid.setHeight(214);  
 		eventsGrid.setShowAllRecords(true);  
 		eventsGrid.setCanEdit(false);  
@@ -85,8 +83,11 @@ String idevento ;
 		eventsGrid.setHeaderHeight(40);
 		eventsGrid.setHeaderSpans(
 				new HeaderSpan("Eventi", new String[]{"id", "nome","luogo","descrizione","dal","al","check","causechiuso"}));
-		userGrid.setWidth(200);  
-		userGrid.setHeight(124);  
+
+		eventsGrid.addStyleName("tables");
+
+		userGrid.setWidth(180);  
+		userGrid.setHeight(200);  
 		userGrid.setShowAllRecords(true);  
 		userGrid.setCanEdit(false);  
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);  
@@ -99,7 +100,8 @@ String idevento ;
 
 		userGrid.setHeaderSpans(
 				new HeaderSpan("Utenti Iscritti", new String[]{"nome", "stato","nick"}));
-	commentGrid.setWidth(550);  
+		userGrid.setStyleName("tables");
+		commentGrid.setWidth(520);  
 		commentGrid.setHeight(224);  
 		commentGrid.setShowAllRecords(true);  
 		commentGrid.setCanEdit(false);  	
@@ -111,7 +113,7 @@ String idevento ;
 
 
 		final DetailViewer detailViewer = new DetailViewer();  
-		detailViewer.setWidth(500);  
+		detailViewer.setWidth(450);  
 		detailViewer.setFields(  
 				new DetailViewerField("id", "ID"),  
 				new DetailViewerField("nome", "Nome Evento"),  
@@ -121,12 +123,13 @@ String idevento ;
 				new DetailViewerField("al", "Al"),
 				new DetailViewerField("check", "Stato"),
 				new DetailViewerField("causechiuso", "Motivi")); 
-		
+		detailViewer.addStyleName("tables");
+
 		commentview.setWidth(500);  
 		commentview.setFields(  
 				new DetailViewerField("nickname", "Nick - Name"),  
 				new DetailViewerField("commento", "Commento")); 
-		
+		commentview.addStyleName("tables");
 
 		hPanels.add(detailViewer);
 		hPanels.setSpacing(10);
@@ -147,7 +150,7 @@ String idevento ;
 					Window.alert("Evento Chiuso");
 					if(userGrid.isAttached()){
 						hPanels.remove(userGrid);
-					//						panel.remove(userGrid);
+						//						panel.remove(userGrid);
 						panel.remove(llcomm);
 						panel.remove(commentview);
 						panel.remove(lcomm);
@@ -162,7 +165,7 @@ String idevento ;
 						panel.remove(no);
 						panel.remove(salva);
 						registra.removeFromParent();
-//						panel.remove(riga);
+						//						panel.remove(riga);
 						panel.remove(riga1);
 					}
 				}
@@ -174,7 +177,7 @@ String idevento ;
 					hPanels.add(userGrid);
 					//					panel.add(userGrid);
 					userGrid.setEmptyMessage("Nessun Utente e' inscritto all'evento!");
-				
+
 					panel.add(lcomm);
 					panel.add(commenti);
 					panel.add(comm);
@@ -182,7 +185,7 @@ String idevento ;
 					panel.add(llcomm);
 					panel.add(commentview);
 					commentview.setEmptyMessage("Nessun commento inserito per l'evento!");
-//					panel.add(riga);
+					//					panel.add(riga);
 					registrati.add(lnome);
 					registrati.add(tnome);
 					tnome.setReadOnly(true);
@@ -193,11 +196,12 @@ String idevento ;
 					registrati.add(yes);
 					yes.setChecked(true);
 					registrati.add(no);
-registrati.setSpacing(10);
+					registrati.setSpacing(10);
 					registrati.add(salva);
 					registra.setAnimationEnabled(true);  
 					registra.add(registrati,"Iscriviti");
-					Doodle_Main.panta.add(registra);
+					registrati.addStyleName("tabLeft");
+					Doodle_Main.left.add(registra);
 					registra.addStyleName("iscriviti");
 					registra.selectTab(0);
 					panel.setCellHorizontalAlignment(commentview,HasHorizontalAlignment.ALIGN_CENTER);
@@ -255,10 +259,10 @@ registrati.setSpacing(10);
 
 		inGetAllEvents();
 		panel.setSpacing(20);
+		panel.add(info);
+		info.setStyleName("gwt-Label");
 		panel.add(eventsGrid);
 		eventsGrid.setEmptyMessage("Nessun evento da visualizzare!");
-		panel.add(info);
-		//		panel.add(detailViewer);
 		panel.add(hPanels);
 		detailViewer.setEmptyMessage("");
 		pannello.add(panel, "Tutti Gli Eventi");

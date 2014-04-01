@@ -15,17 +15,17 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Doodle_Main extends Composite{
+	static VerticalPanel left = new VerticalPanel();
 	HorizontalPanel hPanel = new HorizontalPanel();
 	public static String idKey="";
 	final Button logout = new Button("Log Out");
 	Button Login = new Button("Login");
 	Button Registrazione = new Button("Registrazione");
 	static TabPanel pannello = new TabPanel();
-	TabPanel tab = new TabPanel();
+	TabPanel create = new TabPanel();
 	TabPanel log = new TabPanel();
-	TabPanel reg = new TabPanel();
+	TabPanel sign = new TabPanel();
 
-static VerticalPanel panta = new VerticalPanel();
 
 	public Doodle_Main(){
 
@@ -36,31 +36,33 @@ static VerticalPanel panta = new VerticalPanel();
 			new IMieiEventi(pannello);
 			new TuttiGliEventi(pannello);
 			pannello.getElement().setAttribute("align", "center");			
-			new CreaEventi(tab);
-			panta.add(logout);
-			
-			hPanel.add(panta);
-panta.setSpacing(10);
+			new CreaEventi(create);
+			left.add(logout);
+			hPanel.add(left);
+			left.setSpacing(5);
+			hPanel.add(new HTML("<br />"));
+			hPanel.add(new HTML("<br />"));
+			hPanel.add(new HTML("<br />"));
 			hPanel.add(new HTML("<br />"));
 			hPanel.add(new HTML("<br />"));
 			hPanel.add(new HTML("<br />"));
 			hPanel.add(pannello);
 			hPanel.getElement().setAttribute("align", "left");
-			panta.getElement().setAttribute("align", "left");
-			hPanel.setSpacing(35);
-			hPanel.add(tab);
-			tab.selectTab(0);
-			tab.addStyleName("tabKey");
+			left.getElement().setAttribute("align", "left");
+			hPanel.setSpacing(25);
+			hPanel.add(create);
+			create.selectTab(0);
+			create.addStyleName("tabRight");
 			RootPanel.get().add(hPanel);
 		} else {
 			new TuttiGliEventiAnonimo(pannello);
 			new Login(log);
-			new Registrazione(reg);
+			new Registrazione(sign);
 			hPanel.add(log);
 			log.selectTab(0);
 			hPanel.add(pannello);
-			hPanel.add(reg);
-			reg.selectTab(0);
+			hPanel.add(sign);
+			sign.selectTab(0);
 			hPanel.setSpacing(30);
 			RootPanel.get().add(hPanel);
 			pannello.selectTab(0);	
@@ -68,16 +70,16 @@ panta.setSpacing(10);
 		}
 
 
-pannello.addSelectionHandler(new SelectionHandler<Integer>() {
-	  @Override
-	  public void onSelection(SelectionEvent<Integer> event) {
-	    if (event.getSelectedItem() == 0) {
-	    	if(panta.getWidgetCount() >=2){	
-	    		panta.remove(1);
-	    	}
-	    }
-	  }
-	});
+		pannello.addSelectionHandler(new SelectionHandler<Integer>() {
+			@Override
+			public void onSelection(SelectionEvent<Integer> event) {
+				if (event.getSelectedItem() == 0) {
+					if(left.getWidgetCount() >=2){	
+						left.remove(1);
+					}
+				}
+			}
+		});
 
 
 		logout.addClickHandler(new ClickHandler() {

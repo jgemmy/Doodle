@@ -36,7 +36,8 @@ public class TuttiGliEventiAnonimo {
 	String motivi ;
 	String nome;
 	final DetailViewer commentview = new DetailViewer();
-	ListGrid countryGrid = new ListGrid();  
+	final DetailViewer detailViewer = new DetailViewer();  
+	ListGrid eventsGrid = new ListGrid();  
 	ListGrid userGrid = new ListGrid(); 
 	ListGrid commentGrid = new ListGrid();  
 	Label info = new Label("Doppio click sull evento per visualizzare le info: ");
@@ -47,12 +48,12 @@ public class TuttiGliEventiAnonimo {
 	HTML riga = new HTML("<hr>");
 	public TuttiGliEventiAnonimo(final TabPanel pannello){
 
-		countryGrid.setWidth(720);  
-		countryGrid.setHeight(214);  
-		countryGrid.setShowAllRecords(true);  
-		countryGrid.setCanEdit(false);  
-		countryGrid.setEditEvent(ListGridEditEvent.CLICK);  
-		countryGrid.setModalEditing(false);  
+		eventsGrid.setWidth(720);  
+		eventsGrid.setHeight(214);  
+		eventsGrid.setShowAllRecords(true);  
+		eventsGrid.setCanEdit(false);  
+		eventsGrid.setEditEvent(ListGridEditEvent.CLICK);  
+		eventsGrid.setModalEditing(false);  
 		ListGridField idField = new ListGridField("id", "ID");
 		ListGridField nameField = new ListGridField("nome", "Nome Evento");  
 		ListGridField placeField = new ListGridField("luogo", "Luogo");  
@@ -61,14 +62,12 @@ public class TuttiGliEventiAnonimo {
 		ListGridField toField = new ListGridField("al", "Al");
 		ListGridField checkField = new ListGridField("check", "Stato");
 		ListGridField causeField = new ListGridField("causechiuso", "Motivi");
-		countryGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField,checkField, causeField});
-		countryGrid.setHeaderHeight(40);
-		countryGrid.setHeaderSpans(
-	            new HeaderSpan("Eventi", new String[]{"id", "nome","luogo","descrizione","dal","al","check","causechiuso"}));
-//		countryGrid.setAutoFitFieldWidths(true);
-//		countryGrid.setAutoFitHeaderHeights(true);	
-//		countryGrid.setAutoSizeHeaderSpans(true);
-//	
+		eventsGrid.setFields(new ListGridField[] {idField, nameField, placeField, descrField, fromField, toField,checkField, causeField});
+		eventsGrid.setHeaderHeight(40);
+		eventsGrid.setHeaderSpans(
+				new HeaderSpan("Eventi", new String[]{"id", "nome","luogo","descrizione","dal","al","check","causechiuso"}));
+
+
 		commentGrid.setWidth(550);  
 		commentGrid.setHeight(224);  
 		commentGrid.setShowAllRecords(true);  
@@ -77,10 +76,9 @@ public class TuttiGliEventiAnonimo {
 		commentGrid.setModalEditing(false);  
 		ListGridField nicknameField = new ListGridField("nickname", "Nick - Name");
 		ListGridField commField = new ListGridField("commento", "Commento");
-
-
 		commentGrid.setFields(new ListGridField[] {nicknameField, commField});
-		
+
+
 		userGrid.setWidth(200);  
 		userGrid.setHeight(190);  
 		userGrid.setShowAllRecords(true);  
@@ -92,11 +90,11 @@ public class TuttiGliEventiAnonimo {
 		ListGridField nickField = new ListGridField("nick", "Username");	
 		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField});
 		userGrid.setHeaderHeight(40);
-		
 		userGrid.setHeaderSpans(
-	            new HeaderSpan("Utenti Iscritti", new String[]{"nome", "stato","nick"}));
+				new HeaderSpan("Utenti Iscritti", new String[]{"nome", "stato","nick"}));
 		userGrid.addStyleName("tables");
-		final DetailViewer detailViewer = new DetailViewer();  
+
+
 		detailViewer.setWidth(500);  
 		detailViewer.setFields(  
 				new DetailViewerField("id", "ID"),  
@@ -108,21 +106,22 @@ public class TuttiGliEventiAnonimo {
 				new DetailViewerField("check", "Stato"),
 				new DetailViewerField("causechiuso", "Motivi")); 
 		detailViewer.addStyleName("tables");
+
 		commentview.setWidth(500);  
 		commentview.setFields(  
 				new DetailViewerField("nickname", "Nick - Name"),  
 				new DetailViewerField("commento", "Commento")); 
 		hPanels.add(detailViewer);
 		hPanels.setSpacing(10);
-		countryGrid.addStyleName("tables");
-		countryGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
+		eventsGrid.addStyleName("tables");
+		eventsGrid.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
 
 			@SuppressWarnings("deprecation")
 			@Override
 			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
 				// TODO Auto-generated method stub
 				ListGridRecord record = (ListGridRecord)event.getRecord(); 
-				detailViewer.setData(countryGrid.getSelection());
+				detailViewer.setData(eventsGrid.getSelection());
 				idevento = record.getAttribute("id");
 				motivi = record.getAttribute("causechiuso");
 
@@ -131,7 +130,7 @@ public class TuttiGliEventiAnonimo {
 					Window.alert("Evento Chiuso");
 					if(userGrid.isAttached()){
 						hPanels.remove(userGrid);
-//						panel.remove(userGrid);
+						//						panel.remove(userGrid);
 						panel.remove(riga);
 						panel.remove(lnome);
 						panel.remove(tnome);
@@ -144,7 +143,7 @@ public class TuttiGliEventiAnonimo {
 					inListJoiners();		
 					inListcomment();	
 					hPanels.add(userGrid);
-//					panel.add(userGrid);
+					//					panel.add(userGrid);
 					panel.add(lcomm);
 					panel.add(commentview);
 					commentview.setEmptyMessage("Nessun commento inserito per l'evento!");
@@ -178,11 +177,14 @@ public class TuttiGliEventiAnonimo {
 		inGetAllEvents();
 		panel.setSpacing(20);
 		panel.add(info);
-		panel.add(countryGrid);
+		info.setStyleName("gwt-Label");
+		panel.add(eventsGrid);
+		eventsGrid.setEmptyMessage("Non ci sono eventi");
 		panel.add(hPanels);
 		pannello.add(panel, "Eventi");
-panel.addStyleName("tabCenter");
-commentview.addStyleName("tables");
+		panel.addStyleName("tabCenter");
+		commentview.addStyleName("tables");
+		commentview.setEmptyMessage("Selezionare un evento");
 	}
 	public void inInsertJoin(){
 		greetingService.insertJoin(idevento, tnome.getText(), "Anonymus", "User" , 1, "-2", new AsyncCallback<String>() {
@@ -254,7 +256,7 @@ commentview.addStyleName("tables");
 			@Override
 			public void onSuccess(LinkedList<Evento> result) {
 
-				countryGrid.setData(EventsGridData.getRecords(result));
+				eventsGrid.setData(EventsGridData.getRecords(result));
 
 			}
 

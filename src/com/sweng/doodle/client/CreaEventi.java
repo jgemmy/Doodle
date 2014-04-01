@@ -2,7 +2,6 @@ package com.sweng.doodle.client;
 
 import java.util.Date;
 import java.util.LinkedList;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -58,6 +57,8 @@ public class CreaEventi {
 		panel.add(tto);
 		panel.add(carica);
 		pannello.add(panel, "Carica Evento");
+//		panel.addStyleName("tabRight");
+		tfrom.addStyleName("gwt-DateBox");
 		carica.addClickHandler(new ClickHandler() {
 
 			@Override
