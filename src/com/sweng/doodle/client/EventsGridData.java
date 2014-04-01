@@ -16,7 +16,7 @@ public class EventsGridData {
 
 	}    
 
-	public static ListGridRecord createRecord(String id, String nome, String luogo, String descrizione, Date dal, Date al, String check, String cause) {  
+	public static ListGridRecord createRecord(String id, String nome, String luogo, String descrizione, String dal, String al, String check, String cause) {  
 		ListGridRecord record = new ListGridRecord();  
 		record.setAttribute("id", id);  
 		record.setAttribute("nome", nome);  

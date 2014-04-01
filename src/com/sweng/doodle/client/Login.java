@@ -46,6 +46,7 @@ public class Login{
 		panel.add(Login);
 		panel.getElement().setAttribute("align", "center");
 		pannello.add(panel, "Log in");
+		panel.addStyleName("tabLeft");
 		tpassw.addKeyPressHandler(new KeyPressHandler(){
 			@Override
 			public void onKeyPress(KeyPressEvent event_){
@@ -55,6 +56,7 @@ public class Login{
 				}
 			}
 		});
+		
 		Login.addClickHandler(new ClickHandler() {
 
 			@Override

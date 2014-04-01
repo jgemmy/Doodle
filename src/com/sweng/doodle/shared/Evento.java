@@ -10,11 +10,11 @@ public class Evento implements Serializable {
 	 */
 	private static final long serialVersionUID = 1058023843439640732L;
 	private  String id, nome, luogo, descrizione,cause;
-	private  Date dal,al;
+	private  String dal,al;
 	private int check;
 	
 
-	public Evento (String id, String nome, String luogo,String descrizione, Date dal, Date al, int check, String cause) {
+	public Evento (String id, String nome, String luogo,String descrizione, String dal, String al, int check, String cause) {
 		this.id = id;
 		this.nome = nome;
 		this.luogo = luogo;
@@ -30,8 +30,8 @@ public class Evento implements Serializable {
 		this.nome = "no data";
 		this.luogo = "no data";
 		this.descrizione = "no data";
-		this.dal = new Date();
-		this.al = new Date();
+		this.dal = "no data";
+		this.al = "no data";
 		this.check = 0;
 		this.cause = "nodata";
 	}
@@ -54,11 +54,11 @@ public class Evento implements Serializable {
 		return descrizione;
 	}
 
-	public Date getDal() {
+	public String getDal() {
 		return dal;
 	}
 
-	public Date getAl() {
+	public String getAl() {
 		return al;
 	}
 	public int getCheck() {

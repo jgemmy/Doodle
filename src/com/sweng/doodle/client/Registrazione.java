@@ -49,7 +49,8 @@ public class Registrazione extends Composite  {
 		panel.add(singup);
 		pannello.add(panel, "Registrazione");
 		panel.getElement().setAttribute("align", "center"); 
-
+		panel.setWidth("500");
+panel.addStyleName("tabRight");
 
 		trpassw.addKeyPressHandler(new KeyPressHandler(){
 			@Override

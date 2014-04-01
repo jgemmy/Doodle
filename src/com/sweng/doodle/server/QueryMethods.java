@@ -291,7 +291,7 @@ public class QueryMethods {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding All Events");
-				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7),rs.getInt(8),rs.getString(9)));
+				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getString(9)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -307,7 +307,7 @@ public class QueryMethods {
 			rs = statement.executeQuery(select);
 			while(rs.next()) {
 				System.out.println("Adding User Events");
-				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7),rs.getInt(8),rs.getString(9)));
+				list.add(new Evento(rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getString(9)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -363,7 +363,8 @@ public class QueryMethods {
 				+ "(idEvento, nome, nick, stato, disponibilita) " + "VALUES"
 				+ "('"+idEvento+"','"+nome+"','"+nick+"','"+stato+"','"+disp+"')";
 		statement.executeUpdate(insert);
-		System.out.println("Created join in given database...Utente inscritto all evento");
+		
+		System.out.println("Created join in given database...Utente inscritto all evento"+insert);
 		return name;
 	}
 
@@ -384,14 +385,15 @@ public class QueryMethods {
 	//		}
 	//		return disp;
 	//	}
-	public static String checkInsertJoin(Statement statement,String idEvento,String idKey) throws SQLException{
+	public static String checkInsertJoins(Statement statement,String idEvento,String idKey) throws SQLException{
 		String disp= "-1";
+		//old SELECT partecipanti.disponibilita FROM eventi INNER JOIN partecipanti ON eventi.id = partecipanti.idEvento WHERE partecipanti.idEvento = '6' AND eventi.idKey = '1'
+		//SELECT partecipanti.disponibilita FROM users LEFT JOIN partecipanti ON users.nick = partecipanti.nick WHERE partecipanti.idEvento = '6' AND users.ID = 2
 		String check = "SELECT "+TABLENAME3+".disponibilita " +
-				"FROM "+TABLENAME2+" INNER JOIN "+TABLENAME3+" " +
-				"ON "+TABLENAME2+".id = "+TABLENAME3+".idEvento " + 
+				"FROM "+TABLENAME+" LEFT JOIN "+TABLENAME3+" " +
+				"ON "+TABLENAME+".nick = "+TABLENAME3+".nick " + 
 				"WHERE "+TABLENAME3+".idEvento = '"+idEvento+"' " +
-				"AND "+TABLENAME2+".idKey = '"+idKey+"'";
-
+				"AND "+TABLENAME+".ID = "+idKey;
 		ResultSet rs = statement.executeQuery(check);
 		while (rs.next()) {
 
@@ -446,7 +448,6 @@ public class QueryMethods {
 	public static LinkedList<Commento> getAllCommenti(Statement statement, String idevento){
 		LinkedList<Commento> list = new LinkedList<Commento>();	
 		String select = "SELECT iduser,commento,il FROM "+TABLENAME4+" WHERE idEvento = "+idevento;
-		System.out.println("Query: "+select);
 		ResultSet rs = null;
 		try {
 			rs = statement.executeQuery(select);

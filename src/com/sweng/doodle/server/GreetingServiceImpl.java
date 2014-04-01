@@ -270,9 +270,12 @@ GreetingService {
 			QueryMethods.creatabellapartecipanti(statement);
 			//				System.out.println(QueryMethods.checkInsertJoin(statement, idEvento, id));
 			//				
-			if(QueryMethods.checkInsertJoin(statement, idEvento,idKey).contentEquals("1")){
+			if(idKey.contentEquals("-2")){QueryMethods.insertJoin(statement, idEvento, nome, nick, stato, disp);
+			return "Utente Anonimo Iscritto";}
+			if(QueryMethods.checkInsertJoins(statement, idEvento,idKey).contentEquals("1")){
 				return " Fallita: Gia Inscritto all evento";
 			}
+			else
 			QueryMethods.insertJoin(statement, idEvento, nome, nick, stato, disp);
 
 		} catch (SQLException e) {
