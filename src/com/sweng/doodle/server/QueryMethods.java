@@ -94,17 +94,17 @@ public class QueryMethods {
 	}
 	/*REGISTRAZIONE UTENTE*/
 
-	public static String checkExNick(Statement statement) throws SQLException{
-		String select = "SELECT nick FROM "+TABLENAME;
-		String nick = "";
+	public static String checkExNick(Statement statement,String nick) throws SQLException{
+		String select = "SELECT * FROM "+TABLENAME +" WHERE nick = '"+nick+"'";
+		String result = "empty";
 		ResultSet rs = statement.executeQuery(select);
 		while (rs.next()) {
 
-			nick = rs.getString("nick");
+			result = rs.getString(3);
 			System.out.println("disponibilita: " +nick);
 
 		}
-		return nick;
+		return result;
 	}
 	public static void insertUser(Statement statement, String nome, String nick, String password,String mail) throws SQLException{
 		String insertTableSQL = "INSERT INTO "+TABLENAME

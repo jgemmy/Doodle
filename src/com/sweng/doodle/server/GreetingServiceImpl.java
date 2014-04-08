@@ -62,8 +62,8 @@ GreetingService {
 			conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
 			statement = conn.createStatement();
 			QueryMethods.creatabella(statement, QueryMethods.TABLENAME);
-			if(QueryMethods.checkExNick(statement).contentEquals(nick)){
-				return returned = nick+": Username gia impegnato";
+			if(QueryMethods.checkExNick(statement,nick).contentEquals(nick)){
+				return returned = "Username gia impegnato";
 			} else QueryMethods.insertUser(statement, nome, nick, password,mail);
 
 		} catch (SQLException e) {

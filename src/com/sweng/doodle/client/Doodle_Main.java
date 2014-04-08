@@ -65,6 +65,7 @@ public class Doodle_Main extends Composite{
 			sign.selectTab(0);
 			hPanel.setSpacing(30);
 			RootPanel.get().add(hPanel);
+			hPanel.addStyleName("tabCenter");
 			pannello.selectTab(0);	
 
 		}

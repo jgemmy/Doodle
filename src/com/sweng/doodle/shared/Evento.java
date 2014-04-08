@@ -1,6 +1,5 @@
 package com.sweng.doodle.shared;
 import java.io.Serializable;
-import java.util.Date;
 
 public class Evento implements Serializable {
 	

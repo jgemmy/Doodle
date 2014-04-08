@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.smartgwt.client.widgets.grid.ListGrid;
 
 public class Login{
 
@@ -27,7 +26,6 @@ public class Login{
 	public static String username;
 	public static String nome= "anonymous";
 	VerticalPanel panel ;
-	ListGrid coockie = new ListGrid(); 
 	TabPanel pannello;
 	final long DURATION = 1000 * 60 * 60 * 24 * 14;
 	Date expires = new Date(System.currentTimeMillis() + DURATION);
@@ -35,7 +33,7 @@ public class Login{
 	final Button Login = new Button("Log in");
 	public Login(final TabPanel pannello){
 		this.pannello = pannello;
-	Label user= new Label("User:");
+	Label user= new Label("Username:");
 		Label passw = new Label("Password:");
 		panel = new VerticalPanel();
 		panel.setHeight("50");
