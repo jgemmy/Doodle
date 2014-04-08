@@ -169,3 +169,35 @@ $RECYCLE.BIN/
 
 #Mr Developer
 .mr.developer.cfg
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+*CMakeFiles*
+*CMakeCache*
+*.aux
+*.log
+*.blg
+*.bbl
+*.dvi
+*.ps
+*.toc
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.nav
+*.pyg
+*.snm
+
