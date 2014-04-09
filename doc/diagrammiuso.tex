@@ -3,15 +3,13 @@
 \section{Registrazione}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.55]{img/registrazione.png}
+\includegraphics[scale=0.30]{img/use/Reg.png}
 \caption{Registrazione}
 \label{fig:registrazione}
 \end{figure}
 \begin{table}[H]
 \begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
 \toprule
-%\textbf{Nome} & \textbf{Descrizione} \\
-%\midrule
 NOME & Registrazione;\\
 \hline
 OBBIETTIVO: & Registrare l utente nella applicazione;\\
@@ -27,7 +25,7 @@ ATTORE PRIMARIO: & Utente;\\
 ATTORI SECONDARI: & Sistema;\\
 \bottomrule
 \end{tabular}
-\caption{Registrazione}
+\caption{Registrazione Utente}
 \label{table:reg}
 \end{table}
 FLUSSO PRINCIPALE:
@@ -37,26 +35,25 @@ FLUSSO PRINCIPALE:
 \item Controllo dei campi non opzionali e necessari alla registrazione;
 \item Doppio inserimento password;
 \end{enumerate}
-\item Controllo del nickname;
-\item Ricerca del nickname;
+\item Controllo del username;
+\item Ricerca del username;
 \begin{enumerate}
-\item Il sistema verifica che l'utente (nickname univoco) non sia già registrato;
+\item Il sistema verifica che l'utente (username univoco) non sia già registrato;
 \end{enumerate}
 \item Avviene la registrazione del utente;
 \item La registrazione è avvenuta con successo;
 \end{enumerate}
+
 \section{Login}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.55]{img/registrazione.png}
-\caption{Registrazione}
-\label{fig:registrazione}
+\includegraphics[scale=0.30]{img/use/Log.png}
+\caption{Login}
+\label{fig:Login}
 \end{figure}
 \begin{table}[H]
 \begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
 \toprule
-%\textbf{Nome} & \textbf{Descrizione} \\
-%\midrule
 NOME & Login;\\
 \hline
 OBBIETTIVO: & Ottenere accesso all'applicazione;\\
@@ -72,7 +69,7 @@ ATTORE PRIMARIO: & Utente;\\
 ATTORI SECONDARI: & Sistema;\\
 \bottomrule
 \end{tabular}
-\caption{Login}
+\caption{Login Utente}
 \label{table:log}
 \end{table}
 FLUSSO PRINCIPALE:
@@ -85,18 +82,17 @@ FLUSSO PRINCIPALE:
 \item L'Utente ottiene accesso al' applicazione;
 \end{enumerate}
 
-\section{Partecipazione ad evento – Utente senza accesso }
+\section{Partecipazione ad evento – Utente senza accesso}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.55]{img/registrazione.png}
-\caption{Registrazione}
-\label{fig:registrazione}
+\includegraphics[scale=0.30]{img/use/PartecipaSa.png}
+\caption{Partecipazione senza accesso}
+\label{fig:ParteSA}
 \end{figure}
+
 \begin{table}[H]
 \begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
 \toprule
-%\textbf{Nome} & \textbf{Descrizione} \\
-%\midrule
 NOME & Partecipazione ad evento senza accesso;\\
 \hline
 OBBIETTIVO: & L'utente rende la propria disponibilità per un evento senza essere registrato all'applicazione;\\
@@ -104,7 +100,7 @@ OBBIETTIVO: & L'utente rende la propria disponibilità per un evento senza esser
 PRE-CONDIZIONE & Nessuna;\\
 \hline
 SUCCESSO: & L utente si rende disponibile per tale evento;\\
-\hline
+	\hline
 FALLIMENTO: & La procedura non va a buon fine;\\
 \hline
 ATTORE PRIMARIO: & Utente;\\
@@ -113,13 +109,13 @@ ATTORI SECONDARI: & Sistema;\\
 \bottomrule
 \end{tabular}
 \caption{Partecipazione ad evento senza accesso}
-\label{table:par1}
+\label{table:parSA}
 \end{table}
 FLUSSO PRINCIPALE:
 \begin{enumerate}
 \item L'utente seleziona l'evento desiderato e visualizza tutte le informazioni riguardanti l'evento;
 \begin{enumerate}
-\item L'utente visualizza la lista di tutti gli utenti inscritti all'evento e il nickname dell'utente che l ha creato;
+\item L'utente visualizza la lista di tutti gli utenti inscritti all'evento e il username dell'utente che l ha creato;
 \item L'utente visualizza la lista di tutti i commenti per l evento selezionato;
 \end{enumerate}
 \item L'Utente inserisce il proprio nome nel apposito spazio;
@@ -130,19 +126,16 @@ FLUSSO PRINCIPALE:
 \item L'Utente si rende disponibile per tale evento;
 \end{enumerate}
 
-\section{Partecipazione ad evento – Utente con accesso }
-
-\begin{figure}[H]
+\section{Partecipazione ad evento – Utente con accesso}
+\begin{figure}[h!]
 \centering
-\includegraphics[scale=0.55]{img/registrazione.png}
-\caption{Registrazione}
-\label{fig:registrazione}
+\includegraphics[scale=0.30]{img/use/PartecipaCa.png}
+\caption{Partecipazione con accesso}
+\label{fig:ParteCA}
 \end{figure}
 \begin{table}[H]
 \begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
 \toprule
-%\textbf{Nome} & \textbf{Descrizione} \\
-%\midrule
 NOME & Partecipazione ad evento con accesso;\\
 \hline
 OBBIETTIVO: & L'utente rende la propria disponibilità per un evento dopo aver eseguito l'accesso all'applicazione;\\
@@ -161,18 +154,17 @@ ATTORI SECONDARI: & Sistema;\\
 \caption{Partecipazione ad evento con accesso}
 \label{table:par2}
 \end{table}
-
 FLUSSO PRINCIPALE:
 \begin{enumerate}
 \item L'Utente seleziona l'evento desiderato e visualizza tutte le informazioni riguardanti l'evento;
 \begin{enumerate}
-\item L'Utente visualizza la lista di tutti gli utenti inscritti all'evento e il nickname dell'utente che l ha creato;
+\item L'Utente visualizza la lista di tutti gli utenti inscritti all'evento e il username dell'utente che l ha creato;
 \item L'Utente visualizza la lista di tutti i commenti per l evento selezionato;
 \end{enumerate}
 \item L'Utente inoltra la richiesta d inscrizione;
 \begin{enumerate}
 \item Il Sistema recupera il nome del utente che ha eseguito l accesso;
-\item Il Sistema recupera il nickname del utente che ha eseguito l accesso;
+\item Il Sistema recupera il username del utente che ha eseguito l accesso;
 \end{enumerate}
 \item L'Utente si rende disponibile per tale evento;
 \begin{enumerate}
@@ -180,18 +172,16 @@ FLUSSO PRINCIPALE:
 \end{enumerate}
 \end{enumerate}
 
-\section{Chiusura evento}
+\section{Chiudere evento}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.55]{img/registrazione.png}
-\caption{Registrazione}
-\label{fig:registrazione}
+\includegraphics[scale=0.30]{img/use/Chiude.png}
+\caption{Chiudere un evento}
+\label{fig:Chiudere}
 \end{figure}
 \begin{table}[H]
 \begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
 \toprule
-%\textbf{Nome} & \textbf{Descrizione} \\
-%\midrule
 NOME & Chiusura di un evento;\\
 \hline
 OBBIETTIVO: & L utente chiude un evento;\\
@@ -208,10 +198,9 @@ ATTORE PRIMARIO: & Utente;\\
 ATTORI SECONDARI: & Sistema;\\
 \bottomrule
 \end{tabular}
-\caption{Chiusura di un evento}
+\caption{Chiudere un evento}
 \label{table:chiude}
 \end{table}	
-
 FLUSSO PRINCIPALE:
 \begin{enumerate}
 \item L' utente seleziona l'evento desiderato;
@@ -223,19 +212,16 @@ FLUSSO PRINCIPALE:
 \item L utente ha chiuso l'evento;
 \end{enumerate}
 
-
 \section{Eliminazione evento}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.55]{img/registrazione.png}
-\caption{Registrazione}
-\label{fig:registrazione}
+\includegraphics[scale=0.30]{img/use/Elimina.png}
+\caption{Eliminare un evento}
+\label{fig:Elimina}
 \end{figure}
 \begin{table}[H]
 \begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
 \toprule
-%\textbf{Nome} & \textbf{Descrizione} \\
-%\midrule
 NOME & Eliminazione di un evento;\\
 \hline
 OBBIETTIVO: & L utente elimina un evento;\\
@@ -252,10 +238,9 @@ ATTORE PRIMARIO: & Utente;\\
 ATTORI SECONDARI: & Sistema;\\
 \bottomrule
 \end{tabular}
-\caption{Chiusura di un evento}
-\label{table:chiude}
+\caption{Eliminare di un evento}
+\label{table:elimina}
 \end{table}	
-
 FLUSSO PRINCIPALE:
 \begin{enumerate}
 \item L'utente seleziona l'evento desiderato;
@@ -264,16 +249,13 @@ FLUSSO PRINCIPALE:
 \item Il sistema controlla che l'utente che vuole eliminare l evento sia il creatore dello stesso;
 \end{enumerate}
 \item L'utente ha eliminato l'evento;
-\item L utente ha chiuso l'evento;
 \end{enumerate}
 
-
 \section{Diagramma casi d'uso completo}
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.55]{img/registrazione.png}
-\caption{Registrazione}
-\label{fig:registrazione}
+\begin{figure}[h]
+\flushleft
+\includegraphics[width=16cm, height=18.2cm]{img/use/Diagcompletovert1.png}
+\caption{Diagramma casi d'uso completo}
+\label{fig:diagcompl}
 \end{figure}
-
 
