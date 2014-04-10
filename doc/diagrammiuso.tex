@@ -3,7 +3,7 @@
 \section{Registrazione}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.30]{img/use/Reg.png}
+\includegraphics[scale=0.60]{img/use/Reg.png}
 \caption{Registrazione}
 \label{fig:registrazione}
 \end{figure}
@@ -47,7 +47,7 @@ FLUSSO PRINCIPALE:
 \section{Login}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.30]{img/use/Log.png}
+\includegraphics[scale=0.40]{img/use/Log.png}
 \caption{Login}
 \label{fig:Login}
 \end{figure}
@@ -58,9 +58,9 @@ NOME & Login;\\
 \hline
 OBBIETTIVO: & Ottenere accesso all'applicazione;\\
 \hline
-PRE-CONDIZIONE & L'Utente deve essere registrato all'applicazione;\\
+PRE-CONDIZIONE & L'utente deve essere registrato all'applicazione;\\
 \hline
-SUCCESSO: & L'Utente ottiene accesso all'applicazione;\\
+SUCCESSO: & L'utente ottiene accesso all'applicazione;\\
 \hline
 FALLIMENTO: & La procedura non va a buon fine;\\
 \hline
@@ -74,18 +74,57 @@ ATTORI SECONDARI: & Sistema;\\
 \end{table}
 FLUSSO PRINCIPALE:
 \begin{enumerate}
-\item L'Utente immette le proprie credenziali;
-\item L'Utente inoltra la richiesta di accesso;
+\item L'utente immette le proprie credenziali;
+\item L'utente inoltra la richiesta di accesso;
 \begin{enumerate}
 \item Il sistema verifica la corrispondenza delle credenziali;
 \end{enumerate}
-\item L'Utente ottiene accesso al' applicazione;
+\item L'utente ottiene accesso al' applicazione;
+\end{enumerate}
+
+\section{Crea Evento}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.60]{img/use/creaevento.png}
+\caption{Crea evento}
+\label{fig:creaeve}
+\end{figure}
+\begin{table}[H]
+\begin{tabular}{p{0.35\textwidth}|p{0.65\textwidth}}
+\toprule
+NOME & Crea evento;\\
+\hline
+OBBIETTIVO: & Creare un evento;\\
+\hline
+PRE-CONDIZIONE & L'utente deve essere registrato all'applicazione;
+L'utente deve aver eseguito l'accesso all'applicazione;\\
+\hline
+SUCCESSO: & L'utente crea l'evento;\\
+\hline
+FALLIMENTO: & La procedura non va a buon fine;\\
+\hline
+ATTORE PRIMARIO: & Utente;\\
+\hline
+ATTORI SECONDARI: & Sistema;\\
+\bottomrule
+\end{tabular}
+\caption{Crea evento}
+\label{table:creaevento}
+\end{table}
+FLUSSO PRINCIPALE:
+\begin{enumerate}
+\item L'utente immette i dati necessari alla creazione dell'evento;
+\item L'utente inoltra la richiesta di creazione;
+\begin{enumerate}
+\item Il sistema verifica i dati inseriti;
+\end{enumerate}
+\item L'utente ha creato l'evento;
 \end{enumerate}
 
 \section{Partecipazione ad evento – Utente senza accesso}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.30]{img/use/PartecipaSa.png}
+\includegraphics[scale=0.60]{img/use/PartecipaSa.png}
 \caption{Partecipazione senza accesso}
 \label{fig:ParteSA}
 \end{figure}
@@ -99,7 +138,7 @@ OBBIETTIVO: & L'utente rende la propria disponibilità per un evento senza esser
 \hline
 PRE-CONDIZIONE & Nessuna;\\
 \hline
-SUCCESSO: & L utente si rende disponibile per tale evento;\\
+SUCCESSO: & L'utente si rende disponibile per tale evento;\\
 	\hline
 FALLIMENTO: & La procedura non va a buon fine;\\
 \hline
@@ -115,21 +154,21 @@ FLUSSO PRINCIPALE:
 \begin{enumerate}
 \item L'utente seleziona l'evento desiderato e visualizza tutte le informazioni riguardanti l'evento;
 \begin{enumerate}
-\item L'utente visualizza la lista di tutti gli utenti inscritti all'evento e il username dell'utente che l ha creato;
+\item L'utente visualizza la lista di tutti gli utenti iscritti all'evento e il username dell'utente che l ha creato;
 \item L'utente visualizza la lista di tutti i commenti per l evento selezionato;
 \end{enumerate}
-\item L'Utente inserisce il proprio nome nel apposito spazio;
+\item L'utente inserisce il proprio nome nel apposito spazio;
 \begin{enumerate}
 \item Il sistema verifica che l'utente ha inserito correttamente il suo nome;
 \end{enumerate}
-\item L'Utente inoltra la richiesta d inscrizione;
+\item L'utente inoltra la richiesta d iscrizione;
 \item L'Utente si rende disponibile per tale evento;
 \end{enumerate}
 
 \section{Partecipazione ad evento – Utente con accesso}
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.30]{img/use/PartecipaCa.png}
+\includegraphics[scale=0.60]{img/use/PartecipaCa.png}
 \caption{Partecipazione con accesso}
 \label{fig:ParteCA}
 \end{figure}
@@ -140,9 +179,9 @@ NOME & Partecipazione ad evento con accesso;\\
 \hline
 OBBIETTIVO: & L'utente rende la propria disponibilità per un evento dopo aver eseguito l'accesso all'applicazione;\\
 \hline
-PRE-CONDIZIONE & L' Utente deve essere registrato all'applicazione;\\
+PRE-CONDIZIONE & L'utente deve essere registrato all'applicazione;\\
 \hline
-SUCCESSO: & L utente si rende disponibile per tale evento;\\
+SUCCESSO: & L'utente si rende disponibile per tale evento;\\
 \hline
 FALLIMENTO: & La procedura non va a buon fine;\\
 \hline
@@ -156,17 +195,17 @@ ATTORI SECONDARI: & Sistema;\\
 \end{table}
 FLUSSO PRINCIPALE:
 \begin{enumerate}
-\item L'Utente seleziona l'evento desiderato e visualizza tutte le informazioni riguardanti l'evento;
+\item L'utente seleziona l'evento desiderato e visualizza tutte le informazioni riguardanti l'evento;
 \begin{enumerate}
-\item L'Utente visualizza la lista di tutti gli utenti inscritti all'evento e il username dell'utente che l ha creato;
+\item L'utente visualizza la lista di tutti gli utenti iscritti all'evento e il username dell'utente che l ha creato;
 \item L'Utente visualizza la lista di tutti i commenti per l evento selezionato;
 \end{enumerate}
-\item L'Utente inoltra la richiesta d inscrizione;
+\item L'utente inoltra la richiesta d iscrizione;
 \begin{enumerate}
 \item Il Sistema recupera il nome del utente che ha eseguito l accesso;
 \item Il Sistema recupera il username del utente che ha eseguito l accesso;
 \end{enumerate}
-\item L'Utente si rende disponibile per tale evento;
+\item L'utente si rende disponibile per tale evento;
 \begin{enumerate}
 \item L'utente può lasciare commenti per l evento selezionato;
 \end{enumerate}
@@ -175,7 +214,7 @@ FLUSSO PRINCIPALE:
 \section{Chiudere evento}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.30]{img/use/Chiude.png}
+\includegraphics[scale=0.60]{img/use/Chiude.png}
 \caption{Chiudere un evento}
 \label{fig:Chiudere}
 \end{figure}
@@ -186,8 +225,8 @@ NOME & Chiusura di un evento;\\
 \hline
 OBBIETTIVO: & L utente chiude un evento;\\
 \hline
-PRE-CONDIZIONE & L'Utente deve essere registrato all'applicazione;
-L'Utente è il creatore dell'evento;\\
+PRE-CONDIZIONE & L'utente deve essere registrato all'applicazione;
+L'utente è il creatore dell'evento;\\
 \hline
 SUCCESSO: & L utente chiude correttamente l evento;\\
 \hline
@@ -203,8 +242,8 @@ ATTORI SECONDARI: & Sistema;\\
 \end{table}	
 FLUSSO PRINCIPALE:
 \begin{enumerate}
-\item L' utente seleziona l'evento desiderato;
-\item L' utente inserisce le eventuali cause che hanno portato alla chiusura dell'evento;
+\item L'utente seleziona l'evento desiderato;
+\item L'utente inserisce le eventuali cause che hanno portato alla chiusura dell'evento;
 \item L'utente inoltra la richiesta di chiusura dell'evento;
 \begin{enumerate}
 \item Il Sistema controlla che l'utente che vuole chiudere l evento sia il creatore dello stesso;
@@ -215,7 +254,7 @@ FLUSSO PRINCIPALE:
 \section{Eliminazione evento}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.30]{img/use/Elimina.png}
+\includegraphics[scale=0.60]{img/use/Elimina.png}
 \caption{Eliminare un evento}
 \label{fig:Elimina}
 \end{figure}
@@ -224,10 +263,10 @@ FLUSSO PRINCIPALE:
 \toprule
 NOME & Eliminazione di un evento;\\
 \hline
-OBBIETTIVO: & L utente elimina un evento;\\
+OBBIETTIVO: & L'utente elimina un evento;\\
 \hline
-PRE-CONDIZIONE & L' Utente deve essere registrato all'applicazione;
-L'Utente è il creatore dell'evento;\\
+PRE-CONDIZIONE & L'utente deve essere registrato all'applicazione;
+L'utente è il creatore dell'evento;\\
 \hline
 SUCCESSO: & L utente elimina correttamente l evento;\\
 \hline
@@ -252,10 +291,12 @@ FLUSSO PRINCIPALE:
 \end{enumerate}
 
 \section{Diagramma casi d'uso completo}
-\begin{figure}[h]
-\flushleft
-\includegraphics[width=16cm, height=18.2cm]{img/use/Diagcompletovert1.png}
-\caption{Diagramma casi d'uso completo}
+\begin{figure}[H]
+\centering
+\includegraphics[width=16cm, height=14cm]{img/use/Diagusocompleto.png}
+\caption{Diagramma casi d'uso}
 \label{fig:diagcompl}
 \end{figure}
+
+
 
