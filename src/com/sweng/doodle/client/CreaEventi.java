@@ -1,7 +1,6 @@
 package com.sweng.doodle.client;
 
 import java.util.Date;
-import java.util.LinkedList;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -13,7 +12,6 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Utils;
 
 
@@ -180,23 +178,7 @@ public class CreaEventi {
 		});
 	}
 	
-	public void injuve(){
-		greetingService.getAllCommenti(idevento, new AsyncCallback<LinkedList<Commento>>() {
-			
-			@Override
-			public void onSuccess(LinkedList<Commento> result) {
-				// TODO Auto-generated method stub
-				Window.alert("yo");
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-	}
+	
 }
 
 

@@ -33,7 +33,7 @@ public class Login{
 	final Button Login = new Button("Log in");
 	public Login(final TabPanel pannello){
 		this.pannello = pannello;
-	Label user= new Label("Username:");
+		Label user= new Label("Username:");
 		Label passw = new Label("Password:");
 		panel = new VerticalPanel();
 		panel.setHeight("50");
@@ -51,20 +51,23 @@ public class Login{
 			@Override
 			public void onKeyPress(KeyPressEvent event_){
 				boolean enterPressed = KeyCodes.KEY_ENTER == event_.getNativeEvent().getKeyCode();
-				if ( enterPressed && tuser.getText().length() != 0 && tpassw.getText().length() == 0 ){
+				if ( (enterPressed) && (!(tuser.getText().length() == 0)) && 
+						(!(tpassw.getText().length() == 0 )) && (!(tuser.getText().contains("'"))) && 
+						(!(tpassw.getText().contains("'")))){
 					inLogin();
 				}
 			}
 		});
-		
+
 		Login.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				if ((event.getSource() == Login) &&!(tuser.getText().length() == 0) &&!(tpassw.getText().length() == 0)) 
+				if ((event.getSource() == Login) && (!(tuser.getText().length() == 0)) && (!(tpassw.getText().length() == 0)) 
+						&& (!(tuser.getText().contains("'"))) && (!(tpassw.getText().contains("'"))) ) 
 					inLogin();
-					
+
 			}
 		});
 
@@ -82,19 +85,20 @@ public class Login{
 					username = tuser.getText();
 					Cookies.setCookie("MyCookies", result , expires);
 					Window.alert("Benvenuto: "+username+" Login Effettuato");
-					
+
 					Window.Location.reload();
-					
+
 				}
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				
+				Window.alert("username e/o password errati");
+
 			}
 		});
 	}
 
-	
+
 }
 
 

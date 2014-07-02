@@ -75,7 +75,7 @@ GreetingService {
 			e.printStackTrace();
 		}
 		QueryMethods.close(statement, conn);
-		return returned = nick+": Registazione Effettuata";
+		return returned = nick;
 	}
 
 	@Override
@@ -383,8 +383,45 @@ GreetingService {
 	}
 
 
+public void rimuoviEvento(String idEvento){
+	Connection conn = null;
+	Statement statement = null;
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+		conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+		statement = conn.createStatement();
+		QueryMethods.deleteIdEvent(statement, idEvento);
+		}
+	catch(Exception e){
+		
+	}
+}
+public void rimuoviCommento(String idUser){
+	Connection conn = null;
+	Statement statement = null;
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+		conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+		statement = conn.createStatement();
+		QueryMethods.deleteCommento(statement, idUser);
+		}
+	catch(Exception e){
+		
+	}
+}
 
 
-
-
+public void rimuoviUtente(String idUser){
+	Connection conn = null;
+	Statement statement = null;
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+		conn =  DriverManager.getConnection(QueryMethods.DB_URL, QueryMethods.USER, QueryMethods.PASS);
+		statement = conn.createStatement();
+		QueryMethods.deleteUtente(statement, idUser);
+		}
+	catch(Exception e){
+		
+	}
+}
 }

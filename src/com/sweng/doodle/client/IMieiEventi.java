@@ -30,13 +30,11 @@ import com.sweng.doodle.shared.Evento;
 import com.sweng.doodle.shared.User;
 
 public class IMieiEventi {
-	String nick;
 	Button close = new Button("Chiudi Evento");
 	Button delete = new Button("Cancella Evento");
-
 	HorizontalPanel hPanels = new HorizontalPanel();
-
 	HorizontalPanel hChiudi = new HorizontalPanel();
+	String nick;
 	String idclick;
 	Label lcause = new Label("Inserire cause chiusura/rimozione evento :");
 	Label lcomm = new Label("Lista Commenti: ");
@@ -48,14 +46,10 @@ public class IMieiEventi {
 	final VerticalPanel panel = new VerticalPanel();	
 	final DetailViewer detailViewer = new DetailViewer();  
 	final DetailViewer commentview = new DetailViewer();
-
 	HTML riga = new HTML("<hr>");
-
-
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-	//	public static LinkedList<Evento> evento ;
-	//	CellTable<Evento> table = new CellTable<Evento>();
 
+	
 	public IMieiEventi(final TabPanel pannello){				
 
 		detailViewer.setWidth(450);  
@@ -109,9 +103,10 @@ public class IMieiEventi {
 		hChiudi.add(delete);	
 		userGrid.setFields(new ListGridField[] {nomeField, nickField, stateField});
 		userGrid.setHeaderHeight(40);
-
 		userGrid.setHeaderSpans(
 				new HeaderSpan("Utenti Iscritti", new String[]{"nome", "stato","nick"}));
+
+		
 		commentGrid.setWidth(550);  
 		commentGrid.setHeight(224);  
 		commentGrid.setShowAllRecords(true);  
@@ -124,6 +119,7 @@ public class IMieiEventi {
 		hPanels.setSpacing(10);
 		commentGrid.setFields(new ListGridField[] {nicknameField, commField});
 
+		
 		commentview.setWidth(500);  
 		commentview.setFields(  
 				new DetailViewerField("nickname", "Nick - Name"),  
@@ -147,14 +143,12 @@ public class IMieiEventi {
 					Window.alert("Evento Chiuso");
 					if(userGrid.isAttached()){
 						hPanels.remove(userGrid);
-						//						panel.remove(userGrid);
 						panel.remove(riga);
 						panel.remove(lcause);
 						panel.remove(tcause);
 						panel.remove(lcomm);
 						panel.remove(commentview);
 						panel.remove(hChiudi);
-						//						panel.remove(delete);
 					}
 				}
 
@@ -162,7 +156,6 @@ public class IMieiEventi {
 					inListJoiners();
 					inListcomment();
 					hPanels.add(userGrid);
-					//					panel.add(userGrid);
 					userGrid.setEmptyMessage("Nessun Utente è inscritto all'evento!");
 					panel.add(lcomm);
 					panel.add(commentview);
@@ -171,12 +164,10 @@ public class IMieiEventi {
 					panel.add(lcause);
 					panel.setCellHorizontalAlignment(commentview,HasHorizontalAlignment.ALIGN_CENTER);
 					panel.setCellHorizontalAlignment(lcause,HasHorizontalAlignment.ALIGN_CENTER);
-
 					panel.add(tcause);
 					panel.add(hChiudi);
 					panel.setCellHorizontalAlignment(tcause,HasHorizontalAlignment.ALIGN_CENTER);
 					panel.setCellHorizontalAlignment(hChiudi,HasHorizontalAlignment.ALIGN_CENTER);
-					//					panel.add(delete);	
 
 				}	
 

@@ -150,10 +150,10 @@ public class QueryMethods {
 		statement.executeUpdate(removeUser);   
 	}
 
-	public static void deleteIdUser(Statement statement, int id) throws SQLException{
-		String removeUser = "DELETE FROM "+TABLENAME+" WHERE id = "+id;
+	public static void deleteUtente(Statement statement, String nick) throws SQLException{
+		String removeUser = "DELETE FROM "+TABLENAME+" WHERE nick = '"+nick+"'";
 		statement.executeUpdate(removeUser);
-		System.out.println("Utente Rimosso ID: " + id);
+		System.out.println("Utente Rimosso nick: " + nick);
 	}
 
 	public static void changepassword(Statement stmt,String password) throws SQLException{
@@ -246,8 +246,8 @@ public class QueryMethods {
 	}
 
 	public static String deleteIdEvent(Statement statement, String id,String idKey) throws SQLException{
-
 		String removeEvent = "DELETE FROM "+TABLENAME2+" WHERE idKey = "+idKey+" AND id = "+id;
+System.out.println(removeEvent);
 		String eventid = id ;
 		statement.executeUpdate(removeEvent);
 		System.out.println("Evento Rimosso ID: " + id);
@@ -256,6 +256,28 @@ public class QueryMethods {
 
 	}
 
+	public static String deleteIdEvent(Statement statement, String id) throws SQLException{
+		String removeEvent = "DELETE FROM "+TABLENAME2+" WHERE id = "+id;
+		System.out.println(removeEvent);
+		String eventid = id ;
+		statement.executeUpdate(removeEvent);
+		System.out.println("Evento Rimosso ID: " + id);
+
+		return eventid;
+
+	}
+	
+
+	public static void deleteCommento(Statement statement, String idUser) throws SQLException{
+		String deleteCommento = "DELETE FROM "+TABLENAME4+" WHERE iduser = '"+idUser+"'";
+		System.out.println(deleteCommento);
+		statement.executeUpdate(deleteCommento);
+		System.out.println("Commento Rimosso idUser: " + idUser);
+
+		return;
+
+	}
+	
 	public static String closeIdEvent(Statement statement, String id,String idKey,String commento) throws SQLException{
 
 		String closeEvent = "UPDATE "+TABLENAME2+" SET checks = 0 ,causechiuso = '"+commento+"' WHERE idKey = "+idKey+" AND id = "+id;

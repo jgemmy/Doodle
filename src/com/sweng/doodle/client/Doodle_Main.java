@@ -87,7 +87,6 @@ public class Doodle_Main extends Composite{
 
 			@Override
 			public void onClick(ClickEvent event) {
-
 				Cookies.setCookie("MyCookies","-1");
 				Window.Location.reload();
 				Window.alert("Logout Eseguito");

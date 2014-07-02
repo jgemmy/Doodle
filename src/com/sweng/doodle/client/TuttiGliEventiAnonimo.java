@@ -161,7 +161,7 @@ public class TuttiGliEventiAnonimo {
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							if ((event.getSource() == salva) && (!(tnome.getText().length() == 0)))
+							if ((event.getSource() == salva) && (!(tnome.getText().length() == 0)) && (!(tnome.getText().contains("'"))))
 								inInsertJoin();	
 						}
 					});

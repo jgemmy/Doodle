@@ -3,9 +3,6 @@ package com.sweng.doodle.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -50,39 +47,7 @@ public class Registrazione extends Composite  {
 		pannello.add(panel, "Registrazione");
 		panel.getElement().setAttribute("align", "center"); 
 		panel.setWidth("500");
-panel.addStyleName("tabRight");
-
-		trpassw.addKeyPressHandler(new KeyPressHandler(){
-			@Override
-			public void onKeyPress(KeyPressEvent event_){
-				boolean enterPressed = KeyCodes.KEY_ENTER == event_.getNativeEvent().getKeyCode();
-				if ( (  ((tnome.getText().length() != 0) && 
-						(tnick.getText().length() != 0) &&
-						(tpassw.getText().length() != 0) &&
-						(trpassw.getText().length() != 0) &&
-						(tpassw.getText().contentEquals(trpassw.getText())))) && (enterPressed)  ) inRegistazione();  
-				else{
-					return;
-				}
-			}
-		});
-
-
-
-		trpassw.addKeyPressHandler(new KeyPressHandler(){
-			@Override
-			public void onKeyPress(KeyPressEvent event_){
-				boolean enterPressed = KeyCodes.KEY_ENTER == event_.getNativeEvent().getKeyCode();
-				if ( (  ((tnome.getText().length() != 0) && 
-						(tnick.getText().length() != 0) &&
-						(tpassw.getText().length() != 0) &&
-						(trpassw.getText().length() != 0) &&
-						(tpassw.getText().contentEquals(trpassw.getText())))) && (enterPressed)    ) inRegistazione();  
-				else{
-					return;
-				}
-			}
-		});
+		panel.addStyleName("tabRight");
 
 		singup.addClickHandler(new ClickHandler() {
 
@@ -91,10 +56,14 @@ panel.addStyleName("tabRight");
 				// TODO Auto-generated method stub
 				if ( 
 						(tnome.getText().length() == 0) ||
+						(tnome.getText().contains("'")) ||
 						(tnick.getText().length() == 0) ||
+						(tnick.getText().contains("'")) ||
 						(tpassw.getText().length() == 0) ||
+						(tpassw.getText().contains("'")) ||
 						(trpassw.getText().length() == 0) ||
-						!(tpassw.getText().contentEquals(trpassw.getText()))) return; 
+						(tnome.getText().contains("'")) ||
+						(!(trpassw.getText().contentEquals(trpassw.getText())))) return; 
 				else{
 
 					inRegistazione();
@@ -116,7 +85,7 @@ panel.addStyleName("tabRight");
 			@Override
 			public void onSuccess(String result) {
 				//							 TODO Auto-generated method stub
-				Window.alert(result);
+				Window.alert(result+": Registazione Effettuata");
 				Window.Location.reload();
 
 			}
