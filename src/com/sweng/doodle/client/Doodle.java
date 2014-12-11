@@ -18,6 +18,7 @@ public class Doodle implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
+	@Override
 	public void onModuleLoad() {
 		
 		new Doodle_Main();

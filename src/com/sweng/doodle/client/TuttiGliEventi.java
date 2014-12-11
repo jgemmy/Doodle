@@ -139,7 +139,7 @@ public class TuttiGliEventi {
 			@Override
 			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
 				// TODO Auto-generated method stub
-				ListGridRecord record = (ListGridRecord)event.getRecord(); 
+				ListGridRecord record = event.getRecord(); 
 				detailViewer.setData(eventsGrid.getSelection());
 				//				userViewer.setData(userGrid.getDataAsRecordList());
 				idevento = record.getAttribute("id");

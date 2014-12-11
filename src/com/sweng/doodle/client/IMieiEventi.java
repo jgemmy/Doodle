@@ -134,7 +134,7 @@ public class IMieiEventi {
 			@Override
 			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
 				// TODO Auto-generated method stub
-				ListGridRecord record = (ListGridRecord)event.getRecord(); 
+				ListGridRecord record = event.getRecord(); 
 				detailViewer.setData(eventsGrid.getSelection());
 				idclick = record.getAttribute("id");
 

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import com.sweng.doodle.server.GreetingServiceImpl;
-import com.sweng.doodle.shared.Commento;
 import com.sweng.doodle.shared.Evento;
 
 

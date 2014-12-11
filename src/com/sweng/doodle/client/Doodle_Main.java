@@ -30,7 +30,7 @@ public class Doodle_Main extends Composite{
 	public Doodle_Main(){
 
 		pannello.setAnimationEnabled(true);  
-		if (!(Cookies.getCookie("MyCookies").contentEquals("-1"))){
+		if ( Cookies.getCookie("MyCookies") != null && !(Cookies.getCookie("MyCookies").contentEquals("-1"))){
 			//			Window.alert("Welcome user with id: "+Cookies.getCookie("MyCookies"));
 			idKey = Cookies.getCookie("MyCookies");
 			new IMieiEventi(pannello);

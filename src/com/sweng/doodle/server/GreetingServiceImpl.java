@@ -20,6 +20,7 @@ import com.sweng.doodle.shared.User;
 public class GreetingServiceImpl extends RemoteServiceServlet implements
 GreetingService {
 
+	@Override
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
 		if (!FieldVerifier.isValidName(input)) {
@@ -192,6 +193,7 @@ GreetingService {
 		return returned ;
 	}
 
+	@Override
 	public String cancellaevento(String id,String idKey) throws IllegalArgumentException {
 		// TODO Auto-generated method stubss
 		Connection conn = null;
@@ -339,6 +341,7 @@ GreetingService {
 
 	}
 	
+	@Override
 	public String insertcomm(String idPart,String commento, String il,String iduser)throws IllegalArgumentException {
 		Connection conn = null;
 		Statement statement = null;

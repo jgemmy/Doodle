@@ -120,7 +120,7 @@ public class TuttiGliEventiAnonimo {
 			@Override
 			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
 				// TODO Auto-generated method stub
-				ListGridRecord record = (ListGridRecord)event.getRecord(); 
+				ListGridRecord record = event.getRecord(); 
 				detailViewer.setData(eventsGrid.getSelection());
 				idevento = record.getAttribute("id");
 				motivi = record.getAttribute("causechiuso");
